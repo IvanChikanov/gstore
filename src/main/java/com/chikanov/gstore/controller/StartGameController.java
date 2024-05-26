@@ -11,11 +11,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 @Controller
 public class StartGameController {
     @PostMapping("/miniapp_controller")
-    public ResponseEntity<?> startGame(@RequestBody String postBody,HttpServletRequest request)
+    public ResponseEntity<?> startGame(@RequestBody String postBody)
     {
-        System.out.println(request.getQueryString());
-        System.out.println(request.getRequestURI());
-        System.out.println(request.getHeaderNames());
+
         System.out.println(postBody);
         return ResponseEntity.ok(postBody);
     }
@@ -26,8 +24,11 @@ public class StartGameController {
         return ResponseEntity.ok(postBody);
     }
     @GetMapping("/miniapp_controller")
-    public ResponseEntity<?> getGame()
+    public ResponseEntity<?> getGame(HttpServletRequest request)
     {
+        System.out.println(request.getQueryString());
+        System.out.println(request.getRequestURI());
+        System.out.println(request.getHeaderNames());
         return ResponseEntity.ok("hello");
     }
 }
