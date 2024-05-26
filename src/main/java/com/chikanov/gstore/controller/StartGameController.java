@@ -1,5 +1,6 @@
 package com.chikanov.gstore.controller;
 
+import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -8,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import java.io.IOException;
 import java.util.Iterator;
 
 @Controller
@@ -26,17 +28,17 @@ public class StartGameController {
         return ResponseEntity.ok(postBody);
     }
     @GetMapping("/miniapp_controller")
-    public ResponseEntity<?> getGame(HttpServletRequest request)
-    {
+    public ResponseEntity<?> getGame(HttpServletRequest request) throws ServletException, IOException {
         System.out.println(request.getQueryString());
         System.out.println(request.getRequestURI());
-        var str = request.getHeaderNames().asIterator();
-        while(str.hasNext())
-        {
-            System.out.println(str.next());
-            System.out.println();
-        }
+        request.getParts().stream().forEach(p-> System.out.println(p.getName() + " " + p.getContentType()));
+        var iter = request.getHeaderNames().asIterator();
+        while(iter.hasNext()){
+            String s = iter.next();
+            System.out.println(s);
+            System.out.println(request.getHeader(s));
 
+        }
         return ResponseEntity.ok("hello");
     }
 }
