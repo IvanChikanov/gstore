@@ -31,6 +31,8 @@ public class StartGameController {
     public ResponseEntity<?> getGame(HttpServletRequest request) throws ServletException, IOException {
         System.out.println(request.getQueryString());
         System.out.println(request.getRequestURI());
+        System.out.println(request.getRequestURL());
+
         var iter = request.getHeaderNames().asIterator();
         while(iter.hasNext()){
             String s = iter.next();
