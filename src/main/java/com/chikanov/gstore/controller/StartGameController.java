@@ -15,6 +15,12 @@ public class StartGameController {
         System.out.println(postBody);
         return ResponseEntity.ok(postBody);
     }
+    @PostMapping("/bot_controller")
+    public ResponseEntity<?> sendBot(@RequestBody String postBody)
+    {
+        System.out.println(postBody);
+        return ResponseEntity.ok(postBody);
+    }
     @GetMapping("/miniapp_controller")
     public ResponseEntity<?> getGame()
     {
