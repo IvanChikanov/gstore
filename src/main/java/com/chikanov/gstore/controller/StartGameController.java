@@ -32,6 +32,7 @@ public class StartGameController {
     }
     @PostMapping("/bot_controller")
     public ResponseEntity<?> sendBot(@RequestBody String postBody) throws IOException {
+        System.out.println(postBody);
         ObjectMapper om = new ObjectMapper();
         JsonNode json = om.readTree(postBody.getBytes(StandardCharsets.UTF_8));
         if(json.get("message").get("text").asText().equals("/play")) {
