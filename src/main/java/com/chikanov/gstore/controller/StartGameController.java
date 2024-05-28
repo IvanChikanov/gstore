@@ -35,7 +35,7 @@ public class StartGameController {
         System.out.println(postBody);
         ObjectMapper om = new ObjectMapper();
         JsonNode json = om.readTree(postBody.getBytes(StandardCharsets.UTF_8));
-        if(json.get("message").get("text").asText().equals("/play")) {
+        if(json.get("message").get("text").asText().contains("/play")) {
             String url = String.format("https://api.telegram.org/bot%s/sendMessage", token);
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);
