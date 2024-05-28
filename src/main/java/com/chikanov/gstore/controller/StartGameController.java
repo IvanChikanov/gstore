@@ -32,26 +32,22 @@ public class StartGameController {
     }
     @PostMapping("/bot_controller")
     public ResponseEntity<?> sendBot(@RequestBody String postBody) throws IOException {
-        System.out.println(postBody);
-        String url = String.format("https://api.telegram.org/bot%s/sendMessage", token);
-        System.out.println(url);
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
         ObjectMapper om = new ObjectMapper();
         JsonNode json = om.readTree(postBody.getBytes(StandardCharsets.UTF_8));
-        System.out.println();
-        System.out.println(json.get("message").get("chat").get("id").asText());
-        System.out.println();
-        System.out.println(url);
-        System.out.println();
-        String body = "{ \"chat_id\":" + json.get("message").get("chat").get("id").asText() + ", \"text\": \"test\", " +
-                "\"reply_markup\": { \"inline_keyboard\": [[{\"text\": \"play game\", \"web_app\": " +
-                "{\"url\": \"https://chisch.ru/miniapp_controller\"}}]]}}";
-        System.out.println(body);
-        HttpEntity<String> request = new HttpEntity<>(body, headers);
-        RestTemplate rest = new RestTemplate();
-        rest.exchange(url, HttpMethod.POST, request, String.class);
-        return ResponseEntity.ok(postBody);
+        if(json.get("message").get("text").asText().equals("/play")) {
+            String url = String.format("https://api.telegram.org/bot%s/sendMessage", token);
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_JSON);
+            String body = "{ \"chat_id\":" + json.get("message").get("chat").get("id").asText() + ", \"text\": \"test\", " +
+                    "\"reply_markup\": { \"inline_keyboard\": [[{\"text\": \"play game\", \"web_app\": " +
+                    "{\"url\": \"https://chisch.ru/miniapp_controller\"}}]]}}";
+            System.out.println(body);
+            HttpEntity<String> request = new HttpEntity<>(body, headers);
+            RestTemplate rest = new RestTemplate();
+            rest.exchange(url, HttpMethod.POST, request, String.class);
+            return ResponseEntity.ok(postBody);
+        }
+        return null;
     }
     @GetMapping("/miniapp_controller")
     public ResponseEntity<?> getGame(HttpServletRequest request) throws ServletException, IOException {
