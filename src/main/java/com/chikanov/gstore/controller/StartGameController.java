@@ -55,17 +55,12 @@ public class StartGameController {
     }
     @GetMapping("/miniapp_controller")
     public ResponseEntity<?> getGame(HttpServletRequest request) throws ServletException, IOException {
-        System.out.println(request.getQueryString());
-        System.out.println(request.getRequestURI());
-        System.out.println(request.getRequestURL());
-
-        var iter = request.getHeaderNames().asIterator();
-        while(iter.hasNext()){
-            String s = iter.next();
-            System.out.println(s);
-            System.out.println(request.getHeader(s));
-
-        }
+        String r = "<head><script src=\"https://telegram.org/js/telegram-web-app.js\"></script></head>" +
+                "<body style='color: white;'></body>" +
+                "<script>" +
+                "let data = window.Telegram.WebApp.WebAppInitData;" +
+                "document.body.innerHtml = data.user;" +
+                "</script>";
         return ResponseEntity.ok("hello");
     }
 }
