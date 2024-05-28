@@ -5,9 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.ResourceLoader;
 import org.springframework.http.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,16 +15,12 @@ import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import java.util.Iterator;
 
 @Slf4j
 @Controller
 public class StartGameController {
     @Value("${token.value}")
     private String token;
-
-    @Autowired
-    private ResourceLoader loader;
 
     @PostMapping("/miniapp_controller")
     public ResponseEntity<?> startGame(@RequestBody String postBody)
@@ -56,7 +50,15 @@ public class StartGameController {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
     }
     @GetMapping("/miniapp_controller")
-    public String getGame() {
+    public String getGame(HttpServletRequest request) throws ServletException, IOException {
+        String r = "<head><script src=\"https://telegram.org/js/telegram-web-app.js\"></script></head>" +
+                "<body style='color: white;'></body>" +
+                "<script>" +
+                "let data = window.Telegram.WebApp.initDataUnsafe;" +
+                "try{" +
+                "document.body.innerHTML = 'Hello, ' + data.user.username;" +
+                "}catch(exept){document.body.innerHTML = exept;}" +
+                "</script>";
         return "main";
     }
 }
