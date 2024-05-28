@@ -34,12 +34,13 @@ public class StartGameController {
     public ResponseEntity<?> sendBot(@RequestBody String postBody) throws IOException {
         System.out.println(postBody);
         String url = String.format("https://api.telegram.org/bot%s/sendMessage", token);
+        System.out.println(url);
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         ObjectMapper om = new ObjectMapper();
         JsonNode json = om.readTree(postBody.getBytes(StandardCharsets.UTF_8));
         System.out.println();
-        System.out.println(json.get("chat").get("id").asText());
+        System.out.println(json.get("chat").asText());
         System.out.println();
         System.out.println(url);
         System.out.println();
