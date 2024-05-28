@@ -59,7 +59,7 @@ public class StartGameController {
                 "<body style='color: white;'></body>" +
                 "<script>" +
                 "let data = window.Telegram.WebApp.WebAppInitData;" +
-                "document.body.innerHtml = data.user;" +
+                "document.body.innerHTML = 'Hello, ' + data.user.username;" +
                 "</script>";
         return ResponseEntity.ok(r);
     }
