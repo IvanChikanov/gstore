@@ -51,7 +51,7 @@ public class StartGameController {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
     }
     @GetMapping("/miniapp_controller")
-    public ResponseEntity<?> getGame(HttpServletRequest request) throws ServletException, IOException {
+    public String getGame(HttpServletRequest request) throws ServletException, IOException {
         String r = "<head><script src=\"https://telegram.org/js/telegram-web-app.js\"></script></head>" +
                 "<body style='color: white;'></body>" +
                 "<script>" +
@@ -60,6 +60,6 @@ public class StartGameController {
                 "document.body.innerHTML = 'Hello, ' + data.user.username;" +
                 "}catch(exept){document.body.innerHTML = exept;}" +
                 "</script>";
-        return ResponseEntity.ok(r);
+        return "main";
     }
 }
