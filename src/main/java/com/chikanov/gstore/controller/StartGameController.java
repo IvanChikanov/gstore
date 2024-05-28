@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.stereotype.Controller;
@@ -16,6 +17,7 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.Iterator;
 
+@Slf4j
 @Controller
 public class StartGameController {
     @Value("${token.value}")
@@ -37,11 +39,12 @@ public class StartGameController {
         ObjectMapper om = new ObjectMapper();
         JsonNode json = om.readTree(postBody.getBytes(StandardCharsets.UTF_8));
         System.out.println();
-        System.out.println(json.get("chat").get("id").asText());
+        log.debug(json.get("chat").get("id").asText());
         System.out.println();
-        System.out.println(url);
+        log.debug(url);
         System.out.println();
         String body = "{ \"chat_id\":" + json.get("chat").get("id").asText() + ", \"text\": \"test\"}";
+        log.debug(body);
         HttpEntity<String> request = new HttpEntity<>(body, headers);
         RestTemplate rest = new RestTemplate();
         rest.exchange(url, HttpMethod.POST, request, String.class);
