@@ -61,6 +61,6 @@ public class StartGameController {
                 "let data = window.Telegram.WebApp.WebAppInitData;" +
                 "document.body.innerHtml = data.user;" +
                 "</script>";
-        return ResponseEntity.ok("hello");
+        return ResponseEntity.ok(r);
     }
 }
