@@ -58,9 +58,9 @@ public class StartGameController {
         String r = "<head><script src=\"https://telegram.org/js/telegram-web-app.js\"></script></head>" +
                 "<body style='color: white;'></body>" +
                 "<script>" +
-                "let data = window.Telegram.WebApp.WebAppInitData;" +
+                "let data = window.Telegram.WebApp.initDataUnsafe;" +
                 "try{" +
-                "document.body.innerHTML = 'Hello, ' + data;" +
+                "document.body.innerHTML = 'Hello, ' + data.user.username;" +
                 "}catch(exept){document.body.innerHTML = exept;}" +
                 "</script>";
         return ResponseEntity.ok(r);
