@@ -48,7 +48,7 @@ public class StartGameController {
             rest.exchange(url, HttpMethod.POST, request, String.class);
             return ResponseEntity.ok(postBody);
         }
-        return null;
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
     }
     @GetMapping("/miniapp_controller")
     public ResponseEntity<?> getGame(HttpServletRequest request) throws ServletException, IOException {
