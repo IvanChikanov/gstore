@@ -40,11 +40,11 @@ public class StartGameController {
         ObjectMapper om = new ObjectMapper();
         JsonNode json = om.readTree(postBody.getBytes(StandardCharsets.UTF_8));
         System.out.println();
-        System.out.println(json.get("chat").asText());
+        System.out.println(json.get("message").get("chat").get("id").asText());
         System.out.println();
         System.out.println(url);
         System.out.println();
-        String body = "{ \"chat_id\":" + json.get("chat").get("id").asText() + ", \"text\": \"test\"}";
+        String body = "{ \"chat_id\":" + json.get("message").get("chat").get("id").asText() + ", \"text\": \"test\"}";
         System.out.println(body);
         HttpEntity<String> request = new HttpEntity<>(body, headers);
         RestTemplate rest = new RestTemplate();
