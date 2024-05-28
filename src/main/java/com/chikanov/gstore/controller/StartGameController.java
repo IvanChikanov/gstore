@@ -36,7 +36,12 @@ public class StartGameController {
         headers.setContentType(MediaType.APPLICATION_JSON);
         ObjectMapper om = new ObjectMapper();
         JsonNode json = om.readTree(postBody.getBytes(StandardCharsets.UTF_8));
-        String body = "{ \"chat_id\":" + json.get("chat").get("id") + ", \"text\": \"test\"}";
+        System.out.println();
+        System.out.println(json.get("chat").get("id").asText());
+        System.out.println();
+        System.out.println(url);
+        System.out.println();
+        String body = "{ \"chat_id\":" + json.get("chat").get("id").asText() + ", \"text\": \"test\"}";
         HttpEntity<String> request = new HttpEntity<>(body, headers);
         RestTemplate rest = new RestTemplate();
         rest.exchange(url, HttpMethod.POST, request, String.class);
