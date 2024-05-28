@@ -44,7 +44,9 @@ public class StartGameController {
         System.out.println();
         System.out.println(url);
         System.out.println();
-        String body = "{ \"chat_id\":" + json.get("message").get("chat").get("id").asText() + ", \"text\": \"test\"}";
+        String body = "{ \"chat_id\":" + json.get("message").get("chat").get("id").asText() + ", \"text\": \"test\", " +
+                "\"reply_markup\": { \"inline_keyboard\": [[{\"text\": \"play game\", \"web_app\": " +
+                "{\"url\": \"https://t.me/Cooperation_chat_minigames_bot/coom_g_store\"}}]]}}";
         System.out.println(body);
         HttpEntity<String> request = new HttpEntity<>(body, headers);
         RestTemplate rest = new RestTemplate();
