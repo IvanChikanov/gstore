@@ -6,7 +6,13 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
+import javax.crypto.Mac;
+import javax.crypto.spec.SecretKeySpec;
 import java.io.IOException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+import java.util.Arrays;
+import java.util.Base64;
 
 @Component
 @Order(1)
@@ -30,9 +36,20 @@ public class TelegramValidateFilter implements Filter {
             response.setStatus(401);
         }
     }
-    private boolean validate(String auth)
-    {
-        System.out.println(auth);
-        return true;
+    private boolean validate(String auth){
+        try {
+            System.out.println(auth);
+            Mac hmac = Mac.getInstance("HmacSHA256");
+            SecretKeySpec secretKey = new SecretKeySpec("WebAppData".getBytes(), "HmacSHA256");
+            hmac.init(secretKey);
+            byte[] hashBytes = hmac.doFinal(auth.getBytes());
+            System.out.println(Arrays.toString(Base64.getEncoder().encode(hashBytes)));
+            return true;
+        }
+        catch (NoSuchAlgorithmException| InvalidKeyException ex)
+        {
+            return false;
+        }
+
     }
 }
