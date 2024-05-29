@@ -14,7 +14,7 @@ async function sendUserData()
 {
     let req = await fetch("/check", {
     method: "POST",
-    body: `{"auth": ${window.Telegram.WebApp.initData}, "data": ${window.Telegram.WebApp.initDataUnsafe} }`
+    body: `{"auth": "${window.Telegram.WebApp.initData}", "data": "${window.Telegram.WebApp.initDataUnsafe}" }`
     });
     return await req.status;
 }
