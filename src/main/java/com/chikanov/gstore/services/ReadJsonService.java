@@ -10,6 +10,7 @@ import org.springframework.web.client.RestTemplate;
 
 @Service
 public class ReadJsonService {
+
     @Value("${telegram.token}")
     private String token;
 
