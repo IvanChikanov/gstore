@@ -6,7 +6,7 @@ if(check == 401)
 }
 else{
     let header = document.createElement("H3");
-    header.innerText = `Hello ${JSON.parse(window.Telegram.WebApp.initDataUnsafe)}! requestStatus: ${check}`;
+    header.innerText = `Hello ${JSON.parse(window.Telegram.WebApp.initDataUnsafe.user.username)}! requestStatus: ${check}`;
     document.body.appendChild(header);
 }
 });
@@ -17,4 +17,4 @@ async function sendUserData()
     body: `{"auth": "${window.Telegram.WebApp.initData}", "data": "${window.Telegram.WebApp.initDataUnsafe}" }`
     });
     return await req.status;
-}   
+}
