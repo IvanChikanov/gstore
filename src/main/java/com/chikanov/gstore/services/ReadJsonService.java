@@ -31,7 +31,7 @@ public class ReadJsonService {
                             "{ \"inline_keyboard\": " +
                                 "[[" +
                                     "{\"text\": \"play game\", \"url\": " +
-                                        "\"https://t.me/Cooperation_chat_minigames_bot/coop_g_store\"}" +
+                                        "\"https://t.me/Cooperation_chat_minigames_bot/coop_g_store\"" +
                                     "}" +
                                 "]]" +
                             "}" +
