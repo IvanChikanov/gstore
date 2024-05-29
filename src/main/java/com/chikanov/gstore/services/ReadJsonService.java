@@ -28,7 +28,7 @@ public class ReadJsonService {
             {
                 body = "{ \"chat_id\":" + json.get("message").get("chat").get("id").asText() + ", \"text\": \"test\", " +
                         "\"reply_markup\": " +
-                            "{ \"inline_keyboard\": " +
+                            "{ \"keyboard\": " +
                                 "[[" +
                                     "{\"text\": \"play game\", \"web_app\": " +
                                         "{\"url\": \"https://chisch.ru/miniapp_controller\"}" +
