@@ -17,7 +17,7 @@ public class ReadJsonService {
     public void read(String jsonValue) throws JsonProcessingException {
         ObjectMapper om = new ObjectMapper();
         JsonNode json = om.readTree(jsonValue);
-        String url = String.format("https://api.telegram.org/bot%s/sendMessage", "123");
+        String url = String.format("https://api.telegram.org/bot%s/sendMessage", token);
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         String body = "";
