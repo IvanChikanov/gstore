@@ -15,6 +15,7 @@ public class ReadJsonService {
     private String token;
 
     public void read(String jsonValue) throws JsonProcessingException {
+        System.out.println(jsonValue);
         ObjectMapper om = new ObjectMapper();
         JsonNode json = om.readTree(jsonValue);
         String url = String.format("https://api.telegram.org/bot%s/sendMessage", token);
@@ -26,8 +27,15 @@ public class ReadJsonService {
             if(json.get("message").get("text").asText().contains("/play"))
             {
                 body = "{ \"chat_id\":" + json.get("message").get("chat").get("id").asText() + ", \"text\": \"test\", " +
-                        "\"reply_markup\": { \"inline_keyboard\": [[{\"text\": \"play game\", \"web_app\": " +
-                        "{\"url\": \"https://chisch.ru/miniapp_controller\"}}]]}}";
+                        "\"reply_markup\": " +
+                            "{ \"inline_keyboard\": " +
+                                "[[" +
+                                    "{\"text\": \"play game\", \"web_app\": " +
+                                        "{\"url\": \"https://chisch.ru/miniapp_controller\"}" +
+                                    "}" +
+                                "]]" +
+                            "}" +
+                        "}";
             }
         } else if (json.has("my_chat_member")) {
             body = "{ \"chat_id\":" + json.get("message").get("chat").get("id").asText() + ", \"text\": \"test\", " +
