@@ -20,7 +20,7 @@ public class TelegramValidatorHttpRequestWrapper extends HttpServletRequestWrapp
     private ObjectMapper om;
     public TelegramValidatorHttpRequestWrapper(HttpServletRequest request) throws IOException {
         super(request);
-        String buffBody = StreamUtils.copyToString(request.getInputStream(), Charset.defaultCharset());
+        byte[] buffBody = StreamUtils.copyToByteArray(request.getInputStream());
         om = new ObjectMapper();
         JsonNode json = om.readTree(buffBody);
         authenticateData = json.get("auth").asText();
