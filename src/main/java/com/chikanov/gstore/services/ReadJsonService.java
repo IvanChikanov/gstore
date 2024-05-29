@@ -31,7 +31,7 @@ public class ReadJsonService {
                             "{ \"inline_keyboard\": " +
                                 "[[" +
                                     "{\"text\": \"play game\", \"url\": " +
-                                        "{\"url\": \"https://chisch.ru/miniapp_controller\"}" +
+                                        " \"https://chisch.ru/miniapp_controller\"}" +
                                     "}" +
                                 "]]" +
                             "}" +
@@ -40,7 +40,7 @@ public class ReadJsonService {
         } else if (json.has("my_chat_member")) {
             body = "{ \"chat_id\":" + json.get("message").get("chat").get("id").asText() + ", \"text\": \"test\", " +
                     "\"reply_markup\": { \"inline_keyboard\": [[{\"text\": \"play game\", \"url\": " +
-                    "{\"url\": \"https://chisch.ru/miniapp_controller\"}}]]}}";
+                    "\"https://chisch.ru/miniapp_controller\"}}]]}}";
         }
         if(!body.isEmpty())
         {
