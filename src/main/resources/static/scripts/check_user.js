@@ -6,7 +6,7 @@ if(check == 401)
 }
 else{
     let header = document.createElement("H3");
-    header.innerText = `Hello ${JSON.parse(window.Telegram.WebApp.initDataUnsafe.user.username)}! requestStatus: ${check}`;
+    header.innerText = `Hello ${window.Telegram.WebApp.initDataUnsafe.user.username}! requestStatus: ${check}`;
     document.body.appendChild(header);
 }
 });
