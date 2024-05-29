@@ -26,8 +26,14 @@ public class StartGameController {
         return ResponseEntity.ok(postBody);
     }
     @PostMapping("/bot_controller")
-    public ResponseEntity<?> sendBot(@RequestBody String postBody) throws IOException {
-        readJsonService.read(postBody);
+    public ResponseEntity<?> sendBot(@RequestBody String postBody){
+        try {
+            readJsonService.read(postBody);
+        }
+        catch (Exception ex)
+        {
+            System.out.println(ex.getMessage());
+        }
         return ResponseEntity.status(HttpStatus.OK).build();
     }
     @GetMapping("/miniapp_controller")

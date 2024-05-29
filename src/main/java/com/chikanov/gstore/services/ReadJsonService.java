@@ -11,13 +11,13 @@ import org.springframework.web.client.RestTemplate;
 @Service
 public class ReadJsonService {
 
-    @Value("${telegram.token}")
+    @Value("${token.value}")
     private String token;
 
     public void read(String jsonValue) throws JsonProcessingException {
         ObjectMapper om = new ObjectMapper();
         JsonNode json = om.readTree(jsonValue);
-        String url = String.format("https://api.telegram.org/bot%s/sendMessage", token);
+        String url = String.format("https://api.telegram.org/bot%s/sendMessage", "123");
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         String body = "";
