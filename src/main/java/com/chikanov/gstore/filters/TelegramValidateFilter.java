@@ -14,8 +14,6 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 import java.util.Base64;
 
-@Component
-@Order(1)
 public class TelegramValidateFilter implements Filter {
     private TelegramValidatorHttpRequestWrapper requestWrapper;
     @Override
