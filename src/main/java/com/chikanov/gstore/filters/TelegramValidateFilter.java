@@ -56,17 +56,17 @@ public class TelegramValidateFilter implements Filter {
                 if(s.contains("hash"))
                 {
                     hash = s.split("=")[1];
-                    System.out.println(hash);
                 }
                 else
                 {
-                    others.add(s + "\n");
+                    others.add(s);
                 }
             }
-            String ready = others.stream().collect(Collectors.joining());
+            String ready = others.stream().collect(Collectors.joining("\n"));
             System.out.println(ready);
             byte[] token = getHash(this.token.getBytes(), key.getBytes());
             byte[] data = getHash(ready.getBytes(), token);
+            System.out.println(hash);
             System.out.println(getHex(data).equals(hash));
             return true;
         }
