@@ -8,6 +8,7 @@ else{
     let header = document.createElement("H3");
     header.innerText = `Hello ${window.Telegram.WebApp.initDataUnsafe.query_id}! requestStatus: ${check} ${window.Telegram.WebApp.initDataUnsafe.toString()}`;
     document.body.appendChild(header);
+    window.Telegram.WebApp.sendData();
 }
 });
 async function sendUserData()
