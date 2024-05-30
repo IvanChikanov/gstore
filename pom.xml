@@ -75,7 +75,7 @@
 				</configuration>
 			</plugin>
 		</plugins>
-		<finalName>gstore.jar</finalName>
+		<finalName>gstore</finalName>
 	</build>
 
 </project>
