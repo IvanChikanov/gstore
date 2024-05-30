@@ -3,6 +3,7 @@ package com.chikanov.gstore.filters;
 import jakarta.servlet.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
@@ -15,6 +16,9 @@ import java.util.Arrays;
 import java.util.Base64;
 
 public class TelegramValidateFilter implements Filter {
+    @Value("${token.value}")
+    private String token;
+    private final String key = "WebAppData";
     private TelegramValidatorHttpRequestWrapper requestWrapper;
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)
@@ -36,12 +40,16 @@ public class TelegramValidateFilter implements Filter {
     }
     private boolean validate(String auth){
         try {
-            System.out.println(auth);
             Mac hmac = Mac.getInstance("HmacSHA256");
-            SecretKeySpec secretKey = new SecretKeySpec("WebAppData".getBytes(), "HmacSHA256");
+            SecretKeySpec secretKey = new SecretKeySpec(key.getBytes(), "HmacSHA256");
             hmac.init(secretKey);
-            byte[] hashBytes = hmac.doFinal(auth.getBytes());
-            System.out.println(Arrays.toString(Base64.getEncoder().encode(hashBytes)));
+            byte[] hashBytes =  hmac.doFinal(token.getBytes());
+            StringBuilder sb = new StringBuilder();
+            for(byte b : hashBytes)
+            {
+                sb.append(String.format("%02X", b));
+            }
+            System.out.println(sb);
             return true;
         }
         catch (NoSuchAlgorithmException| InvalidKeyException ex)
