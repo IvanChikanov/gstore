@@ -4,23 +4,20 @@ import jakarta.servlet.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.annotation.Order;
-import org.springframework.stereotype.Component;
 
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 import java.io.IOException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
-import java.util.Arrays;
-import java.util.Base64;
 
 public class TelegramValidateFilter implements Filter {
-    @Value("${token.value}")
-    private String token;
 
+    private String token;
     private final String key = "WebAppData";
     private TelegramValidatorHttpRequestWrapper requestWrapper;
+
+    public TelegramValidateFilter(String token){this.token = token;}
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)
             throws IOException, ServletException {
