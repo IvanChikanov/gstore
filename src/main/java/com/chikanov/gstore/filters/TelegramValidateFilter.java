@@ -3,11 +3,15 @@ package com.chikanov.gstore.filters;
 import jakarta.servlet.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.apache.tomcat.util.digester.DocumentProperties;
 import org.springframework.beans.factory.annotation.Value;
 
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 import java.io.IOException;
+import java.net.URLDecoder;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 
@@ -38,6 +42,8 @@ public class TelegramValidateFilter implements Filter {
     }
     private boolean validate(String auth){
         try {
+            System.out.println(auth);
+            System.out.println(URLDecoder.decode(auth, StandardCharsets.UTF_8));
             Mac hmac = Mac.getInstance("HmacSHA256");
             SecretKeySpec secretKey = new SecretKeySpec(key.getBytes(), "HmacSHA256");
             hmac.init(secretKey);
