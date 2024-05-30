@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
 
 public class TelegramValidateFilter implements Filter {
 
-    private String token;
+    private final String token;
     private final String key = "WebAppData";
     private TelegramValidatorHttpRequestWrapper requestWrapper;
 
@@ -65,9 +65,9 @@ public class TelegramValidateFilter implements Filter {
             }
             String ready = others.stream().collect(Collectors.joining());
             System.out.println(ready);
-            String token = getHexHash(this.token, key);
-            String data = getHexHash(ready, token);
-            System.out.println(data.equals(hash));
+            byte[] token = getHash(this.token.getBytes(), key.getBytes());
+            byte[] data = getHash(ready.getBytes(), token);
+            System.out.println(getHex(data).equals(hash));
             return true;
         }
         catch (NoSuchAlgorithmException| InvalidKeyException ex)
@@ -76,19 +76,22 @@ public class TelegramValidateFilter implements Filter {
         }
 
     }
-    private String getHexHash(String value, String key) throws NoSuchAlgorithmException, InvalidKeyException {
+    private byte[] getHash(byte[] value, byte[] key) throws NoSuchAlgorithmException, InvalidKeyException {
         Mac hmac = Mac.getInstance("HmacSHA256");
-        SecretKeySpec secretKey = new SecretKeySpec(key.getBytes(), "HmacSHA256");
+        SecretKeySpec secretKey = new SecretKeySpec(key, "HmacSHA256");
         hmac.init(secretKey);
-        byte[] hashBytes =  hmac.doFinal(value.getBytes());
+        byte[] hashBytes =  hmac.doFinal(value);
+        return hashBytes;
+    }
+    private String getHex(byte[] byteArr)
+    {
         StringBuilder bytes = new StringBuilder();
-        for(byte b: hashBytes)
+        for(byte b: byteArr)
         {
             bytes.append(b);
         }
-        System.out.println(bytes);
         StringBuilder sb = new StringBuilder();
-        for(byte b : hashBytes)
+        for(byte b : byteArr)
         {
             sb.append(String.format("%02x", b));
         }
