@@ -18,6 +18,7 @@ import java.util.Base64;
 public class TelegramValidateFilter implements Filter {
     @Value("${token.value}")
     private String token;
+
     private final String key = "WebAppData";
     private TelegramValidatorHttpRequestWrapper requestWrapper;
     @Override
