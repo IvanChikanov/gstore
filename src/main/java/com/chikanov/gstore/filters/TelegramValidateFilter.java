@@ -66,9 +66,7 @@ public class TelegramValidateFilter implements Filter {
             String ready = others.stream().collect(Collectors.joining());
             System.out.println(ready);
             String token = getHexHash(this.token, key);
-            String data = getHexHash(ready, hash);
-            System.out.println(token);
-            System.out.println(data);
+            String data = getHexHash(ready, token);
             System.out.println(token.equals(data));
             return true;
         }
