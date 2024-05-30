@@ -48,7 +48,6 @@ public class TelegramValidateFilter implements Filter {
         try {
             System.out.println(auth);
             String decoded = URLDecoder.decode(auth, StandardCharsets.UTF_8);
-            decoded += "&";
             String[] splitted = decoded.replaceAll("&", "\n&").split("&");
             String hash = "";
             SortedSet<String> others = new TreeSet<>();
