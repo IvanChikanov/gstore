@@ -81,11 +81,10 @@ public class TelegramValidateFilter implements Filter {
         SecretKeySpec secretKey = new SecretKeySpec(key.getBytes(), "HmacSHA256");
         hmac.init(secretKey);
         byte[] hashBytes =  hmac.doFinal(value.getBytes());
-        System.out.println(hashBytes.toString());
-        String bytes = "";
+        StringBuilder bytes = new StringBuilder();
         for(byte b: hashBytes)
         {
-            bytes += b;
+            bytes.append(b);
         }
         System.out.println(bytes);
         StringBuilder sb = new StringBuilder();
