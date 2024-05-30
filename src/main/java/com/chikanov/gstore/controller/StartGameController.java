@@ -28,6 +28,7 @@ public class StartGameController {
     @PostMapping("/bot_controller")
     public ResponseEntity<?> sendBot(@RequestBody String postBody){
         try {
+            System.out.println(postBody);
             readJsonService.read(postBody);
         }
         catch (Exception ex)
