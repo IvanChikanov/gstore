@@ -14,6 +14,8 @@ import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
+import java.util.Arrays;
+import java.util.stream.Collectors;
 
 public class TelegramValidateFilter implements Filter {
 
@@ -43,7 +45,10 @@ public class TelegramValidateFilter implements Filter {
     private boolean validate(String auth){
         try {
             System.out.println(auth);
-            System.out.println(URLDecoder.decode(auth, StandardCharsets.UTF_8));
+            String decoded = URLDecoder.decode(auth, StandardCharsets.UTF_8);
+            String[] splitted = decoded.replaceAll("&", "\n&").split("&");
+            String sorted = Arrays.stream(splitted).sorted().collect(Collectors.joining());
+            System.out.println(sorted);
             Mac hmac = Mac.getInstance("HmacSHA256");
             SecretKeySpec secretKey = new SecretKeySpec(key.getBytes(), "HmacSHA256");
             hmac.init(secretKey);
