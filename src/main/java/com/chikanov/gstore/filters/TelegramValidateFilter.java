@@ -15,6 +15,8 @@ import java.nio.charset.StandardCharsets;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
+import java.util.SortedSet;
+import java.util.TreeSet;
 import java.util.stream.Collectors;
 
 public class TelegramValidateFilter implements Filter {
@@ -46,19 +48,28 @@ public class TelegramValidateFilter implements Filter {
         try {
             System.out.println(auth);
             String decoded = URLDecoder.decode(auth, StandardCharsets.UTF_8);
+            decoded += "&";
             String[] splitted = decoded.replaceAll("&", "\n&").split("&");
-            String sorted = Arrays.stream(splitted).sorted().collect(Collectors.joining());
-            System.out.println(sorted);
-            Mac hmac = Mac.getInstance("HmacSHA256");
-            SecretKeySpec secretKey = new SecretKeySpec(key.getBytes(), "HmacSHA256");
-            hmac.init(secretKey);
-            byte[] hashBytes =  hmac.doFinal(token.getBytes());
-            StringBuilder sb = new StringBuilder();
-            for(byte b : hashBytes)
+            String hash = "";
+            SortedSet<String> others = new TreeSet<>();
+            for(var s : splitted)
             {
-                sb.append(String.format("%02X", b));
+                if(s.contains("hash"))
+                {
+                    hash = s.split("=")[1];
+                }
+                else
+                {
+                    others.add(s);
+                }
             }
-            System.out.println(sb);
+            String ready = others.stream().collect(Collectors.joining());
+            System.out.println(ready);
+            String token = getHexHash(this.token, key);
+            String data = getHexHash(ready, hash);
+            System.out.println(token);
+            System.out.println(data);
+            System.out.println(token.equals(data));
             return true;
         }
         catch (NoSuchAlgorithmException| InvalidKeyException ex)
@@ -66,5 +77,18 @@ public class TelegramValidateFilter implements Filter {
             return false;
         }
 
+    }
+    private String getHexHash(String value, String key) throws NoSuchAlgorithmException, InvalidKeyException {
+        Mac hmac = Mac.getInstance("HmacSHA256");
+        SecretKeySpec secretKey = new SecretKeySpec(key.getBytes(), "HmacSHA256");
+        hmac.init(secretKey);
+        byte[] hashBytes =  hmac.doFinal(value.getBytes());
+        StringBuilder sb = new StringBuilder();
+        for(byte b : hashBytes)
+        {
+            sb.append(String.format("%02x", b));
+        }
+        System.out.println(sb);
+        return sb.toString();
     }
 }
