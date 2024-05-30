@@ -46,7 +46,6 @@ public class TelegramValidateFilter implements Filter {
     }
     private boolean validate(String auth){
         try {
-            System.out.println(auth);
             String decoded = URLDecoder.decode(auth, StandardCharsets.UTF_8);
             String[] splitted = decoded.split("&");
             String hash = "";
@@ -63,12 +62,9 @@ public class TelegramValidateFilter implements Filter {
                 }
             }
             String ready = others.stream().collect(Collectors.joining("\n"));
-            System.out.println(ready);
             byte[] token = getHash(this.token.getBytes(), key.getBytes());
             byte[] data = getHash(ready.getBytes(), token);
-            System.out.println(hash);
-            System.out.println(getHex(data).equals(hash));
-            return true;
+            return getHex(data).equals(hash);
         }
         catch (NoSuchAlgorithmException| InvalidKeyException ex)
         {
@@ -95,7 +91,6 @@ public class TelegramValidateFilter implements Filter {
         {
             sb.append(String.format("%02x", b));
         }
-        System.out.println(sb);
         return sb.toString();
     }
 }
