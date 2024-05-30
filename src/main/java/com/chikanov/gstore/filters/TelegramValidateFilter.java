@@ -56,6 +56,7 @@ public class TelegramValidateFilter implements Filter {
                 if(s.contains("hash"))
                 {
                     hash = s.split("=")[1];
+                    System.out.println(hash);
                 }
                 else
                 {
@@ -66,7 +67,7 @@ public class TelegramValidateFilter implements Filter {
             System.out.println(ready);
             String token = getHexHash(this.token, key);
             String data = getHexHash(ready, token);
-            System.out.println(token.equals(data));
+            System.out.println(token.equals(hash));
             return true;
         }
         catch (NoSuchAlgorithmException| InvalidKeyException ex)
