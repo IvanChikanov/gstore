@@ -21,7 +21,7 @@ import java.util.UUID;
 public class AutoSetWebhook {
     @Value("${token.value}")
     private String TOKEN;
-    private final String URL = "https://t.me/bot";
+    private final String URL = "https://api.telegram.org/bot";
     private final String SET_WEBHOOK = "/setWebhook";
     private final Webhook webhook;
     public AutoSetWebhook()
