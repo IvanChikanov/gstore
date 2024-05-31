@@ -19,7 +19,7 @@ public class BotRequestFilter implements Filter {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         if(request.getHeader("X-Telegram-Bot-Api-Secret-Token").equals(webhook.getWebhookToken()))
         {
-            doFilter(servletRequest, servletResponse, filterChain);
+            filterChain.doFilter(servletRequest, servletResponse);
         }
         else
         {
