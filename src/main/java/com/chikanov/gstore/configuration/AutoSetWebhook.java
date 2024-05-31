@@ -28,13 +28,17 @@ public class AutoSetWebhook {
     }
     @EventListener(ApplicationReadyEvent.class)
     public void setWebhook() throws JsonProcessingException {
-        RestTemplate rt = new RestTemplate();
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        ObjectMapper om = new ObjectMapper();
-        HttpEntity<String> entity = new HttpEntity<>(om.writeValueAsString(webhook), headers);
-        var response = rt.exchange(URL + TOKEN + SET_WEBHOOK, HttpMethod.POST, entity, String.class);
-        System.out.println(response);
+        try {
+            RestTemplate rt = new RestTemplate();
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_JSON);
+            ObjectMapper om = new ObjectMapper();
+            HttpEntity<String> entity = new HttpEntity<>(om.writeValueAsString(webhook), headers);
+            var response = rt.exchange(URL + TOKEN + SET_WEBHOOK, HttpMethod.POST, entity, String.class);
+            System.out.println(response);
+        }catch (JsonProcessingException ex){
+            ex.printStackTrace();
+        }
 
     }
     private class Webhook
