@@ -15,7 +15,7 @@ public class Message extends AbstractMessage{
         if(json.get("message").has("text") && json.get("message").get("text").asText().contains("/play"))
         {
             send(json.get("message").get("chat").get("id").asText(),
-                    "Желаешь сыграть в игру ?\nДавай братишка, жми кнопку ```Играть!```");
+                    "Желаешь сыграть в игру ?\nДавай братишка, жми кнопку Играть!");
         }
     }
 }
