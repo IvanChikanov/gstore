@@ -14,9 +14,6 @@ abstract class AbstractMessage {
 
     protected void send(String chatId, String text)
     {
-        if(!body.isEmpty())
-        {
-            sendMessageService.send(chatId, text);
-        }
+        sendMessageService.send(chatId, text);
     }
 }
