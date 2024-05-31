@@ -3,6 +3,8 @@ package com.chikanov.gstore.configuration;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jdk.jfr.ContentType;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
@@ -27,7 +29,7 @@ public class AutoSetWebhook {
         webhook = new Webhook();
     }
     @EventListener(ApplicationReadyEvent.class)
-    public void setWebhook() throws JsonProcessingException {
+    public void setWebhook() {
         try {
             RestTemplate rt = new RestTemplate();
             HttpHeaders headers = new HttpHeaders();
@@ -41,6 +43,8 @@ public class AutoSetWebhook {
         }
 
     }
+    @Getter
+    @Setter
     private class Webhook
     {
         final String url = "https://chisch.ru/bot_controller";
