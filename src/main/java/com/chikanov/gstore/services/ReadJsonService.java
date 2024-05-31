@@ -38,7 +38,7 @@ public class ReadJsonService {
                         "}";
             }
         } else if (json.has("my_chat_member")) {
-            body = "{ \"chat_id\":" + json.get("chat").get("id").asText() + ", \"text\": \"test\", " +
+            body = "{ \"chat_id\":" + json.get("my_chat_member").get("chat").get("id").asText() + ", \"text\": \"test\", " +
                     "\"reply_markup\": { \"inline_keyboard\": [[{\"text\": \"play game\", \"url\": " +
                     "\"https://chisch.ru/miniapp_controller\"}}]]}}";
         }
