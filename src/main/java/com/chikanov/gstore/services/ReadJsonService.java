@@ -39,12 +39,15 @@ public class ReadJsonService {
             }
         } else if (json.has("my_chat_member")) {
             body = "{ \"chat_id\":" + json.get("my_chat_member").get("chat").get("id").asText() + ", \"text\": \"test\", " +
-                    "\"reply_markup\": { \"inline_keyboard\": " +
+                    "\"reply_markup\": " +
+                    "{ \"inline_keyboard\": " +
                     "[[" +
                     "{\"text\": \"play game\", \"url\": " +
-                        "https://t.me/Cooperation_chat_minigames_bot/coop_g_store}" +
+                    "\"https://t.me/Cooperation_chat_minigames_bot/coop_g_store\"" +
+                    "}" +
                     "]]" +
-                    "}}";
+                    "}" +
+                    "}";
         }
         if(!body.isEmpty())
         {
