@@ -1,5 +1,7 @@
 package com.chikanov.gstore.configuration;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jdk.jfr.ContentType;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
@@ -25,12 +27,12 @@ public class AutoSetWebhook {
         webhook = new Webhook();
     }
     @EventListener(ApplicationReadyEvent.class)
-    public void setWebhook()
-    {
+    public void setWebhook() throws JsonProcessingException {
         RestTemplate rt = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
-        HttpEntity<Webhook> entity = new HttpEntity<>(webhook, headers);
+        ObjectMapper om = new ObjectMapper();
+        HttpEntity<String> entity = new HttpEntity<>(om.writeValueAsString(webhook), headers);
         var response = rt.exchange(URL + TOKEN + SET_WEBHOOK, HttpMethod.POST, entity, String.class);
         System.out.println(response);
 
