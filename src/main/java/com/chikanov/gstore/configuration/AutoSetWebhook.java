@@ -53,7 +53,7 @@ public class AutoSetWebhook {
     @Setter
     private class Webhook
     {
-        final String url = "https://chisch.ru/bot_controller";
+        final String url = "https://chisch.ru/bot";
         final String allowed_updates = "[" + Arrays.stream(TelegramUpdates.values()).
                 map(tu-> tu.getStr()).
                 collect(Collectors.joining(", ")) + "]";

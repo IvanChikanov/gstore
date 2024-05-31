@@ -17,15 +17,7 @@ public class StartGameController {
 
     @Autowired
     private ReadJsonService readJsonService;
-
-    @PostMapping("/miniapp_controller")
-    public ResponseEntity<?> startGame(@RequestBody String postBody)
-    {
-
-        System.out.println(postBody);
-        return ResponseEntity.ok(postBody);
-    }
-    @PostMapping("/bot_controller")
+    @PostMapping("/bot")
     public ResponseEntity<?> sendBot(@RequestBody String postBody){
         try {
             System.out.println(postBody);
@@ -33,18 +25,13 @@ public class StartGameController {
         }
         catch (Exception ex)
         {
-            System.out.println(ex.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
         return ResponseEntity.status(HttpStatus.OK).build();
     }
-    @GetMapping("/miniapp_controller")
+    @GetMapping("/miniapp")
     public String getGame(HttpServletRequest request) throws ServletException, IOException {
         return "main";
     }
-    @PostMapping("/check")
-    public ResponseEntity<?> check(@RequestBody String body)
-    {
-        System.out.println(body);
-        return ResponseEntity.status(200).build();
-    }
+
 }

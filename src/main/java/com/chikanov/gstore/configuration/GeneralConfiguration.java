@@ -27,7 +27,7 @@ public class GeneralConfiguration implements WebMvcConfigurer {
     {
         FilterRegistrationBean<TelegramValidateFilter> registrationBean = new FilterRegistrationBean<>();
         registrationBean.setFilter(new TelegramValidateFilter(token));
-        registrationBean.addUrlPatterns("/check/*");
+        registrationBean.addUrlPatterns("/inside/*");
         registrationBean.setOrder(1);
         return registrationBean;
     }
@@ -36,7 +36,7 @@ public class GeneralConfiguration implements WebMvcConfigurer {
     {
         FilterRegistrationBean<BotRequestFilter> registrationBean = new FilterRegistrationBean<>();
         registrationBean.setFilter(new BotRequestFilter(autoSetWebhook));
-        registrationBean.addUrlPatterns("/bot_controller");
+        registrationBean.addUrlPatterns("/bot");
         registrationBean.setOrder(2);
         return registrationBean;
     }
