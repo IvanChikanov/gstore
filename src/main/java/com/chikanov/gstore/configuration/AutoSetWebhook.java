@@ -1,5 +1,6 @@
 package com.chikanov.gstore.configuration;
 
+import com.chikanov.gstore.enums.TelegramUpdates;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jdk.jfr.ContentType;
@@ -15,7 +16,9 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.Arrays;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Component
 public class AutoSetWebhook {
@@ -51,7 +54,9 @@ public class AutoSetWebhook {
     private class Webhook
     {
         final String url = "https://chisch.ru/bot_controller";
-        final String allowed_updates = "[\"inline_query\", \"my_chat_member\", \"callback_query\", \"chosen_inline_result\"]";
+        final String allowed_updates = "[" + Arrays.stream(TelegramUpdates.values()).
+                map(tu-> tu.getStr()).
+                collect(Collectors.joining(", ")) + "]";
         final String secret_token;
         Webhook()
         {
