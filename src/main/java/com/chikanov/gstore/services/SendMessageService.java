@@ -27,7 +27,7 @@ public class SendMessageService {
         return "{ \"chat_id\":" + chatId + ", \"text\": \"" + text + "\", \"reply_markup\": " +
                     "{ \"inline_keyboard\": " +
                         "[[" +
-                            "{\"text\": \"Play!\", \"url\": " +
+                            "{\"text\": \"Играть!\", \"url\": " +
                             "\"https://t.me/Cooperation_chat_minigames_bot/coop_g_store\"" +
                             "}" +
                         "]]" +
