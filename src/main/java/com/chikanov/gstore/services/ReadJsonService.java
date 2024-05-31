@@ -33,6 +33,7 @@ public class ReadJsonService {
         Optional<TelegramUpdates> update = Arrays.stream(TelegramUpdates.values()).
                 filter(tu-> json.has(tu.getStr())).findFirst();
         update.ifPresent(upd->{
+            System.out.println(upd.getStr());
             switch (upd)
             {
                 case MESSAGE -> new Message(json, sendMessageService);
