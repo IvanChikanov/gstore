@@ -3,7 +3,7 @@ package com.chikanov.gstore.configuration;
 import com.chikanov.gstore.enums.TelegramUpdates;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import jdk.jfr.ContentType;
+
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Value;
