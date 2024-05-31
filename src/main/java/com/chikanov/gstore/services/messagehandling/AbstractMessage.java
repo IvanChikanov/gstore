@@ -12,11 +12,11 @@ abstract class AbstractMessage {
     protected JsonNode json;
     protected String body;
 
-    protected void send()
+    protected void send(String chatId, String text)
     {
         if(!body.isEmpty())
         {
-            sendMessageService.send(body);
+            sendMessageService.send(chatId, text);
         }
     }
 }
