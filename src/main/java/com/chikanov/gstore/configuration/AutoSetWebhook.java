@@ -54,9 +54,9 @@ public class AutoSetWebhook {
     private class Webhook
     {
         final String url = "https://chisch.ru/bot";
-        final String allowed_updates = "[" + Arrays.stream(TelegramUpdates.values()).
+        final String allowed_updates = "[\"" + Arrays.stream(TelegramUpdates.values()).
                 map(tu-> tu.getStr()).
-                collect(Collectors.joining(", ")) + "]";
+                collect(Collectors.joining("\", \"")) + "\"]";
         final String secret_token;
         Webhook()
         {
