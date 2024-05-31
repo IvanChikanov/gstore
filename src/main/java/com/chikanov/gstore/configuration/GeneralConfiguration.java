@@ -1,6 +1,8 @@
 package com.chikanov.gstore.configuration;
 
+import com.chikanov.gstore.filters.BotRequestFilter;
 import com.chikanov.gstore.filters.TelegramValidateFilter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
@@ -13,6 +15,9 @@ public class GeneralConfiguration implements WebMvcConfigurer {
     @Value("${token.value}")
     private String token;
 
+    @Autowired
+    AutoSetWebhook autoSetWebhook;
+
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry){
         registry.addResourceHandler("/static/**").addResourceLocations("classpath:/static/**");
@@ -24,6 +29,15 @@ public class GeneralConfiguration implements WebMvcConfigurer {
         registrationBean.setFilter(new TelegramValidateFilter(token));
         registrationBean.addUrlPatterns("/check/*");
         registrationBean.setOrder(1);
+        return registrationBean;
+    }
+    @Bean
+    public FilterRegistrationBean<BotRequestFilter> botFilter()
+    {
+        FilterRegistrationBean<BotRequestFilter> registrationBean = new FilterRegistrationBean<>();
+        registrationBean.setFilter(new BotRequestFilter(autoSetWebhook));
+        registrationBean.addUrlPatterns("/bot_controller");
+        registrationBean.setOrder(2);
         return registrationBean;
     }
 }
