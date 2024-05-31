@@ -8,6 +8,7 @@ public class Message extends AbstractMessage{
     {
         super(sendMessageService);
         json = node;
+        handling();
     }
     private void handling()
     {
