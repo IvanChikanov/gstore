@@ -25,7 +25,7 @@ public class StartGameController {
         }
         catch (Exception ex)
         {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+            return ResponseEntity.status(HttpStatus.OK).build();
         }
         return ResponseEntity.status(HttpStatus.OK).build();
     }
