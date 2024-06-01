@@ -39,7 +39,8 @@ public class AutoSetWebhook {
             headers.setContentType(MediaType.APPLICATION_JSON);
             ObjectMapper om = new ObjectMapper();
             HttpEntity<String> entity = new HttpEntity<>(om.writeValueAsString(webhook), headers);
-            rt.exchange(URL + TOKEN + SET_WEBHOOK, HttpMethod.POST, entity, String.class);
+            var r = rt.exchange(URL + TOKEN + SET_WEBHOOK, HttpMethod.POST, entity, String.class);
+            System.out.println(r.getBody());
         }catch (JsonProcessingException ex){
             ex.printStackTrace();
         }
