@@ -5,3 +5,4 @@ class Application
         Sender.request("hello");
     }
 }
+let app = Application();
