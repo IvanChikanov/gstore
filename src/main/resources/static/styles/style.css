@@ -3,9 +3,15 @@ body{
     color: var(--tg-theme-text-color);
 }
 .game_button{
-    background-color: var(--tg-theme-section-header-text-color);
+    background-color: transparent;
     border-radius: .4rem;
-    box-shadow: 3px 3px 7px var(--tg-theme-section-bg-color);
+    box-shadow: 3px 3px 7px var(--tg-theme-section-header-text-color);
+    grid-column-start: 3;
+    grid-column-end: 4;
+    grid-row-start: 1;
+    grid-row-start: 2;
+    align-self: center;
+    justify-self: center;
 }
 .main{
     display: grid;

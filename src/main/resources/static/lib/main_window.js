@@ -27,7 +27,7 @@ class MainWindow{
     {
         this.#settingButton = document.createElement("DIV");
         this.#settingButton.classList.add("game_button");
-        this.#settingButton.innerText = "*";
+        this.#settingButton.innerText = "#";
         this.#mainGrid.appendChild(this.#settingButton);
     }
 }
