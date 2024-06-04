@@ -31,3 +31,4 @@ class MainWindow{
         this.#mainGrid.appendChild(this.#settingButton);
     }
 }
+
