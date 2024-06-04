@@ -20,7 +20,7 @@ class MainWindow{
     {
         this.#header = document.createElement("DIV");
         this.#header.classList.add("header");
-        this.#header.innerText = `Привет, ${window.Telegram.WebApp.user.username}!`;
+        this.#header.innerText = `Привет, ${window.Telegram.WebApp.initDataUnsafe.user.username}!`;
         this.#mainGrid.appendChild(this.#header);
     }
     #settingButtonInit()
