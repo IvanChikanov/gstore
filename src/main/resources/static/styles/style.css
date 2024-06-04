@@ -7,3 +7,16 @@ body{
     border-radius: .4rem;
     box-shadow: 3px 3px 7px var(--tg-theme-section-bg-color);
 }
+.main{
+    display: grid;
+    grid-template-rows: 1fr 15fr;
+    grid-template-columns: repeat(4, 1fr);
+}
+.header{
+    color: var(--tg-theme-secondary-bg-color);
+    grid-column-start: 1;
+    grid-column-end: 4;
+    grid-row-start: 1;
+    grid-row-start: 2;
+    font-size: 1rem;
+}
