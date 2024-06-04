@@ -15,7 +15,7 @@ class Application
         try
         {
             let response = await Sender.request("hello", "main");
-            childos.innerText = "Hello, " + this.tg.initDataUnsafe().user.username + "!" + await response.text();
+            childos.innerText = "Hello, " + this.tg.initDataUnsafe.user.username + "!" + await response.text();
         
         }
         catch(ex)
