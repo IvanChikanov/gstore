@@ -3,7 +3,7 @@ class Sender
     static #apiPath = "/inside"
     static async request(body, path = "")
     {
-        let request = await fetch(`${this.#apiPath}/${path}`,
+        let response = await fetch(`${this.#apiPath}/${path}`,
             {
                 method: "POST",
                 headers: 
@@ -14,6 +14,6 @@ class Sender
                 body: body
             }
         );
-        return await request.text();
+        return response;
     }
 }
