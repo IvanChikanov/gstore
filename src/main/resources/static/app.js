@@ -5,6 +5,7 @@ class Application
     {
         let response = Sender.request("hello", "main");
         this.tg = = window.Telegram.WebApp;
+        this.rg.ready();
         this.tg.expand();
     }
 }
