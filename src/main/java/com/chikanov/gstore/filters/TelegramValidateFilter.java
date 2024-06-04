@@ -30,16 +30,9 @@ public class TelegramValidateFilter implements Filter {
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)
             throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
-        System.out.println(request.getHeader("Authorization"));
-        boolean ok = true;
-        boolean post = request.getMethod().equals("POST");
-        if(post)
-        {
-            requestWrapper = new TelegramValidatorHttpRequestWrapper(request);
-            ok = validate(requestWrapper.getValidData());
-        }
+        boolean ok = validate(request.getHeader("Authorization"));
         if(ok)
-            filterChain.doFilter(post ? requestWrapper:request, servletResponse);
+            filterChain.doFilter(servletRequest, servletResponse);
         else{
             HttpServletResponse response = (HttpServletResponse) servletResponse;
             response.setStatus(401);
@@ -67,7 +60,7 @@ public class TelegramValidateFilter implements Filter {
             byte[] data = getHash(ready.getBytes(), token);
             return getHex(data).equals(hash);
         }
-        catch (NoSuchAlgorithmException| InvalidKeyException ex)
+        catch (Exception ex)
         {
             return false;
         }
