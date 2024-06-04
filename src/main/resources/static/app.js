@@ -5,7 +5,7 @@ class Application
         let response = Sender.request("hello", "main");
         if(response.status == 401)
         {
-            location = "https://t.me/Cooperation_chat_minigames_bot";
+            document.location = "https://t.me/Cooperation_chat_minigames_bot";
         }
     }
 }
