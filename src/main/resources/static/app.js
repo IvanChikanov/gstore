@@ -6,6 +6,7 @@ class Application
         this.tg = window.Telegram.WebApp;
         this.tg.ready();
         this.tg.expand();
+        this.startApp();
     
     }
     async startApp()
