@@ -12,6 +12,4 @@ class Application
         let response = Sender.request("hello", "main");
     }
 }
-window.onload = ()=>{
-    new Application();
-}
+new Application();
