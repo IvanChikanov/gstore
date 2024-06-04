@@ -16,4 +16,3 @@ class Application
         document.body.appendChild(childos);
     }
 }
-new Application();

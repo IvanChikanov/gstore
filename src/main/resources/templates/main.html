@@ -6,8 +6,13 @@
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <script src="/lib.js"></script>
 </head>
-<body style="background: var(--tg-theme-bg-color), color: var(--tg-theme-text-color);">
+<body style="background: var(--tg-theme-bg-color); color: var(--tg-theme-text-color)">
 
 </body>
 <script src="/app.js"></script>
+<script>
+    window.addEventlistener("load", ()=>{
+    new Application();
+});
+</script>
 </html>
