@@ -3,6 +3,7 @@ class Sender
     static #apiPath = "/inside"
     static async request(body, path = "")
     {
+    try{
         let response = await fetch(`${this.#apiPath}/${path}`,
             {
                 method: "POST",
@@ -15,5 +16,10 @@ class Sender
             }
         );
         return response;
+        }
+        catch(exeption)
+        {
+            document.body.innerHTML = `<h3>${exeption}</h3>`
+        }
     }
 }
