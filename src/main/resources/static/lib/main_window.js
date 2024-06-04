@@ -14,7 +14,7 @@ class MainWindow{
     {
         this.#mainGrid = document.createElement("DIV");
         this.#mainGrid.classList.add("main");
-        this.#body.appendChild(div);
+        this.#body.appendChild(this.#mainGrid);
     }
     #createHeader()
     {
