@@ -16,7 +16,8 @@ class Sender
         );
         if(response.status == 401)
         {
-            document.location = "https://t.me/Cooperation_chat_minigames_bot";
+            //document.location = "https://t.me/Cooperation_chat_minigames_bot";
+            return response;
         }
         else
         {
