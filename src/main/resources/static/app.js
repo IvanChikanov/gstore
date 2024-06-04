@@ -2,7 +2,7 @@ class Application
 {
     constructor()
     {
-        Sender.request("hello");
+        Sender.request("hello", "/main");
     }
 }
 let app = new Application();

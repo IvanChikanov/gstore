@@ -3,7 +3,6 @@ package com.chikanov.gstore.controller;
 import com.chikanov.gstore.services.ReadJsonService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.stereotype.Controller;
