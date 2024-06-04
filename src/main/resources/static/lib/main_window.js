@@ -8,7 +8,7 @@ class MainWindow{
         this.#body = document.body;
         this.#createMainGrid();
         this.#createHeader();
-        this.#settingButton();
+        this.#settingButtonInit();
     }
     #createMainGrid()
     {
@@ -23,7 +23,7 @@ class MainWindow{
         this.#header.innerText = `Привет, ${window.Telegram.WebApp.user.username}!`;
         this.#mainGrid.appendChild(this.#header);
     }
-    #settingButton()
+    #settingButtonInit()
     {
         this.#settingButton = document.createElement("DIV");
         this.#settingButton.classList.add("game_button");
