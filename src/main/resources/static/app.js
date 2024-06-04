@@ -7,6 +7,9 @@ class Application
         this.tg = = window.Telegram.WebApp;
         this.rg.ready();
         this.tg.expand();
+        let childos = document.createElement("h1");
+        childos.innerText = "Hello, " this.tg.initDataUnsafe().user.username; + "!";
+        document.body.appendChild(childos);
     }
 }
 let app = new Application();
