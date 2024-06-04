@@ -3,7 +3,6 @@ class Sender
     static #apiPath = "/inside"
     static async request(body, path = "")
     {
-    try{
         let response = await fetch(`${this.#apiPath}/${path}`,
             {
                 method: "POST",
@@ -15,11 +14,13 @@ class Sender
                 body: body
             }
         );
-        return response;
-        }
-        catch(exeption)
+        if(response.status == 401)
         {
-            document.body.innerHTML = `<h3>${exeption}</h3>`
+            document.location = "https://t.me/Cooperation_chat_minigames_bot";
+        }
+        else
+        {
+            return response;
         }
     }
 }
