@@ -11,9 +11,19 @@ class Application
     }
     async startApp()
     {
-        let response = await Sender.request("hello", "main");
         let childos = document.createElement("h1");
-        childos.innerText = "Hello, " + this.tg.initDataUnsafe().user.username + "!" + await response.text();
-        document.body.appendChild(childos);
+        try
+        {
+            let response = await Sender.request("hello", "main");
+            childos.innerText = "Hello, " + this.tg.initDataUnsafe().user.username + "!" + await response.text();
+        
+        }
+        catch(ex)
+        {
+            childos.innerText = ex;
+        }
+        finally{
+            document.body.appendChild(childos);
+        }
     }
 }
