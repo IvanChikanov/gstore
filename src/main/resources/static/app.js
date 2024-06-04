@@ -6,10 +6,14 @@ class Application
         this.tg = window.Telegram.WebApp;
         this.tg.ready();
         this.tg.expand();
+    
+    }
+    async startApp()
+    {
+        let response = await Sender.request("hello", "main");
         let childos = document.createElement("h1");
-        childos.innerText = "Hello, " + this.tg.initDataUnsafe().user.username + "!";
+        childos.innerText = "Hello, " + this.tg.initDataUnsafe().user.username + "!" + await response.text();
         document.body.appendChild(childos);
-        let response = Sender.request("hello", "main");
     }
 }
 new Application();
