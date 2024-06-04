@@ -8,7 +8,7 @@ class Sender
                 method: "POST",
                 headers: 
                 {
-                    "Authorization": window.Telegram.WebApp.initData(), 
+                    "Authorization": window.Telegram.WebApp.initData,
                     "Content-Type": "application/json"
                 },
                 body: body
