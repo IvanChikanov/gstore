@@ -15,8 +15,19 @@ body{
 }
 .main{
     display: grid;
+    grid-template-areas: "panel"
+                         "game_window"
     grid-template-rows: 1fr 15fr;
-    grid-template-columns: repeat(4, 1fr);
+}
+.user_panel
+{
+    grid-area: panel;
+    background: var(--tg-theme-section-header-text-color);
+}
+.game_window
+{
+    grid-area: game_window;
+    background: var(--tg-theme-secondary-bg-color);
 }
 .header{
     color: var(--tg-theme-secondary-bg-color);

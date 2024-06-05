@@ -11,12 +11,10 @@ class Application
     }
     async startApp()
     {
-        //let childos = document.createElement("h1");
         try
         {
             this.window = new MainWindow();
             let response = await Sender.request("hello", "main");
-            //childos.innerText = "Hello, " + this.tg.initDataUnsafe.user.username + "!" + await response.text();
         }
         catch(ex)
         {

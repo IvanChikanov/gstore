@@ -12,14 +12,12 @@ class MainWindow{
     }
     #createMainGrid()
     {
-        this.#mainGrid = document.createElement("DIV");
-        this.#mainGrid.classList.add("main");
+        this.#mainGrid = Elem.create("DIV", "main")
         this.#body.appendChild(this.#mainGrid);
     }
     #createHeader()
     {
-        this.#header = document.createElement("DIV");
-        this.#header.classList.add("header");
+        this.#header = Elem.create("DIV", "header");
         this.#header.innerText = `Привет, ${window.Telegram.WebApp.initDataUnsafe.user.username}!`;
         this.#mainGrid.appendChild(this.#header);
     }
