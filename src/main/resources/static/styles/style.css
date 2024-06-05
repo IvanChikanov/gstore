@@ -29,11 +29,3 @@ body{
     grid-area: game_window;
     background: var(--tg-theme-secondary-bg-color);
 }
-.header{
-    color: var(--tg-theme-secondary-bg-color);
-    grid-column-start: 1;
-    grid-column-end: 4;
-    grid-row-start: 1;
-    grid-row-start: 2;
-    font-size: 1rem;
-}
