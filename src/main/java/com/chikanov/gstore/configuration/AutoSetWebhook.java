@@ -41,7 +41,7 @@ public class AutoSetWebhook {
             var r = rt.exchange(URL + TOKEN + SET_WEBHOOK, HttpMethod.POST, entity, String.class);
             if(r.getStatusCode().equals(HttpStatus.OK)) {
                 var getMe = rt.exchange(URL + TOKEN + GET_ME, HttpMethod.GET, HttpEntity.EMPTY, String.class);
-                BOT = getMe.getBody();
+                BOT = om.readTree(getMe.getBody()).get("result").asText();
                 System.out.println(BOT);
             }
         }catch (JsonProcessingException ex){
