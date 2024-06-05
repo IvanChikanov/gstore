@@ -1,6 +1,8 @@
 package com.chikanov.gstore.services;
 
+import com.chikanov.gstore.configuration.AutoSetWebhook;
 import com.chikanov.gstore.enums.TelegramUpdates;
+import com.chikanov.gstore.repositories.ChatRoleRepository;
 import com.chikanov.gstore.services.messagehandling.Message;
 import com.chikanov.gstore.services.messagehandling.Chat;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -19,6 +21,8 @@ import java.util.Optional;
 public class ReadJsonService {
     @Autowired
     SendMessageService sendMessageService;
+    @Autowired
+    ChatRoleRepository chatRoleRepository;
 
     @Value("${token.value}")
     private String token;
@@ -36,8 +40,19 @@ public class ReadJsonService {
             switch (upd)
             {
                 case MESSAGE -> new Message(json, sendMessageService);
-                case MY_CHAT_MEMBER -> new Chat(json, sendMessageService);
+                case MY_CHAT_MEMBER -> chat(json);
             }
         });
+    }
+    private void message(JsonNode jsonNode){}
+    private void chat(JsonNode jsonNode){
+        JsonNode json = jsonNode.get("my_chat_member");
+        if(json.get("new_chat_member").get("id").asText().equals(AutoSetWebhook.getBOT()))
+        {
+            if(json.get("status").asText().equals("member"))
+            {
+
+            }
+        }
     }
 }

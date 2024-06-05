@@ -20,6 +20,7 @@ import java.util.stream.Collectors;
 
 @Component
 public class AutoSetWebhook {
+    @Getter
     private static String BOT;
     @Value("${token.value}")
     private String TOKEN;

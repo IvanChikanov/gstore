@@ -1,5 +1,6 @@
 package com.chikanov.gstore.services.messagehandling;
 
+import com.chikanov.gstore.configuration.AutoSetWebhook;
 import com.chikanov.gstore.services.SendMessageService;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -9,9 +10,15 @@ public class Chat extends AbstractMessage{
     {
         super(sendMessageService);
         this.json = json;
-        ObjectMapper om = new ObjectMapper();
+    }
+    private void handling()
+    {
         try {
-            System.out.println(om.writeValueAsString(json));
+            ObjectMapper om = new ObjectMapper();
+            if(json.get("my_chat_member").get("new_chat_member").get("id").asText().equals(AutoSetWebhook.getBOT()))
+            {
+
+            }
         }
         catch (Exception ex) {
             ex.printStackTrace();
