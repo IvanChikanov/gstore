@@ -36,7 +36,7 @@ public class ReadJsonService {
             switch (upd)
             {
                 case MESSAGE -> new Message(json, sendMessageService);
-                case MY_CHAT_MEMBER -> new Chat();
+                case MY_CHAT_MEMBER -> new Chat(json, sendMessageService);
             }
         });
     }
