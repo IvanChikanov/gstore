@@ -2,9 +2,6 @@ package com.chikanov.gstore.entity;
 
 import com.chikanov.gstore.enums.Role;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Entity
 @IdClass(ChatRoleKey.class)
