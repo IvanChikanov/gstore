@@ -9,10 +9,7 @@ import lombok.Setter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.MediaType;
+import org.springframework.http.*;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
@@ -22,10 +19,12 @@ import java.util.stream.Collectors;
 
 @Component
 public class AutoSetWebhook {
+    private static String BOT;
     @Value("${token.value}")
     private String TOKEN;
     private final String URL = "https://api.telegram.org/bot";
     private final String SET_WEBHOOK = "/setWebhook";
+    private final String GET_ME = "/getMe";
     private final Webhook webhook;
     public AutoSetWebhook()
     {
@@ -40,7 +39,11 @@ public class AutoSetWebhook {
             ObjectMapper om = new ObjectMapper();
             HttpEntity<String> entity = new HttpEntity<>(om.writeValueAsString(webhook), headers);
             var r = rt.exchange(URL + TOKEN + SET_WEBHOOK, HttpMethod.POST, entity, String.class);
-            System.out.println(r.getBody());
+            if(r.getStatusCode().equals(HttpStatus.OK)) {
+                var getMe = rt.exchange(URL + TOKEN + GET_ME, HttpMethod.GET, HttpEntity.EMPTY, String.class);
+                BOT = getMe.getBody();
+                System.out.println(BOT);
+            }
         }catch (JsonProcessingException ex){
             ex.printStackTrace();
         }
