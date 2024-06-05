@@ -2,6 +2,7 @@ package com.chikanov.gstore.configuration;
 
 import com.chikanov.gstore.enums.TelegramUpdates;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import lombok.Getter;
@@ -41,8 +42,10 @@ public class AutoSetWebhook {
             var r = rt.exchange(URL + TOKEN + SET_WEBHOOK, HttpMethod.POST, entity, String.class);
             if(r.getStatusCode().equals(HttpStatus.OK)) {
                 var getMe = rt.exchange(URL + TOKEN + GET_ME, HttpMethod.GET, HttpEntity.EMPTY, String.class);
-                BOT = om.readTree(getMe.getBody()).get("result").asText();
+                JsonNode json = om.readTree(getMe.getBody());
+                BOT = json.get("result").asText();
                 System.out.println(BOT);
+                System.out.println(om.writeValueAsString(json));
             }
         }catch (JsonProcessingException ex){
             ex.printStackTrace();
