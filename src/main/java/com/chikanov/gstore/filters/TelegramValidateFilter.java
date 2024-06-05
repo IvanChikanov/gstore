@@ -40,6 +40,7 @@ public class TelegramValidateFilter implements Filter {
     }
     private boolean validate(String auth){
         try {
+            System.out.println(auth);
             String decoded = URLDecoder.decode(auth, StandardCharsets.UTF_8);
             String[] splitted = decoded.split("&");
             String hash = "";
