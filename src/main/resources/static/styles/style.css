@@ -16,7 +16,8 @@ body{
 .main{
     display: grid;
     grid-template-areas: "panel"
-                         "game_window"
+                         "game_window";
+                         
     grid-template-rows: 1fr 15fr;
 }
 .user_panel
