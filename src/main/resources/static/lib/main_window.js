@@ -8,7 +8,6 @@ class MainWindow{
         this.#body = document.body;
         this.#createMainGrid();
         this.#createHeader();
-        this.#settingButtonInit();
     }
     #createMainGrid()
     {
@@ -17,16 +16,9 @@ class MainWindow{
     }
     #createHeader()
     {
-        this.#header = Elem.create("DIV", "header");
+        this.#header = Elem.create("DIV", "user_panel");
         this.#header.innerText = `Привет, ${window.Telegram.WebApp.initDataUnsafe.user.username}!`;
         this.#mainGrid.appendChild(this.#header);
-    }
-    #settingButtonInit()
-    {
-        this.#settingButton = document.createElement("DIV");
-        this.#settingButton.classList.add("game_button");
-        this.#settingButton.innerText = "#";
-        this.#mainGrid.appendChild(this.#settingButton);
     }
 }
 
