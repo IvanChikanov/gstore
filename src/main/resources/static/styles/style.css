@@ -19,6 +19,7 @@ body{
                          "game_window";
                          
     grid-template-rows: 1fr 15fr;
+    height: var(--tg-viewport-stable-height);
 }
 .user_panel
 {
