@@ -13,7 +13,7 @@ public class ChatEntity{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private long chat_id;
+    private Long chat_id;
 
     private String name;
 

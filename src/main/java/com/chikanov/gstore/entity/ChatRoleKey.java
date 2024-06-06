@@ -6,6 +6,6 @@ import java.io.Serializable;
 
 @Data
 public class ChatRoleKey implements Serializable {
-    private long user;
-    private long chat;
+    private Long user;
+    private Long chat;
 }
