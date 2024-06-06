@@ -8,6 +8,7 @@ import com.chikanov.gstore.repositories.UserRepository;
 import com.fasterxml.jackson.databind.JsonNode;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -19,6 +20,7 @@ public class UserAndChatsService {
     private final ChatRoleRepository chatRoleRepository;
     private final UserRepository userRepository;
 
+    @Transactional
     public User loadUser(String id)
     {
         return userRepository.findById(id).orElse(createUser(id));
