@@ -1,7 +1,10 @@
 package com.chikanov.gstore.services;
 
 import com.chikanov.gstore.configuration.AutoSetWebhook;
+import com.chikanov.gstore.entity.ChatEntity;
+import com.chikanov.gstore.entity.ChatRoles;
 import com.chikanov.gstore.entity.User;
+import com.chikanov.gstore.enums.Role;
 import com.chikanov.gstore.enums.TelegramUpdates;
 import com.chikanov.gstore.repositories.ChatRoleRepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -55,8 +58,13 @@ public class ReadJsonService {
         {
             if(json.get("status").asText().equals("member"))
             {
-                Optional<User> userOptional = userAndChatsService.loadUser(jsonNode.get("from").get("id").asText());
-                User user = userOptional.orElse(userAndChatsService.createUser(jsonNode.get("from").get("id").asText()));
+                User user = userAndChatsService.loadUser(json.get("from").get("id").asText());
+                ChatEntity chat = userAndChatsService.createChat(json.get("chat"));
+                ChatRoles chatRoles = new ChatRoles();
+                chatRoles.setChat(chat);
+                chatRoles.setUser(user);
+                chatRoles.setRole(Role.ADMIN);
+                userAndChatsService.saveChatRole(chatRoles);
                 sendMessageService.send(json.get("message").get("chat").get("id").asText(),
                         "Желаешь сыграть в игру ?\nДавай братишка, жми кнопку Играть!");
             }

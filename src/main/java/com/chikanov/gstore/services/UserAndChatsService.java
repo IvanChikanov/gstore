@@ -1,8 +1,11 @@
 package com.chikanov.gstore.services;
 
+import com.chikanov.gstore.entity.ChatEntity;
+import com.chikanov.gstore.entity.ChatRoles;
 import com.chikanov.gstore.entity.User;
 import com.chikanov.gstore.repositories.ChatRoleRepository;
 import com.chikanov.gstore.repositories.UserRepository;
+import com.fasterxml.jackson.databind.JsonNode;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -16,9 +19,9 @@ public class UserAndChatsService {
     private final ChatRoleRepository chatRoleRepository;
     private final UserRepository userRepository;
 
-    public Optional<User> loadUser(String id)
+    public User loadUser(String id)
     {
-        return userRepository.findByHashedId(id);
+        return userRepository.findByHashedId(id).orElse(createUser(id));
     }
     public User createUser(String id)
     {
@@ -26,5 +29,16 @@ public class UserAndChatsService {
         user.setPremium(false);
         user.setHashedId(id);
         return user;
+    }
+    public ChatEntity createChat(JsonNode jsonChat)
+    {
+        ChatEntity chat = new ChatEntity();
+        chat.setChat_id(jsonChat.get("id").asLong());
+        chat.setName(jsonChat.get("title").asText());
+        return chat;
+    }
+    public void saveChatRole(ChatRoles chatRoles)
+    {
+        chatRoleRepository.save(chatRoles);
     }
 }

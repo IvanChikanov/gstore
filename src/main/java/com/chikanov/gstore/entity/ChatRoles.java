@@ -2,8 +2,10 @@ package com.chikanov.gstore.entity;
 
 import com.chikanov.gstore.enums.Role;
 import jakarta.persistence.*;
+import lombok.Data;
 
 @Entity
+@Data
 @IdClass(ChatRoleKey.class)
 public class ChatRoles {
 
