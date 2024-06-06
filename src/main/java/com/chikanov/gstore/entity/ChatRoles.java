@@ -13,7 +13,7 @@ public class ChatRoles {
     private User user;
 
     @Id
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "chat_id")
     private ChatEntity chat;
 

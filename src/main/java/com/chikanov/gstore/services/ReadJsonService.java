@@ -1,11 +1,13 @@
 package com.chikanov.gstore.services;
 
 import com.chikanov.gstore.configuration.AutoSetWebhook;
+import com.chikanov.gstore.entity.User;
 import com.chikanov.gstore.enums.TelegramUpdates;
 import com.chikanov.gstore.repositories.ChatRoleRepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -14,11 +16,11 @@ import java.util.Arrays;
 import java.util.Optional;
 
 @Service
+@AllArgsConstructor
 public class ReadJsonService {
-    @Autowired
-    SendMessageService sendMessageService;
-    @Autowired
-    ChatRoleRepository chatRoleRepository;
+
+    private final SendMessageService sendMessageService;
+    private final UserAndChatsService userAndChatsService;
 
     @Value("${token.value}")
     private String token;
@@ -53,7 +55,10 @@ public class ReadJsonService {
         {
             if(json.get("status").asText().equals("member"))
             {
-
+                Optional<User> userOptional = userAndChatsService.loadUser(jsonNode.get("from").get("id").asText());
+                User user = userOptional.orElse(userAndChatsService.createUser(jsonNode.get("from").get("id").asText()));
+                sendMessageService.send(json.get("message").get("chat").get("id").asText(),
+                        "Желаешь сыграть в игру ?\nДавай братишка, жми кнопку Играть!");
             }
         }
     }
