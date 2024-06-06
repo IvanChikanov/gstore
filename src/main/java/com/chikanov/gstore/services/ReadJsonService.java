@@ -3,8 +3,6 @@ package com.chikanov.gstore.services;
 import com.chikanov.gstore.configuration.AutoSetWebhook;
 import com.chikanov.gstore.enums.TelegramUpdates;
 import com.chikanov.gstore.repositories.ChatRoleRepository;
-import com.chikanov.gstore.services.messagehandling.Message;
-import com.chikanov.gstore.services.messagehandling.Chat;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -37,12 +35,18 @@ public class ReadJsonService {
         update.ifPresent(upd->{
             switch (upd)
             {
-                case MESSAGE -> new Message(json, sendMessageService);
+                case MESSAGE -> message(json);
                 case MY_CHAT_MEMBER -> chat(json);
             }
         });
     }
-    private void message(JsonNode jsonNode){}
+    private void message(JsonNode json){
+        if(json.get("message").has("text") && json.get("message").get("text").asText().contains("/play"))
+        {
+            sendMessageService.send(json.get("message").get("chat").get("id").asText(),
+                    "Желаешь сыграть в игру ?\nДавай братишка, жми кнопку Играть!");
+        }
+    }
     private void chat(JsonNode jsonNode){
         JsonNode json = jsonNode.get("my_chat_member");
         if(json.get("new_chat_member").get("id").asText().equals(AutoSetWebhook.getBOT()))
