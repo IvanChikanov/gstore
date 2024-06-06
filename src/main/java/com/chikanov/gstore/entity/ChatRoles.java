@@ -10,7 +10,7 @@ import lombok.Data;
 public class ChatRoles {
 
     @Id
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "id")
     private User user;
 
