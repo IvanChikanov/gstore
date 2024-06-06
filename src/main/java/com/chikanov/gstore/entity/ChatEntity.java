@@ -10,9 +10,6 @@ import java.util.Set;
 public class ChatEntity{
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
     private Long chat_id;
 
     private String name;
