@@ -27,7 +27,7 @@ public class UserAndChatsService {
     {
         User user = new User();
         user.setPremium(false);
-        user.setHashedId(id);
+        user.setId(id);
         return user;
     }
     public ChatEntity createChat(JsonNode jsonChat)
