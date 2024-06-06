@@ -21,7 +21,7 @@ public class UserAndChatsService {
 
     public User loadUser(String id)
     {
-        return userRepository.findByHashedId(id).orElse(createUser(id));
+        return userRepository.findById(id).orElse(createUser(id));
     }
     public User createUser(String id)
     {
