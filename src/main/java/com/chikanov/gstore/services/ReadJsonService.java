@@ -66,7 +66,7 @@ public class ReadJsonService {
                 chatRoles.setUser(user);
                 chatRoles.setRole(Role.ADMIN);
                 userAndChatsService.saveChatRole(chatRoles);
-                sendMessageService.send(json.get("message").get("chat").get("id").asText(),
+                sendMessageService.send(json.get("chat").get("id").asText(),
                         "Желаешь сыграть в игру ?\nДавай братишка, жми кнопку Играть!");
             }
         }
