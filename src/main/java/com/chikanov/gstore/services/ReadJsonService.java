@@ -57,9 +57,9 @@ public class ReadJsonService {
         JsonNode json = jsonNode.get("my_chat_member");
         if(json.get("new_chat_member").get("user").get("id").asText().equals(AutoSetWebhook.getBOT()))
         {
-            if(json.get("status").asText().equals("member"))
+            if(json.get("new_chat_member").get("status").asText().equals("member"))
             {
-                User user = userAndChatsService.loadUser(json.get("new_chat_member").get("from").get("id").asText());
+                User user = userAndChatsService.loadUser(json.get("from").get("id").asText());
                 ChatEntity chat = userAndChatsService.createChat(json.get("chat"));
                 ChatRoles chatRoles = new ChatRoles();
                 chatRoles.setChat(chat);
