@@ -24,6 +24,7 @@ public class StartGameController {
         }
         catch (Exception ex)
         {
+            ex.printStackTrace();
             return ResponseEntity.status(HttpStatus.OK).build();
         }
         return ResponseEntity.status(HttpStatus.OK).build();
