@@ -16,6 +16,6 @@ public class User{
 
     private boolean isPremium;
 
-    @OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.LAZY)
     private Set<ChatRoles> chatRoles = new HashSet<>();
 }

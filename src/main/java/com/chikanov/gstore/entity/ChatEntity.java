@@ -14,6 +14,6 @@ public class ChatEntity{
 
     private String name;
 
-    @OneToMany(cascade = CascadeType.PERSIST)
+    @OneToMany
     private Set<ChatRoles> chatRoles = new HashSet<>();
 }
