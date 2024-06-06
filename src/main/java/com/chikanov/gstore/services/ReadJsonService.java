@@ -2,6 +2,7 @@ package com.chikanov.gstore.services;
 
 import com.chikanov.gstore.configuration.AutoSetWebhook;
 import com.chikanov.gstore.entity.ChatEntity;
+import com.chikanov.gstore.entity.ChatRoleKey;
 import com.chikanov.gstore.entity.ChatRoles;
 import com.chikanov.gstore.entity.User;
 import com.chikanov.gstore.enums.Role;
@@ -57,7 +58,8 @@ public class ReadJsonService {
         JsonNode json = jsonNode.get("my_chat_member");
         if(json.get("new_chat_member").get("user").get("id").asText().equals(AutoSetWebhook.getBOT()))
         {
-            if(json.get("new_chat_member").get("status").asText().equals("member"))
+            String status = json.get("new_chat_member").get("status").asText();
+            if(status.equals("member"))
             {
                 User user = userAndChatsService.loadUser(json.get("from").get("id").asText());
                 ChatEntity chat = userAndChatsService.createChat(json.get("chat"));
@@ -68,6 +70,13 @@ public class ReadJsonService {
                 userAndChatsService.saveChatRole(chatRoles);
                 sendMessageService.send(json.get("chat").get("id").asText(),
                         "Желаешь сыграть в игру ?\nДавай братишка, жми кнопку Играть!");
+            }
+            else
+            {
+                ChatRoleKey chatRoleKey = new ChatRoleKey();
+                chatRoleKey.setUser(json.get("from").get("id").asText());
+                chatRoleKey.setChat(json.get("chat").get("id").asLong());
+                userAndChatsService.deleteChatRole(chatRoleKey);
             }
         }
     }

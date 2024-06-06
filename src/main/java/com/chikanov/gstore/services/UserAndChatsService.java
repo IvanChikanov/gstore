@@ -1,6 +1,7 @@
 package com.chikanov.gstore.services;
 
 import com.chikanov.gstore.entity.ChatEntity;
+import com.chikanov.gstore.entity.ChatRoleKey;
 import com.chikanov.gstore.entity.ChatRoles;
 import com.chikanov.gstore.entity.User;
 import com.chikanov.gstore.repositories.ChatRoleRepository;
@@ -42,5 +43,9 @@ public class UserAndChatsService {
     public void saveChatRole(ChatRoles chatRoles)
     {
         chatRoleRepository.save(chatRoles);
+    }
+    public void deleteChatRole(ChatRoleKey chatRoleKey)
+    {
+        chatRoleRepository.deleteById(chatRoleKey);
     }
 }
