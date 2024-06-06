@@ -19,11 +19,12 @@ import java.util.Arrays;
 import java.util.Optional;
 
 @Service
-@AllArgsConstructor
 public class ReadJsonService {
 
-    private final SendMessageService sendMessageService;
-    private final UserAndChatsService userAndChatsService;
+    @Autowired
+    private SendMessageService sendMessageService;
+    @Autowired
+    private UserAndChatsService userAndChatsService;
 
     @Value("${token.value}")
     private String token;
