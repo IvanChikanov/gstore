@@ -21,18 +21,18 @@ public class UserAndChatsService {
 
     private final ChatRoleRepository chatRoleRepository;
     private final UserRepository userRepository;
-    private final PasswordEncoder passwordEncoder;
     private final TextEncryptor textEncryptor;
 
     public User loadUser(String id)
     {
-        return userRepository.findById(id).orElse(createUser(id));
+        String encrypt = textEncryptor.encrypt(id);
+        return userRepository.findById(encrypt).orElse(createUser(encrypt));
     }
     public User createUser(String id)
     {
         User user = new User();
         user.setPremium(false);
-        user.setId(textEncryptor.encrypt(id));
+        user.setId(id);
         return user;
     }
     public ChatEntity createChat(JsonNode jsonChat)
