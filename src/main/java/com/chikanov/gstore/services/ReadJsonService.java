@@ -7,13 +7,12 @@ import com.chikanov.gstore.entity.ChatRoles;
 import com.chikanov.gstore.entity.User;
 import com.chikanov.gstore.enums.Role;
 import com.chikanov.gstore.enums.TelegramUpdates;
-import com.chikanov.gstore.repositories.ChatRoleRepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
@@ -26,6 +25,7 @@ public class ReadJsonService {
     private SendMessageService sendMessageService;
     @Autowired
     private UserAndChatsService userAndChatsService;
+
 
     @Value("${token.value}")
     private String token;
