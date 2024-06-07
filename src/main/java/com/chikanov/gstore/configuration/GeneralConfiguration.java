@@ -49,9 +49,4 @@ public class GeneralConfiguration implements WebMvcConfigurer {
     {
         return new BCryptPasswordEncoder();
     }
-    @Bean
-    public TextEncryptor textEncryptor()
-    {
-        return Encryptors.text("coopgamesbot", "chikanov");
-    }
 }

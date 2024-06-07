@@ -8,6 +8,7 @@ import com.chikanov.gstore.repositories.ChatRoleRepository;
 import com.chikanov.gstore.repositories.UserRepository;
 import com.fasterxml.jackson.databind.JsonNode;
 import lombok.AllArgsConstructor;
+import org.springframework.security.crypto.encrypt.Encryptors;
 import org.springframework.security.crypto.encrypt.TextEncryptor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -21,11 +22,11 @@ public class UserAndChatsService {
 
     private final ChatRoleRepository chatRoleRepository;
     private final UserRepository userRepository;
-    private final TextEncryptor textEncryptor;
 
     public User loadUser(String id)
     {
-        String encrypt = textEncryptor.encrypt(id);
+        TextEncryptor te = Encryptors.text("coopgamesbot", "chikanov");
+        String encrypt = te.encrypt(id);
         return userRepository.findById(encrypt).orElse(createUser(encrypt));
     }
     public User createUser(String id)
