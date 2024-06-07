@@ -52,6 +52,6 @@ public class GeneralConfiguration implements WebMvcConfigurer {
     @Bean
     public TextEncryptor textEncryptor()
     {
-        return Encryptors.text("coop_games_bot", "chikanov");
+        return Encryptors.text("coopgamesbot", "chikanov");
     }
 }
