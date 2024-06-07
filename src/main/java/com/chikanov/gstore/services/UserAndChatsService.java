@@ -8,10 +8,9 @@ import com.chikanov.gstore.repositories.ChatRoleRepository;
 import com.chikanov.gstore.repositories.UserRepository;
 import com.fasterxml.jackson.databind.JsonNode;
 import lombok.AllArgsConstructor;
-import org.springframework.security.crypto.encrypt.Encryptors;
+import org.springframework.security.crypto.encrypt.TextEncryptor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -23,6 +22,7 @@ public class UserAndChatsService {
     private final ChatRoleRepository chatRoleRepository;
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final TextEncryptor textEncryptor;
 
     public User loadUser(String id)
     {
@@ -32,7 +32,7 @@ public class UserAndChatsService {
     {
         User user = new User();
         user.setPremium(false);
-        user.setId(id);
+        user.setId(textEncryptor.encrypt(id));
         return user;
     }
     public ChatEntity createChat(JsonNode jsonChat)
