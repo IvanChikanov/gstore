@@ -40,13 +40,13 @@ public class TelegramValidateFilter implements Filter {
     }
     private boolean validate(String auth){
         try {
-            System.out.println(auth);
             String decoded = URLDecoder.decode(auth, StandardCharsets.UTF_8);
             String[] splitted = decoded.split("&");
             String hash = "";
             SortedSet<String> others = new TreeSet<>();
             for(var s : splitted)
             {
+                System.out.println(s);
                 if(s.contains("hash"))
                 {
                     hash = s.split("=")[1];
