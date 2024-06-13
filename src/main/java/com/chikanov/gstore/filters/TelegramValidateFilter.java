@@ -47,6 +47,7 @@ public class TelegramValidateFilter implements Filter {
             SortedSet<String> others = new TreeSet<>();
             for(var s : splitted)
             {
+                System.out.println(s);
                 if(s.contains("hash"))
                 {
                     hash = s.split("=")[1];
