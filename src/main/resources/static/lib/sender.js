@@ -9,7 +9,7 @@ class Sender
                 headers: 
                 {
                     "Authorization": window.Telegram.WebApp.initData,
-                    "User-Chat": `${window.Telegram.WebApp.initDataUnsafe.chat.id}`,
+                    "User-Chat": `${window.Telegram.WebApp.initDataUnsafe.user.id}`,
                     "Content-Type": "application/json"
                 },
                 body: body
