@@ -88,8 +88,5 @@ public class TelegramValidateFilter implements Filter {
         }
         return sb.toString();
     }
-    private boolean checkDataEnable(String decoded, )
-    {
 
-    }
 }
