@@ -25,9 +25,7 @@ public class UserAndChatsService {
 
     public User loadUser(String id)
     {
-        TextEncryptor te = Encryptors.text("coopgamesbot", "chikanov");
-        String encrypt = te.encrypt(id);
-        return userRepository.findById(encrypt).orElse(createUser(encrypt));
+        return userRepository.findById(id).orElse(createUser(id));
     }
     public User createUser(String id)
     {
