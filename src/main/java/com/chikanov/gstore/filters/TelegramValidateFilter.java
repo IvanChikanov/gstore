@@ -30,6 +30,7 @@ public class TelegramValidateFilter implements Filter {
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)
             throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
+        System.out.println(request.getHeader("User-Chat"));
         boolean ok = validate(request.getHeader("Authorization"));
         if(ok)
             filterChain.doFilter(servletRequest, servletResponse);
@@ -46,7 +47,6 @@ public class TelegramValidateFilter implements Filter {
             SortedSet<String> others = new TreeSet<>();
             for(var s : splitted)
             {
-                System.out.println(s);
                 if(s.contains("hash"))
                 {
                     hash = s.split("=")[1];
@@ -87,5 +87,9 @@ public class TelegramValidateFilter implements Filter {
             sb.append(String.format("%02x", b));
         }
         return sb.toString();
+    }
+    private boolean checkDataEnable(String decoded, )
+    {
+
     }
 }
