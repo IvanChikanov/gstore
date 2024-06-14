@@ -10,5 +10,7 @@ import java.util.UUID;
 @Data
 public class Game {
     @Id
-    private UUID id;
+    private ChatRoleKey id;
+
+    private UUID externalId;
 }
