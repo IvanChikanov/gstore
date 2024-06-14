@@ -16,4 +16,7 @@ public class ChatEntity{
 
     @OneToMany
     private Set<ChatRoles> chatRoles = new HashSet<>();
+
+    @OneToMany(mappedBy = "id", fetch = FetchType.LAZY)
+    private Set<Game> games = new HashSet<>();
 }
