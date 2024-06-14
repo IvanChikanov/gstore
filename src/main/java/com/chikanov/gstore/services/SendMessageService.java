@@ -28,7 +28,7 @@ public class SendMessageService {
                     "{ \"inline_keyboard\": " +
                         "[[" +
                             "{\"text\": \"Играть!\", \"url\": " +
-                            "\"https://t.me/Cooperation_chat_minigames_bot/coop_g_store\"" +
+                            "\"https://t.me/Cooperation_chat_minigames_bot/coop_g_store?startapp=jojobings\"" +
                             "}" +
                         "]]" +
                     "}" +
