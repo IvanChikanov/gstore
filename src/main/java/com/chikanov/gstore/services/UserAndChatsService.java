@@ -49,4 +49,9 @@ public class UserAndChatsService {
     {
         chatRoleRepository.deleteById(chatRoleKey);
     }
+
+    public void connectUserToGame(String userGame)
+    {
+        String[] split = userGame.split("&");
+    }
 }

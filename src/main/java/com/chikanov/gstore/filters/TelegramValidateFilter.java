@@ -3,18 +3,14 @@ package com.chikanov.gstore.filters;
 import jakarta.servlet.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.apache.tomcat.util.digester.DocumentProperties;
-import org.springframework.beans.factory.annotation.Value;
 
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 import java.io.IOException;
 import java.net.URLDecoder;
-import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
-import java.util.Arrays;
 import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
@@ -30,7 +26,7 @@ public class TelegramValidateFilter implements Filter {
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)
             throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
-        System.out.println(request.getHeader("User-Chat"));
+        System.out.println(request.getHeader("User-Game"));
         boolean ok = validate(request.getHeader("Authorization"));
         if(ok)
             filterChain.doFilter(servletRequest, servletResponse);
@@ -47,7 +43,6 @@ public class TelegramValidateFilter implements Filter {
             SortedSet<String> others = new TreeSet<>();
             for(var s : splitted)
             {
-                System.out.println(s);
                 if(s.contains("hash"))
                 {
                     hash = s.split("=")[1];
