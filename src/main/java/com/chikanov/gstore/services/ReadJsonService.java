@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class ReadJsonService {
@@ -26,9 +27,6 @@ public class ReadJsonService {
     @Autowired
     private UserAndChatsService userAndChatsService;
 
-
-    @Value("${token.value}")
-    private String token;
 
     public void read(String jsonValue) throws JsonProcessingException {
         System.out.println(jsonValue);
@@ -50,7 +48,7 @@ public class ReadJsonService {
     private void message(JsonNode json){
         if(json.get("message").has("text") && json.get("message").get("text").asText().contains("/play"))
         {
-            sendMessageService.send(json.get("message").get("chat").get("id").asText(),
+            sendMessageService.send(json.get("message").get("chat").get("id").asLong(),
                     "Желаешь сыграть в игру ?\nДавай братишка, жми кнопку Играть!");
         }
     }
@@ -68,7 +66,7 @@ public class ReadJsonService {
                 chatRoles.setUser(user);
                 chatRoles.setRole(Role.ADMIN);
                 userAndChatsService.saveChatRole(chatRoles);
-                sendMessageService.send(json.get("chat").get("id").asText(),
+                sendMessageService.send(json.get("chat").get("id").asLong(),
                         "Желаешь сыграть в игру ?\nДавай братишка, жми кнопку Играть!");
             }
             else

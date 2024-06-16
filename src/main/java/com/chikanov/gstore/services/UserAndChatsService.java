@@ -1,19 +1,16 @@
 package com.chikanov.gstore.services;
 
-import com.chikanov.gstore.entity.ChatEntity;
-import com.chikanov.gstore.entity.ChatRoleKey;
-import com.chikanov.gstore.entity.ChatRoles;
-import com.chikanov.gstore.entity.User;
+import com.chikanov.gstore.entity.*;
+import com.chikanov.gstore.repositories.ChatRepository;
 import com.chikanov.gstore.repositories.ChatRoleRepository;
+import com.chikanov.gstore.repositories.GameRepository;
 import com.chikanov.gstore.repositories.UserRepository;
 import com.fasterxml.jackson.databind.JsonNode;
 import lombok.AllArgsConstructor;
-import org.springframework.security.crypto.encrypt.Encryptors;
-import org.springframework.security.crypto.encrypt.TextEncryptor;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
+import java.util.UUID;
 
 
 @Service
@@ -22,6 +19,8 @@ public class UserAndChatsService {
 
     private final ChatRoleRepository chatRoleRepository;
     private final UserRepository userRepository;
+    private final GameRepository gameRepository;
+    private final ChatRepository chatRepository;
 
     public User loadUser(String id)
     {
@@ -49,9 +48,28 @@ public class UserAndChatsService {
     {
         chatRoleRepository.deleteById(chatRoleKey);
     }
-
     public void connectUserToGame(String userGame)
     {
         String[] split = userGame.split("&");
+        Optional<Game> gameOptional = gameRepository.findById(UUID.fromString(split[1]));
+
+        if(gameOptional.isPresent())
+        {
+            try {
+                User user = loadUser(split[0]);
+                Game game = gameOptional.get();
+                ChatRoles chatRoles = chatRoleRepository.getReferenceById(new ChatRoleKey(user.getId(), game.getChatId().getChat_id()));
+
+            }
+            catch (Exception ex)
+            {
+                ex.printStackTrace();
+            }
+        }
+        else
+        {
+            throw new RuntimeException("Игра не существует!");
+        }
+
     }
 }
