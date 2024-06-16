@@ -17,9 +17,9 @@ public class GameService {
     public String createGame(ChatEntity chatId)
     {
         Game game = new Game();
-        game.setExternalId(UUID.randomUUID());
+        game.setId(UUID.randomUUID());
         game.setChatId(chatId);
         gameRepository.save(game);
-        return game.getExternalId().toString();
+        return game.getId().toString();
     }
 }
