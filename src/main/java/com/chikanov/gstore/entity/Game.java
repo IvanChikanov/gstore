@@ -14,7 +14,7 @@ import java.util.UUID;
 @Data
 public class Game {
     @Id
-    private UUID externalId;
+    private UUID id;
 
     @ManyToOne
     private ChatEntity chatId;
