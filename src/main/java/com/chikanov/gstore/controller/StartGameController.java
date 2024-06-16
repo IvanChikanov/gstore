@@ -36,8 +36,7 @@ public class StartGameController {
         return ResponseEntity.status(HttpStatus.OK).build();
     }
     @GetMapping("/miniapp")
-    public String getGame(@RequestHeader("User-Game") String userGame){
-        userAndChatsService.connectUserToGame(userGame);
+    public String getGame(){
         return "main";
     }
 
