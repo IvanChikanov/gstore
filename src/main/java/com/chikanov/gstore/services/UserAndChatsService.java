@@ -1,6 +1,7 @@
 package com.chikanov.gstore.services;
 
 import com.chikanov.gstore.entity.*;
+import com.chikanov.gstore.enums.Role;
 import com.chikanov.gstore.repositories.ChatRepository;
 import com.chikanov.gstore.repositories.ChatRoleRepository;
 import com.chikanov.gstore.repositories.GameRepository;
@@ -52,18 +53,20 @@ public class UserAndChatsService {
     {
         String[] split = userGame.split("&");
         Optional<Game> gameOptional = gameRepository.findById(UUID.fromString(split[1]));
-
         if(gameOptional.isPresent())
         {
-            try {
-                User user = loadUser(split[0]);
-                Game game = gameOptional.get();
-                ChatRoles chatRoles = chatRoleRepository.getReferenceById(new ChatRoleKey(user.getId(), game.getChatId().getChat_id()));
-
-            }
-            catch (Exception ex)
-            {
-                ex.printStackTrace();
+            User user = loadUser(split[0]);
+            Game game = gameOptional.get();
+            ChatRoleKey chatRolekey = new ChatRoleKey();
+            chatRolekey.setChat(game.getChatId().getChat_id());
+            chatRolekey.setUser(user.getId());
+            Optional<ChatRoles> chatRoles = chatRoleRepository.findById(chatRolekey);
+            if(chatRoles.isEmpty()){
+                ChatRoles chRo = new ChatRoles();
+                chRo.setRole(Role.USER);
+                chRo.setUser(user);
+                chRo.setChat(game.getChatId());
+                chatRoleRepository.save(chRo);
             }
         }
         else

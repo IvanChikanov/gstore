@@ -37,7 +37,7 @@ public class StartGameController {
     }
     @GetMapping("/miniapp")
     public String getGame(@RequestHeader("User-Game") String userGame){
-
+        userAndChatsService.connectUserToGame(userGame);
         return "main";
     }
 
