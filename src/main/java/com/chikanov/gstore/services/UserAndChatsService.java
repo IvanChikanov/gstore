@@ -7,6 +7,7 @@ import com.chikanov.gstore.repositories.ChatRoleRepository;
 import com.chikanov.gstore.repositories.GameRepository;
 import com.chikanov.gstore.repositories.UserRepository;
 import com.fasterxml.jackson.databind.JsonNode;
+import jakarta.persistence.Lob;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -27,6 +28,7 @@ public class UserAndChatsService {
     {
         return userRepository.findById(id).orElse(createUser(id));
     }
+    public ChatEntity loadChat(Long id){return chatRepository.findById(id).orElseThrow();}
     public User createUser(String id)
     {
         User user = new User();
@@ -57,15 +59,16 @@ public class UserAndChatsService {
         {
             User user = loadUser(split[0]);
             Game game = gameOptional.get();
+            ChatEntity chat = loadChat(game.getChatId().getChat_id());
             ChatRoleKey chatRolekey = new ChatRoleKey();
-            chatRolekey.setChat(game.getChatId().getChat_id());
+            chatRolekey.setChat(chat.getChat_id());
             chatRolekey.setUser(user.getId());
             Optional<ChatRoles> chatRoles = chatRoleRepository.findById(chatRolekey);
             if(chatRoles.isEmpty()){
                 ChatRoles chRo = new ChatRoles();
                 chRo.setRole(Role.USER);
                 chRo.setUser(user);
-                chRo.setChat(game.getChatId());
+                chRo.setChat(chat);
                 chatRoleRepository.save(chRo);
             }
         }
