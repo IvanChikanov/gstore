@@ -1,9 +1,6 @@
 package com.chikanov.gstore.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 import lombok.Data;
 
 import java.util.HashSet;
@@ -17,6 +14,7 @@ public class Game {
     private UUID id;
 
     @ManyToOne
+    @Column(name = "chat_id")
     private ChatEntity chatId;
 
     @OneToMany(mappedBy = "id")
