@@ -19,8 +19,6 @@ public class SendMessageService {
 
     @Autowired
     private GameService gameService;
-    @Autowired
-    private ChatRepository chatRepository;
 
     public void send(Long chatId, String text)
     {
@@ -38,7 +36,7 @@ public class SendMessageService {
                         "[[" +
                             "{\"text\": \"Играть!\", \"url\": " +
                             "\"https://t.me/Cooperation_chat_minigames_bot/coop_g_store?startapp=" +
-                                gameService.createGame(chatRepository.findById(chatId).orElseThrow()) + "\"" +
+                                gameService.createGame(chatId) + "\"" +
                             "}" +
                         "]]" +
                     "}" +

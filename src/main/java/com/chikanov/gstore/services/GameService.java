@@ -18,13 +18,13 @@ public class GameService {
     @Autowired
     private ChatRepository chatRepository;
 
-    public String createGame(ChatEntity chatId)
+    public String createGame(Long chatId)
     {
         Game game = new Game();
         game.setId(UUID.randomUUID());
-        game.setChatId(chatId);
-        chatId.getGames().add(game);
-        chatRepository.save(chatId);
+        ChatEntity chat = chatRepository.findById(chatId).orElseThrow();
+        chat.getGames().add(game);
+        chatRepository.save(chat);
         return game.getId().toString();
     }
 }
