@@ -1,7 +1,7 @@
 package com.chikanov.gstore.enums;
 
 public enum TelegramUpdates {
-    MESSAGE("message"),
+    /*MESSAGE("message"),*/
     INLINE_QUERY("inline_query"),
     CHOSEN_INLINE_RESULT("chosen_inline_result"),
     CALLBACK_QUERY("callback_query"),

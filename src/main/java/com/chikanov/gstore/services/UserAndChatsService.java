@@ -40,7 +40,13 @@ public class UserAndChatsService {
     {
         ChatEntity chat = new ChatEntity();
         chat.setChat_id(jsonChat.get("id").asLong());
-        chat.setName(jsonChat.get("title").asText());
+        if(jsonChat.get("type").asText().equals("private")) {
+            chat.setName("private");
+        }
+        else
+        {
+            chat.setName(jsonChat.get("title").asText());
+        }
         return chat;
     }
     public void saveChatRole(ChatRoles chatRoles)
