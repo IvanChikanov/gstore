@@ -40,7 +40,6 @@ public class ReadJsonService {
         update.ifPresent(upd->{
             switch (upd)
             {
-                case MESSAGE -> message(json);
                 case MY_CHAT_MEMBER -> chat(json);
             }
         });
