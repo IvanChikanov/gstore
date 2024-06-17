@@ -14,7 +14,7 @@ public class Game {
     private UUID id;
 
     @ManyToOne
-    @Column(name = "chat_id")
+    @JoinColumn(name = "chat_id")
     private ChatEntity chatId;
 
     @OneToMany(mappedBy = "id")
