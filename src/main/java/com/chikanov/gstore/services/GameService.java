@@ -23,6 +23,7 @@ public class GameService {
         Game game = new Game();
         game.setId(UUID.randomUUID());
         ChatEntity chat = chatRepository.findById(chatId).orElseThrow();
+        game.setChatId(chat);
         chat.getGames().add(game);
         chatRepository.save(chat);
         return game.getId().toString();
