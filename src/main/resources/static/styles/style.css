@@ -33,3 +33,12 @@ body{
     grid-area: game_window;
     background: var(--tg-theme-secondary-bg-color);
 }
+.grid{
+    display: grid;
+}
+.fullWidth{
+    width: 100vw;
+}
+.fullHeight{
+    height:  var(--tg-viewport-stable-height);
+}
