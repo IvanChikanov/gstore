@@ -15,6 +15,7 @@ class Application{
         this.mainGrid.getHtml().innerText = name ? name : "ull";
         this.mainGrid.setStyles([gridRows("1fr 15fr")]);
         this.createPanel();
+        this.mainGrid.addChilds([this.panelGrid]);
     }
     private createPanel(){
         let per: number = Sizer.calcWidthPercernt(10);
