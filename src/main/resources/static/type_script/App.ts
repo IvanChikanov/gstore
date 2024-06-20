@@ -9,6 +9,8 @@ class Application{
     {
         this.mainGrid = new Grid();
         document.body.appendChild(this.mainGrid.getHtml());
+        let name = Telegram.WebApp.initDataUnsafe.user?.first_name;
+        this.mainGrid.getHtml().innerText = name ? name : "ull";
         console.log(Telegram.WebApp.initDataUnsafe.user?.usernames);
     }
 }
