@@ -6,6 +6,7 @@ class Application{
     constructor()
     {
         this.mainGrid = new Grid();
+        document.body.appendChild(this.mainGrid.getHtml());
     }
 }
 var app = new Application();

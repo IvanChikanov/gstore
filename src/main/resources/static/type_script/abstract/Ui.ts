@@ -7,6 +7,9 @@ abstract class Ui{
         this.html = document.createElement(elemetnt);
     }
 
+    public getHtml(){
+        return this.html;
+    }
 
     public addClasses(classNames: string[]): void{
         this.foreachString(classNames, (val: string)=>
