@@ -4,13 +4,12 @@ import { Sizer } from "./types/Sizer";
 
 class Application{
     private eventListener: any;
-    private mainGrid: Grid;
-    private panelGrid: Grid;
+    private mainGrid: Grid = new Grid();
+    private panelGrid: Grid = new Grid();
 
     constructor()
     {
         Sizer.init();
-        this.mainGrid = new Grid();
         document.body.appendChild(this.mainGrid.getHtml());
         let name = Telegram.WebApp.initDataUnsafe.user?.first_name;
         this.mainGrid.getHtml().innerText = name ? name : "ull";
@@ -18,7 +17,6 @@ class Application{
         this.createPanel();
     }
     private createPanel(){
-        this.panelGrid = new Grid();
         let per: number = Sizer.calcWidthPercernt(10);
         this.panelGrid.setStyles([gridCols(`${Sizer.width - per}px ${per}px`)]);
         let d = document.createElement("div");
