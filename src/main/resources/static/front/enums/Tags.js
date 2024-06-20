@@ -1,3 +1,5 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 var Tags;
 (function (Tags) {
     Tags["DIV"] = "DIV";
@@ -8,4 +10,4 @@ var Tags;
     Tags["P"] = "P";
     Tags["TABLE"] = "TABLE";
 })(Tags || (Tags = {}));
-export default Tags;
+exports.default = Tags;

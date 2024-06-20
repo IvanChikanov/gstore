@@ -1,3 +1,5 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 class Ui {
     constructor(elemetnt) {
         this.html = document.createElement(elemetnt);
@@ -15,4 +17,4 @@ class Ui {
         classNames.forEach(className => fc(className));
     }
 }
-export default Ui;
+exports.default = Ui;
