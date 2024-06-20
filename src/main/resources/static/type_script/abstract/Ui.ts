@@ -34,7 +34,7 @@ abstract class Ui{
 
     public setStyles(styles: string[])
     {
-        
+
     }
 
 }
