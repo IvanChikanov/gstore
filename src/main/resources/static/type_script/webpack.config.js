@@ -4,8 +4,8 @@ module.exports = {
     mode: "production",
     entry: "./App.ts",
     output: {
-        filename: "front.js",
-        path: path.resolve(__dirname, "../front")
+        filename: "webapp.js",
+        path: path.resolve(__dirname, "../")
     },
     resolve: {
         extensions: [".ts", ".js"]

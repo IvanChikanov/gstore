@@ -2,7 +2,7 @@
     "compilerOptions": {
         "target": "ES2020",
         "removeComments": true,
-        "outDir": "../front",
+        "outDir": "../",
         "module": "ES2020",
         "strict": true
     },
