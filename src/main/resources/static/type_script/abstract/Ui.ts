@@ -32,7 +32,7 @@ abstract class Ui{
         classNames.forEach(className => fc(className));
     }
 
-    public setStyles(styles: StyleFunc[])
+    public setStyles(styles: string[])
     {
         
     }

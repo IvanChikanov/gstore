@@ -1,0 +1,19 @@
+export class Sizer{
+    public static heigtht: number;
+    public static width: number;
+
+    private static rect: DOMRect
+    public static init(): void{
+        this.rect = document.documentElement.getBoundingClientRect();
+        this.heigtht = this.rect.height;
+        this.width = this.rect.width;
+        window.addEventListener("resize", this.init);
+    }
+
+    public static calcHeightPercernt(percent: number){
+        return this.heigtht / percent;
+    }
+    public static calcWidthPercernt(percent: number){
+        return this.width / percent;
+    }
+}
