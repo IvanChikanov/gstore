@@ -1,3 +1,5 @@
+import { StyleFunc } from "../storage/styles";
+
 abstract class Ui{
 
     protected html: HTMLElement;
@@ -28,6 +30,11 @@ abstract class Ui{
 
     private foreachString(classNames: string[], fc:(str: string)=> void ): void{
         classNames.forEach(className => fc(className));
+    }
+
+    public setStyles(styles: StyleFunc[])
+    {
+        
     }
 
 }
