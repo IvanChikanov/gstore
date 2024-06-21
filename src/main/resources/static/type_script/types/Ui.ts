@@ -55,7 +55,7 @@ export class Ui{
     private updateCss(): void
     {
         let cssText = "";
-        this.styles.forEach((k, v ) => {cssText += `${k}:${v}; `;});
+        this.styles.forEach((k, v ) => {cssText += `${k}:${v}; `;console.log(cssText)});
         this.html.style.cssText = cssText;
     }
 
