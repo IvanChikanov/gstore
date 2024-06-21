@@ -52,6 +52,12 @@ class Application{
         settingButton.setText("S");
         let game = new Ui("DIV");
         game.setText("G");
+        game.addStyle([
+            [Style.GRID_ROW_START, "2"],
+            [Style.GRID_ROW_END, "3"],
+            [Style.GRID_COL_START, "1"],
+            [Style.GRID_COL_END, "2"]
+        ]);
         this.panelGrid.addChilds([userButton, settingButton]);
         this.mainGrid.addChilds([game]);
     }
