@@ -19,6 +19,8 @@ class Application{
         document.body.appendChild(this.mainGrid.getHtml());
         let per : number = Sizer.calcHeightPercernt(15);
         console.log(per);
+        console.log(Sizer.height);
+        console.log(Math.abs(Sizer.height));
         this.mainGrid.addStyle([
             [Style.GRID_ROWS, `${per}px ${Sizer.height - per}px`],
             [Style.WIDTH, `${Sizer.width}px`],
