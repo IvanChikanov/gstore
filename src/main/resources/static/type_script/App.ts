@@ -18,7 +18,7 @@ class Application{
     private mainInit()
     {
         document.body.appendChild(this.mainGrid.getHtml());
-        let per : number = Sizer.width / 15;
+        let per : number = Sizer.heigtht / 15;
         this.mainGrid.addStyle([[Style.GRID_ROWS, `${per}px ${Sizer.heigtht - per}px`]]);
     }
     private createPanel(){
