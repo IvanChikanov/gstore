@@ -1,4 +1,5 @@
-import { gridCols, gridRows } from "./storage/styles";
+import { Ui } from "./types/Ui";
+import { Style } from "./enums/styles";
 import Grid from "./types/Grid"
 import { Sizer } from "./types/Sizer";
 
@@ -10,24 +11,39 @@ class Application{
     constructor()
     {
         Sizer.init();
-        document.body.appendChild(this.mainGrid.getHtml());
-        let name = Telegram.WebApp.initDataUnsafe.user?.first_name;
-        this.mainGrid.getHtml().innerText = name ? name : "ull";
-        //this.mainGrid.setStyles([gridRows("1fr 15fr")]);
-        this.mainGrid.getHtml().style.gridTemplateRows = "1fr 15fr";
+        this.mainInit();
         this.createPanel();
         this.mainGrid.addChilds([this.panelGrid]);
     }
+    private mainInit()
+    {
+        document.body.appendChild(this.mainGrid.getHtml());
+        let per : number = Sizer.width / 15;
+        this.mainGrid.addStyle([[Style.GRID_ROWS, `${per}px ${Sizer.width - per}px`]]);
+    }
     private createPanel(){
         let per: number = Sizer.calcWidthPercernt(10);
-        //this.panelGrid.setStyles([gridCols(`${Sizer.width - per}px ${per}px`)]);
-        this.panelGrid.getHtml().style.gridTemplateColumns = `${Sizer.width - per}px ${per}px`;
-        let d = document.createElement("div");
-        d.style.background = <string>Telegram.WebApp.themeParams.bg_color;
-        let dd = document.createElement("div");
-        dd.style.background = <string>Telegram.WebApp.themeParams.button_color;
-        this.panelGrid.getHtml().appendChild(d);
-        this.panelGrid.getHtml().appendChild(dd);
+        this.panelGrid.addStyle([
+            [Style.GRID_COLS, `${Sizer.width - per}px ${per}px` ],
+            [Style.GRID_ROW_START, "1"],
+            [Style.GRID_ROW_END, "3"],
+            [Style.GRID_COL_START, "1"],
+            [Style.GRID_COL_END, "2"]
+        ]);
+        let userButton = new Ui("DIV");
+        let settingButton = new Ui("DIV");
+        userButton.addStyle([
+            [Style.BACKGROUND, Telegram.WebApp.themeParams.bg_color as string],
+            [Style.COLOR, Telegram.WebApp.themeParams.text_color as string]
+        ]);
+        userButton.setText(Telegram.WebApp.initDataUnsafe.user?.usernames as string);
+
+        settingButton.addStyle([
+            [Style.BACKGROUND, Telegram.WebApp.themeParams.button_color as string],
+            [Style.COLOR, Telegram.WebApp.themeParams.button_text_color as string]
+        ]);
+        settingButton.setText("S");
+        this.panelGrid.addChilds([userButton, settingButton]);
     }
 }
 var app = new Application();

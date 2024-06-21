@@ -1,4 +1,4 @@
-import Ui from "../abstract/Ui";
+import { Ui } from "./Ui";
 import Tags from "../enums/Tags";
 
 class Grid extends Ui{
