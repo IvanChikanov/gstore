@@ -12,7 +12,6 @@ class Application{
     {
         Sizer.init();
         this.mainInit();
-        this.createPanel();
         this.mainGrid.addChilds([this.panelGrid]);
     }
     private mainInit()
@@ -20,9 +19,9 @@ class Application{
         document.body.appendChild(this.mainGrid.getHtml());
         let per : number = Sizer.heigtht / 15;
         this.mainGrid.addStyle([[Style.GRID_ROWS, `${per}px ${Sizer.heigtht - per}px`]]);
+        this.createPanel(per);
     }
-    private createPanel(){
-        let per: number = Sizer.calcWidthPercernt(10);
+    private createPanel(per : number){
         this.panelGrid.addStyle([
             [Style.GRID_COLS, `${Sizer.width - per}px ${per}px`],
             [Style.GRID_ROW_START, "1"],
