@@ -5,6 +5,7 @@ class Grid extends Ui{
     constructor(row: string = "", col: string = "")
     {
         super(Tags.DIV);
+        this.addClasses(["grid"]);
     }
 }
 export default Grid;
