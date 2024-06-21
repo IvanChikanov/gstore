@@ -52,7 +52,8 @@ class Application{
         settingButton.setText("S");
         let game = new Ui("DIV");
         game.setText("G");
-        this.panelGrid.addChilds([userButton, settingButton, game]);
+        this.panelGrid.addChilds([userButton, settingButton]);
+        this.mainGrid.addChilds([game]);
     }
 }
 window.addEventListener("load", ()=>{
