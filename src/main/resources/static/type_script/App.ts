@@ -19,7 +19,7 @@ class Application{
     {
         document.body.appendChild(this.mainGrid.getHtml());
         let per : number = Sizer.width / 15;
-        this.mainGrid.addStyle([[Style.GRID_ROWS, `${per}px ${Sizer.width - per}px`]]);
+        this.mainGrid.addStyle([[Style.GRID_ROWS, `${per}px ${Sizer.heigtht - per}px`]]);
     }
     private createPanel(){
         let per: number = Sizer.calcWidthPercernt(10);
@@ -30,7 +30,7 @@ class Application{
             [Style.GRID_COL_START, "1"],
             [Style.GRID_COL_END, "2"]
         ]);
-        
+
         let userButton = new Ui("DIV");
         let settingButton = new Ui("DIV");
         userButton.addStyle([
