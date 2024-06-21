@@ -18,7 +18,11 @@ class Application{
     {
         document.body.appendChild(this.mainGrid.getHtml());
         let per : number = Sizer.heigtht / 15;
-        this.mainGrid.addStyle([[Style.GRID_ROWS, `${per}px ${Sizer.heigtht - per}px`]]);
+        this.mainGrid.addStyle([
+            [Style.GRID_ROWS, `${per}px ${Sizer.heigtht - per}px`],
+            [Style.WIDTH, `${Sizer.width}px`],
+            [Style.HEIGHT, `${Sizer.heigtht}px`]
+        ]);
         this.createPanel(per);
     }
     private createPanel(per : number){
@@ -48,4 +52,6 @@ class Application{
         this.panelGrid.addChilds([userButton, settingButton, game]);
     }
 }
-var app = new Application();
+window.addEventListener("load", ()=>{
+    var app = new Application();
+});
