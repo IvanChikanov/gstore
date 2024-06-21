@@ -30,6 +30,7 @@ class Application{
             [Style.GRID_COL_START, "1"],
             [Style.GRID_COL_END, "2"]
         ]);
+        
         let userButton = new Ui("DIV");
         let settingButton = new Ui("DIV");
         userButton.addStyle([
