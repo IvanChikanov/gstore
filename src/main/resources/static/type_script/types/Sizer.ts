@@ -4,10 +4,9 @@ export class Sizer{
 
     private static rect: DOMRect
     public static init(): void{
-        this.rect = document.documentElement.getBoundingClientRect();
-        console.log(this.rect);
-        this.height = this.rect.height;
-        this.width = this.rect.width;
+        let html = document.documentElement;
+        this.height = html.clientHeight;
+        this.width = html.clientWidth;
         window.addEventListener("resize", this.init);
     }
 
