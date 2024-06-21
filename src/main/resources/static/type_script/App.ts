@@ -17,11 +17,12 @@ class Application{
     private mainInit()
     {
         document.body.appendChild(this.mainGrid.getHtml());
-        let per : number = Sizer.heigtht / 15;
+        let per : number = Sizer.calcHeightPercernt(15);
+        console.log(per);
         this.mainGrid.addStyle([
-            [Style.GRID_ROWS, `${per}px ${Sizer.heigtht - per}px`],
+            [Style.GRID_ROWS, `${per}px ${Sizer.height - per}px`],
             [Style.WIDTH, `${Sizer.width}px`],
-            [Style.HEIGHT, `${Sizer.heigtht}px`]
+            [Style.HEIGHT, `${Sizer.height}px`]
         ]);
         this.createPanel(per);
     }
