@@ -43,7 +43,9 @@ class Application{
             [Style.COLOR, Telegram.WebApp.themeParams.button_text_color as string]
         ]);
         settingButton.setText("S");
-        this.panelGrid.addChilds([userButton, settingButton]);
+        let game = new Ui("DIV");
+        game.setText("G");
+        this.panelGrid.addChilds([userButton, settingButton, game]);
     }
 }
 var app = new Application();
