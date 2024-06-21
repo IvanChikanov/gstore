@@ -32,9 +32,9 @@ class Application{
         this.panelGrid.addStyle([
             [Style.GRID_COLS, `${Sizer.width - per}px ${per}px`],
             [Style.GRID_ROW_START, "1"],
-            [Style.GRID_ROW_END, "3"],
+            [Style.GRID_ROW_END, "2"],
             [Style.GRID_COL_START, "1"],
-            [Style.GRID_COL_END, "2"]
+            [Style.GRID_COL_END, "3"]
         ]);
 
         let userButton = new Ui("DIV");
