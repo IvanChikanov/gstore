@@ -24,7 +24,7 @@ class Application{
     private createPanel(){
         let per: number = Sizer.calcWidthPercernt(10);
         this.panelGrid.addStyle([
-            [Style.GRID_COLS, `${Sizer.width - per}px ${per}px` ],
+            [Style.GRID_COLS, `${Sizer.width - per}px ${per}px`],
             [Style.GRID_ROW_START, "1"],
             [Style.GRID_ROW_END, "3"],
             [Style.GRID_COL_START, "1"],
