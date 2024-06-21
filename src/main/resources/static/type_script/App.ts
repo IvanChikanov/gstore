@@ -43,7 +43,7 @@ class Application{
             [Style.BACKGROUND, Telegram.WebApp.themeParams.bg_color as string],
             [Style.COLOR, Telegram.WebApp.themeParams.text_color as string]
         ]);
-        userButton.setText(Telegram.WebApp.initDataUnsafe.user?.usernames as string);
+        userButton.setText(Telegram.WebApp.initDataUnsafe.user?.username as string);
 
         settingButton.addStyle([
             [Style.BACKGROUND, Telegram.WebApp.themeParams.button_color as string],
