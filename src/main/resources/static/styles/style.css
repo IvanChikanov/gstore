@@ -42,3 +42,10 @@ body{
 .fullHeight{
     height:  var(--tg-viewport-stable-height);
 }
+.flex{
+    display: flex;
+}
+.f_center{
+    align-items: center;
+    justify-content: center;
+}

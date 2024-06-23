@@ -32,12 +32,13 @@ class Application{
             [Style.COLOR, Telegram.WebApp.themeParams.text_color as string]
         ]);
         userButton.setText(Telegram.WebApp.initDataUnsafe.user?.username as string);
-
+        userButton.addClasses([ "flex", "f_center"]);
         settingButton.addStyle([
             [Style.BACKGROUND, Telegram.WebApp.themeParams.button_color as string],
             [Style.COLOR, Telegram.WebApp.themeParams.button_text_color as string]
         ]);
         settingButton.setText("S");
+        settingButton.addClasses([ "flex", "f_center"]);
         let game = new Ui("DIV");
         game.setText("G");
         game.setGridPosition(Pos2D.create(2, 1), Pos2D.create(3, 2));
