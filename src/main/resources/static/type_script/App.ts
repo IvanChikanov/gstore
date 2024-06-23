@@ -23,7 +23,7 @@ class Application{
         this.createPanel(per);
     }
     private createPanel(per : number){
-        this.panelGrid.setGrid(`${Sizer.width - per}px ${per}px`, `${per}px`);
+        this.panelGrid.setGrid(`${per}px`, `${Sizer.width - per}px ${per}px`);
         this.panelGrid.setGridPosition(Pos2D.create(1, 1), Pos2D.create(2, 3));
         let userButton = new Ui("DIV");
         let settingButton = new Ui("DIV");
