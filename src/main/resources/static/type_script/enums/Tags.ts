@@ -5,6 +5,7 @@ enum Tags{
     H2 = "H2",
     H3 = "H3",
     P = "P",
-    TABLE = "TABLE"
+    TABLE = "TABLE",
+    CNV = "CANVAS"
 }
 export default Tags;
