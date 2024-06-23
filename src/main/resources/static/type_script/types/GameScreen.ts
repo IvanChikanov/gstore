@@ -7,8 +7,8 @@ export class GLScreen extends Ui{
     {
         super(Tags.CNV);
         this.setSize(w, h);
-        let ctx = this.html as HTMLCanvasElement;
-        this.ctx = ctx.getContext("webgl2") as WebGL2RenderingContext;
+        let c = this.html as HTMLCanvasElement;
+        this.ctx = c.getContext("webgl2") as WebGL2RenderingContext;
     }
     private setSize(w: number, h: number)
     {
@@ -17,6 +17,4 @@ export class GLScreen extends Ui{
     }
 
 
-    public init(){
-    }
 }
