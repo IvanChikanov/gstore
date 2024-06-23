@@ -8,5 +8,6 @@ export enum Style{
     WIDTH = "width",
     HEIGHT = "height",
     BACKGROUND = "background",
-    COLOR = "color"
+    COLOR = "color",
+    GAP = "gap"
 }

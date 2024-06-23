@@ -25,16 +25,19 @@ class Application{
     private createPanel(per : number){
         this.panelGrid.setGrid(`${per}px`, `${Sizer.width - per}px ${per}px`);
         this.panelGrid.setGridPosition(Pos2D.create(1, 1), Pos2D.create(2, 3));
+        this.panelGrid.addStyle([
+            [Style.GAP, "3px"],
+            [Style.BACKGROUND, Telegram.WebApp.themeParams.button_color as string]
+        ]);
         let userButton = new Ui("DIV");
         let settingButton = new Ui("DIV");
         userButton.addStyle([
             [Style.BACKGROUND, Telegram.WebApp.themeParams.bg_color as string],
-            [Style.COLOR, Telegram.WebApp.themeParams.text_color as string]
+            [Style.COLOR, Telegram.WebApp.themeParams.text_color as string],
         ]);
         userButton.setText(Telegram.WebApp.initDataUnsafe.user?.username as string);
         userButton.addClasses([ "flex", "f_center"]);
         settingButton.addStyle([
-            [Style.BACKGROUND, Telegram.WebApp.themeParams.button_color as string],
             [Style.COLOR, Telegram.WebApp.themeParams.button_text_color as string]
         ]);
         settingButton.setText("S");
