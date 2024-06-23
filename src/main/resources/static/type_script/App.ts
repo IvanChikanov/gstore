@@ -19,7 +19,7 @@ class Application{
     {
         document.body.appendChild(this.mainGrid.getHtml());
         let per : number = Sizer.calcHeightPercernt(15);
-        this.mainGrid.setGrid(`${Sizer.width}px`, `${per}px ${Sizer.height - per}px`);
+        this.mainGrid.setGrid(`${per}px ${Sizer.height - per}px`, `${Sizer.width}px`,);
         this.createPanel(per);
     }
     private createPanel(per : number){
