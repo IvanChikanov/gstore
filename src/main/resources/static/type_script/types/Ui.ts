@@ -1,3 +1,6 @@
+import { Style } from "../enums/styles";
+import { Pos2D } from "./pos2d";
+
 export class Ui{
 
     protected html: HTMLElement;
@@ -28,7 +31,6 @@ export class Ui{
         uiElements.forEach(ui => this.html.appendChild(ui.html));
     }
 
-
     public addStyle(style: string[][])
     {
         for(let s of style)
@@ -37,6 +39,7 @@ export class Ui{
         }  
         this.updateCss();
     }
+
     public removeStyle(name: string[]){
         for(let n of name){
             if(this.styles.has(n))
@@ -49,6 +52,17 @@ export class Ui{
     {
         this.html.innerText = text;
     }
+
+    public setGridPosition(start: Pos2D, end: Pos2D):void
+    {
+        this.addStyle([
+            [Style.GRID_ROW_START, `${start.x}`],
+            [Style.GRID_ROW_END, `${end.x}`],
+            [Style.GRID_COL_START, `${start.y}`],
+            [Style.GRID_COL_END, `${end.y}`]
+        ]);
+    }
+
     private foreachString(classNames: string[], fc:(str: string)=> void ): void{
         classNames.forEach(className => fc(className));
     }

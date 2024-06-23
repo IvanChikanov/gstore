@@ -2,6 +2,7 @@ import { Ui } from "./types/Ui";
 import { Style } from "./enums/styles";
 import Grid from "./types/Grid"
 import { Sizer } from "./types/Sizer";
+import { Pos2D } from "./types/pos2d";
 
 class Application{
     private eventListener: any;
@@ -18,25 +19,12 @@ class Application{
     {
         document.body.appendChild(this.mainGrid.getHtml());
         let per : number = Sizer.calcHeightPercernt(15);
-        console.log(per);
-        console.log(Sizer.height);
-        console.log(Math.abs(Sizer.height));
-        this.mainGrid.addStyle([
-            [Style.GRID_ROWS, `${per}px ${Sizer.height - per}px`],
-            [Style.WIDTH, `${Sizer.width}px`],
-            [Style.HEIGHT, `${Sizer.height}px`]
-        ]);
+        this.mainGrid.setGrid(`${Sizer.width}px`, `${per}px ${Sizer.height - per}px`);
         this.createPanel(per);
     }
     private createPanel(per : number){
-        this.panelGrid.addStyle([
-            [Style.GRID_COLS, `${Sizer.width - per}px ${per}px`],
-            [Style.GRID_ROW_START, "1"],
-            [Style.GRID_ROW_END, "2"],
-            [Style.GRID_COL_START, "1"],
-            [Style.GRID_COL_END, "3"]
-        ]);
-
+        this.panelGrid.setGrid(`${Sizer.width - per}px ${per}px`, `${per}px`);
+        this.panelGrid.setGridPosition(Pos2D.create(1, 1), Pos2D.create(2, 3));
         let userButton = new Ui("DIV");
         let settingButton = new Ui("DIV");
         userButton.addStyle([
@@ -52,12 +40,7 @@ class Application{
         settingButton.setText("S");
         let game = new Ui("DIV");
         game.setText("G");
-        game.addStyle([
-            [Style.GRID_ROW_START, "2"],
-            [Style.GRID_ROW_END, "3"],
-            [Style.GRID_COL_START, "1"],
-            [Style.GRID_COL_END, "2"]
-        ]);
+        game.setGridPosition(Pos2D.create(2, 1), Pos2D.create(3, 2));
         this.panelGrid.addChilds([userButton, settingButton]);
         this.mainGrid.addChilds([game]);
     }
