@@ -25,10 +25,10 @@ export class GLScreen extends Ui{
         let shader =  this.ctx.createShader(type) as WebGLShader;
         this.ctx.shaderSource(shader, code as string);
         this.ctx.compileShader(shader);
-        if(!this.ctx.getShaderParameter(shader, this.ctx.COMPILE_STATUS))
+        /*if(!this.ctx.getShaderParameter(shader, this.ctx.COMPILE_STATUS))
         {
-            throw("Exception!!!");
-        }
+            throw("Exception!!!" + this.ctx.COMPILE_STATUS);
+        }*/
         return shader;
     }
     private createProgram()
