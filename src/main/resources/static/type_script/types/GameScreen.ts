@@ -21,7 +21,7 @@ export class GLScreen extends Ui{
     }
     private loadShader(type: number, id: string)
     {
-        let code = document.getElementById("shader-vs")?.innerHTML;
+        let code = document.getElementById(id)?.innerHTML;
         let shader =  this.ctx.createShader(type) as WebGLShader;
         this.ctx.shaderSource(shader, code as string);
         this.ctx.compileShader(shader);

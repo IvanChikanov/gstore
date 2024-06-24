@@ -3,6 +3,7 @@ import { Style } from "./enums/styles";
 import Grid from "./types/Grid"
 import { Sizer } from "./types/Sizer";
 import { Pos2D } from "./types/pos2d";
+import { GLScreen } from "./types/GameScreen";
 
 class Application{
     private eventListener: any;
@@ -21,6 +22,7 @@ class Application{
         let per : number = Sizer.calcHeightPercernt(15);
         this.mainGrid.setGrid(`${per}px ${Sizer.height - per}px`, `${Sizer.width}px`,);
         this.createPanel(per);
+
     }
     private createPanel(per : number){
         this.panelGrid.setGrid(`${per}px`, `${Sizer.width - per}px ${per}px`);
@@ -42,8 +44,7 @@ class Application{
         ]);
         settingButton.setText("S");
         settingButton.addClasses([ "flex", "f_center"]);
-        let game = new Ui("DIV");
-        game.setText("G");
+        let game = new GLScreen(Sizer.width, Sizer.height - per);
         game.setGridPosition(Pos2D.create(2, 1), Pos2D.create(3, 2));
         this.panelGrid.addChilds([userButton, settingButton]);
         this.mainGrid.addChilds([game]);
