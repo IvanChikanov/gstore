@@ -32,3 +32,4 @@ build/
 ### VS Code ###
 /src/main/resources/type_script/.vscode/
 /src/main/resources/type_script/node_modules/
+/src/main/resources/static/type_script/public/

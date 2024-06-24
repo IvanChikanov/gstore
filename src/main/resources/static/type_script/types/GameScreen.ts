@@ -14,8 +14,9 @@ export class GLScreen extends Ui{
     private readonly f_shader = `#version 300 es
         precision highp float;
         out vec4 color;
+        uniform sampler2D tex;
         void main() {
-          color = vec4(1.0, 1.0, 1.0, 1.0);
+          color = texture(tex, vec2(0.5, 0.5));
         }`;
     constructor(w: number, h: number)
     {
@@ -64,7 +65,20 @@ export class GLScreen extends Ui{
             -0.5, 0.5,
             0.5, 0.5
         ];
-        this.ctx.bufferData(this.ctx.ARRAY_BUFFER, new Float32Array(posDots), this.ctx.STATIC_DRAW)
+        this.ctx.bufferData(this.ctx.ARRAY_BUFFER, new Float32Array(posDots), this.ctx.STATIC_DRAW);
+        let texture = this.ctx.createTexture();
+        this.ctx.bindTexture(this.ctx.TEXTURE_2D, texture);
+        let img = new Image();
+        img.onload = ()=>{
+            this.ctx.bindTexture(this.ctx.TEXTURE_2D, texture);
+            this.ctx.pixelStorei(this.ctx.UNPACK_FLIP_Y_WEBGL, true);
+            this.ctx.texImage2D(this.ctx.TEXTURE_2D, 0, this.ctx.RGBA, this.ctx.RGBA, this.ctx.UNSIGNED_BYTE, img);
+            this.ctx.texParameteri(this.ctx.TEXTURE_2D, this.ctx.TEXTURE_MAG_FILTER, this.ctx.NEAREST);
+            this.ctx.texParameteri(this.ctx.TEXTURE_2D, this.ctx.TEXTURE_MIN_FILTER, this.ctx.NEAREST);
+        }
+        img.src = "./mig-3.png";
+        let sampler = this.ctx.getUniformLocation(program, "tex");
+        this.ctx.uniform1i(sampler, 0);
         let vao = this.ctx.createVertexArray();
         this.ctx.bindVertexArray(vao);
         this.ctx.enableVertexAttribArray(attr);
