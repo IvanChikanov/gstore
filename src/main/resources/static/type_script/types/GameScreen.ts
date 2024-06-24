@@ -39,7 +39,6 @@ export class GLScreen extends Ui{
         this.ctx.attachShader(program , this.vShader);
         this.ctx.attachShader(program, this.fShader);
         this.ctx.linkProgram(program);
-        program.uniform1f(this.ctx.getUniformLocation(program, "layer"), 1.0);
         let attr = this.ctx.getAttribLocation(program, "position");
         let posBuffer = this.ctx.createBuffer();
         this.ctx.bindBuffer(this.ctx.ARRAY_BUFFER, posBuffer);
