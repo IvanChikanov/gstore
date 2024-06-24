@@ -36,7 +36,7 @@ export class GLScreen extends Ui{
         this.ctx.compileShader(shader);
         if(!this.ctx.getShaderParameter(shader, this.ctx.COMPILE_STATUS))
         {
-            console.log(this.ctx.getShaderInfoLog.toString());
+            console.log(this.ctx.getShaderInfoLog(shader));
         }
         return shader;
     }
@@ -50,7 +50,7 @@ export class GLScreen extends Ui{
         this.ctx.linkProgram(program);
         if(this.ctx.getProgramParameter(program, this.ctx.LINK_STATUS))
         {
-            console.log(this.ctx.getProgramInfoLog);
+            console.log(this.ctx.getProgramInfoLog(program));
         }
         let attr = this.ctx.getAttribLocation(program, "position");
         let posBuffer = this.ctx.createBuffer();
