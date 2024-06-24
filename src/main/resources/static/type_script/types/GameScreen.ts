@@ -28,9 +28,9 @@ export class GLScreen extends Ui{
         this.html.setAttribute("width", `${w}`);
         this.html.setAttribute("height", `${h}`);
     }
-    private loadShader(type: number, id: string)
+    private loadShader(type: number, code: string)
     {
-        let code = document.getElementById(id)?.innerHTML;
+
         let shader =  this.ctx.createShader(type) as WebGLShader;
         this.ctx.shaderSource(shader, code as string);
         this.ctx.compileShader(shader);
