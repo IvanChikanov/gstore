@@ -25,10 +25,10 @@ export class GLScreen extends Ui{
         let shader =  this.ctx.createShader(type) as WebGLShader;
         this.ctx.shaderSource(shader, code as string);
         this.ctx.compileShader(shader);
-        /*if(!this.ctx.getShaderParameter(shader, this.ctx.COMPILE_STATUS))
+        if(!this.ctx.getShaderParameter(shader, this.ctx.COMPILE_STATUS))
         {
-            throw("Exception!!!" + this.ctx.COMPILE_STATUS);
-        }*/
+            console.log(this.ctx.getShaderInfoLog);
+        }
         return shader;
     }
     private createProgram()
@@ -39,6 +39,10 @@ export class GLScreen extends Ui{
         this.ctx.attachShader(program , this.vShader);
         this.ctx.attachShader(program, this.fShader);
         this.ctx.linkProgram(program);
+        if(this.ctx.getProgramParameter(program, this.ctx.LINK_STATUS))
+        {
+            console.log(this.ctx.getProgramInfoLog);
+        }
         let attr = this.ctx.getAttribLocation(program, "position");
         let posBuffer = this.ctx.createBuffer();
         this.ctx.bindBuffer(this.ctx.ARRAY_BUFFER, posBuffer);
