@@ -27,7 +27,7 @@ export class GLScreen extends Ui{
         this.ctx.compileShader(shader);
         if(!this.ctx.getShaderParameter(shader, this.ctx.COMPILE_STATUS))
         {
-            console.log(this.ctx.getShaderInfoLog);
+            console.log(this.ctx.getShaderInfoLog.toString());
         }
         return shader;
     }
