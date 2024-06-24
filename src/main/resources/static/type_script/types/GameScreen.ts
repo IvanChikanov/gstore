@@ -59,9 +59,9 @@ export class GLScreen extends Ui{
         this.ctx.bindBuffer(this.ctx.ARRAY_BUFFER, posBuffer);
         let posDots = [
             -0.5, 0.5, 
-            0.5, 0.5,
-            0.5, -0,5,
-            -0.5, -0.5
+            -0.5, -0.5,
+            0.5, 0,5,
+            0.5, -0.5
         ];
         this.ctx.bufferData(this.ctx.ARRAY_BUFFER, new Float32Array(posDots), this.ctx.STATIC_DRAW)
         let vao = this.ctx.createVertexArray();
