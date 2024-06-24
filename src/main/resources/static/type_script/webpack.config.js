@@ -1,7 +1,6 @@
 const path = require('path');
 
 module.exports = {
-    mode: "production",
     entry: "./App.ts",
     output: {
         filename: "webapp.js",
@@ -18,5 +17,8 @@ module.exports = {
                 exclude: /node_modules/
             }
         ]
+    },
+    devServer:{
+        hot: true
     }
 }

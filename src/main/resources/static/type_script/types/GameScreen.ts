@@ -60,9 +60,9 @@ export class GLScreen extends Ui{
         let posDots = [
             -0.5, 0.5, 
             -0.5, -0.5,
-            0.5, 0,5,
             0.5, -0.5,
-            -0.5, -0.5
+            -0.5, 0.5,
+            0.5, 0.5
         ];
         this.ctx.bufferData(this.ctx.ARRAY_BUFFER, new Float32Array(posDots), this.ctx.STATIC_DRAW)
         let vao = this.ctx.createVertexArray();
@@ -70,7 +70,8 @@ export class GLScreen extends Ui{
         this.ctx.enableVertexAttribArray(attr);
         this.ctx.vertexAttribPointer(attr, 2, this.ctx.FLOAT, false, 0, 0);
         this.ctx.viewport(0, 0, Sizer.width, Sizer.height);
-        this.ctx.clearColor(0,0,0,1);
+        this.ctx.clearColor(0, 0, 0, 1);
+        this.ctx.clear(this.ctx.COLOR_BUFFER_BIT);
         this.ctx.useProgram(program);
         this.ctx.drawArrays(this.ctx.TRIANGLE_STRIP, 0, 5);
     }
