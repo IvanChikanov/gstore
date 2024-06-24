@@ -50,5 +50,9 @@ class Application{
     }
 }
 window.addEventListener("load", ()=>{
+    try{
     var app = new Application();
+    }catch(ex: any){
+        document.body.innerHTML = ex;
+    }
 });
