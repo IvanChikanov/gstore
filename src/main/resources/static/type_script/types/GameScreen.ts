@@ -7,8 +7,9 @@ export class GLScreen extends Ui{
     private vShader: WebGLShader | undefined;
     private fShader: WebGLShader | undefined;
     private readonly f_shader = `#version 300 es
+        out vec4 color;
         void main() {
-          gl_FragColor = vec4(1.0, 1.0, 1.0, 1.0);
+          color = vec4(1.0, 1.0, 1.0, 1.0);
         }`;
     private readonly v_shader = `#version 300 es
         in vec2 position;
