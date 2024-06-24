@@ -6,6 +6,15 @@ export class GLScreen extends Ui{
     private ctx: WebGL2RenderingContext;
     private vShader: WebGLShader | undefined;
     private fShader: WebGLShader | undefined;
+    private readonly v_shader = `#version 300 es
+        void main(void) {
+          gl_FragColor = vec4(1.0, 1.0, 1.0, 1.0);
+        }`;
+    private readonly f_shader = `#version 300 es
+        in vec2 position;
+        void main(void) {
+          gl_Position = vec4(aVertexPosition, 1.0, 1.0);
+        }`;
     constructor(w: number, h: number)
     {
         super(Tags.CNV);
@@ -33,8 +42,8 @@ export class GLScreen extends Ui{
     }
     private createProgram()
     {
-        this.vShader = this.loadShader(this.ctx.VERTEX_SHADER, "shader-vs");
-        this.fShader = this.loadShader(this.ctx.FRAGMENT_SHADER, "shader-fs");
+        this.vShader = this.loadShader(this.ctx.VERTEX_SHADER, this.v_shader);
+        this.fShader = this.loadShader(this.ctx.FRAGMENT_SHADER, this.f_shader);
         let program = this.ctx.createProgram() as WebGL2RenderingContext;
         this.ctx.attachShader(program , this.vShader);
         this.ctx.attachShader(program, this.fShader);
