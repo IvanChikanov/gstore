@@ -71,7 +71,7 @@ export class GLScreen extends Ui{
         this.ctx.viewport(0, 0, Sizer.width, Sizer.height);
         this.ctx.clearColor(0,0,0,1);
         this.ctx.useProgram(program);
-        this.ctx.drawArrays(this.ctx.TRIANGLES, 0, 4);
+        this.ctx.drawArrays(this.ctx.TRIANGLE_STRIP, 0, 4);
     }
 
 }
