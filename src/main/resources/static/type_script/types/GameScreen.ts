@@ -6,13 +6,13 @@ export class GLScreen extends Ui{
     private ctx: WebGL2RenderingContext;
     private vShader: WebGLShader | undefined;
     private fShader: WebGLShader | undefined;
-    private readonly v_shader = `#version 300 es
-        void main(void) {
+    private readonly f_shader = `#version 300 es
+        void main() {
           gl_FragColor = vec4(1.0, 1.0, 1.0, 1.0);
         }`;
-    private readonly f_shader = `#version 300 es
+    private readonly v_shader = `#version 300 es
         in vec2 position;
-        void main(void) {
+        void main() {
           gl_Position = vec4(aVertexPosition, 1.0, 1.0);
         }`;
     constructor(w: number, h: number)
