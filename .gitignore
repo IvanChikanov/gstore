@@ -30,5 +30,5 @@ build/
 !**/src/test/**/build/
 
 ### VS Code ###
-.vscode/
-/src/main/resources/node_modules/
+/src/main/resources/type_script/.vscode/
+/src/main/resources/type_script/node_modules/
