@@ -4,7 +4,11 @@
         "removeComments": true,
         "outDir": "../public/front",
         "module": "ES2020",
-        "strict": true
+        "strict": true,
+        "baseUrl": "./",
+        "paths": {
+            "gl-matrix": ["node_modules/gl-matrix/dist/gl-matrix.js"]
+        },
     },
     "include": ["**/*.ts", "./*.ts"]
 }

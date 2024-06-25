@@ -4,50 +4,24 @@ import { Sizer } from "./Sizer";
 import { Ui } from "./Ui";
 
 export class GLScreen extends Ui{
-    private programs: Map<string, WebGLProgram>;
-    private readonly v_shader = `#version 300 es
-        in vec2 position;
-        out vec4 colorValue;
-        void main() {
-        gl_Position = vec4(position, 1.0, 1.0);
-        colorValue = vec4(1.0, 1.0, 1.0, 1.0);
-        }`;
-    private readonly f_shader = `#version 300 es
-        precision highp float;
-        out vec4 color;
-        in vec4 colorValue;
-        void main() {
-          color = colorValue;
-        }`;
+
+    private context: Ctx | undefined;
+
     constructor(w: number, h: number)
     {
         super(Tags.CNV);
         this.setSize(w, h);
-        Ctx.set(this.html as HTMLCanvasElement);
-        this.programs = new Map();
-        this.createProgram();
+        this.context = new Ctx(this.html as HTMLCanvasElement);
     }
-    private newProgram(type: string, )
     private setSize(w: number, h: number)
     {
         this.html.setAttribute("width", `${w}`);
         this.html.setAttribute("height", `${h}`);
     }
-    private loadShader(type: number, code: string)
-    {
-
-        let shader =  this.ctx.createShader(type) as WebGLShader;
-        this.ctx.shaderSource(shader, code as string);
-        this.ctx.compileShader(shader);
-        if(!this.ctx.getShaderParameter(shader, this.ctx.COMPILE_STATUS))
-        {
-            console.log(this.ctx.getShaderInfoLog(shader));
-        }
-        return shader;
-    }
     private createProgram()
     {
-        this.vShader = this.loadShader(this.ctx.VERTEX_SHADER, this.v_shader);
+
+        /*this.vShader = this.loadShader(this.ctx.VERTEX_SHADER, this.v_shader);
         this.fShader = this.loadShader(this.ctx.FRAGMENT_SHADER, this.f_shader);
         let program = this.ctx.createProgram() as WebGL2RenderingContext;
         this.ctx.attachShader(program , this.vShader);
@@ -83,7 +57,7 @@ export class GLScreen extends Ui{
         img.src = "./mig-3.png";
 
         let sampler = this.ctx.getUniformLocation(program, "tex");
-        this.ctx.uniform1i(sampler, 0);*/
+        this.ctx.uniform1i(sampler, 0);
         let vao = this.ctx.createVertexArray();
         this.ctx.bindVertexArray(vao);
         this.ctx.enableVertexAttribArray(attr);
@@ -92,7 +66,7 @@ export class GLScreen extends Ui{
         this.ctx.clearColor(0, 0, 0, 1);
         this.ctx.clear(this.ctx.COLOR_BUFFER_BIT);
         this.ctx.useProgram(program);
-        this.ctx.drawArrays(this.ctx.TRIANGLE_STRIP, 0, 5);
+        this.ctx.drawArrays(this.ctx.TRIANGLE_STRIP, 0, 5);*/
     }
 
 }
