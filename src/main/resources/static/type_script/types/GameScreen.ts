@@ -1,31 +1,33 @@
 import Tags from "../enums/Tags";
+import { Ctx } from "../gl_services/context";
 import { Sizer } from "./Sizer";
 import { Ui } from "./Ui";
 
 export class GLScreen extends Ui{
-    private ctx: WebGL2RenderingContext;
-    private vShader: WebGLShader | undefined;
-    private fShader: WebGLShader | undefined;
+    private programs: Map<string, WebGLProgram>;
     private readonly v_shader = `#version 300 es
         in vec2 position;
+        out vec4 colorValue;
         void main() {
         gl_Position = vec4(position, 1.0, 1.0);
+        colorValue = vec4(1.0, 1.0, 1.0, 1.0);
         }`;
     private readonly f_shader = `#version 300 es
         precision highp float;
         out vec4 color;
-        uniform sampler2D tex;
+        in vec4 colorValue;
         void main() {
-          color = texture(tex, vec2(0.5, 0.5));
+          color = colorValue;
         }`;
     constructor(w: number, h: number)
     {
         super(Tags.CNV);
         this.setSize(w, h);
-        let c = this.html as HTMLCanvasElement;
-        this.ctx = c.getContext("webgl2") as WebGL2RenderingContext;
+        Ctx.set(this.html as HTMLCanvasElement);
+        this.programs = new Map();
         this.createProgram();
     }
+    private newProgram(type: string, )
     private setSize(w: number, h: number)
     {
         this.html.setAttribute("width", `${w}`);
@@ -65,7 +67,7 @@ export class GLScreen extends Ui{
             -0.5, 0.5,
             0.5, 0.5
         ];
-        this.ctx.bufferData(this.ctx.ARRAY_BUFFER, new Float32Array(posDots), this.ctx.STATIC_DRAW);
+        this.ctx.bufferData(this.ctx.ARRAY_BUFFER, new Float32Array(posDots), this.ctx.STATIC_DRAW);/*
         let texture = this.ctx.createTexture();
         this.ctx.bindTexture(this.ctx.TEXTURE_2D, texture);
         let img = new Image();
@@ -75,10 +77,13 @@ export class GLScreen extends Ui{
             this.ctx.texImage2D(this.ctx.TEXTURE_2D, 0, this.ctx.RGBA, this.ctx.RGBA, this.ctx.UNSIGNED_BYTE, img);
             this.ctx.texParameteri(this.ctx.TEXTURE_2D, this.ctx.TEXTURE_MAG_FILTER, this.ctx.NEAREST);
             this.ctx.texParameteri(this.ctx.TEXTURE_2D, this.ctx.TEXTURE_MIN_FILTER, this.ctx.NEAREST);
+            this.ctx.activeTexture(this.ctx.TEXTURE0 + 0);
+            this.ctx.texImage2D(this.ctx.TEXTURE_2D, 0, this.ctx.RGBA, this.ctx.RGBA, this.ctx.UNSIGNED_BYTE, img);
         }
         img.src = "./mig-3.png";
+
         let sampler = this.ctx.getUniformLocation(program, "tex");
-        this.ctx.uniform1i(sampler, 0);
+        this.ctx.uniform1i(sampler, 0);*/
         let vao = this.ctx.createVertexArray();
         this.ctx.bindVertexArray(vao);
         this.ctx.enableVertexAttribArray(attr);
