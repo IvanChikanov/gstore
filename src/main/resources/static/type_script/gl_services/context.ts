@@ -8,17 +8,33 @@ export class Ctx{
     private gl: WebGL2RenderingContext;
     private h: number;
     private w: number;
-
+    private projMatrixLocation: WebGLUniformLocation | null;
     constructor(canvas: HTMLCanvasElement){
         this.gl = canvas.getContext("webgl2") as WebGL2RenderingContext
         this.h = canvas.height;
         this.w = canvas.width;
+        this.gl.viewport(0, 0, this.w, this.h);
+
+        // create shaders & program
         let vertex = this.initShader(this.gl.VERTEX_SHADER, simpleShaders.vertex)  as WebGLShader;
         let fragment = this.initShader(this.gl.FRAGMENT_SHADER, simpleShaders.fragment) as WebGLShader;
         this.initProgram("simple", vertex, fragment);
 
+        // get matrix pos
+        this.projMatrixLocation = this.gl.getUniformLocation(this.programs.get("simple") as WebGL2RenderingContext, "m_projection");
+
+        // create and binds buffers
         let vertexBuffer = this.gl.createBuffer();
         this.gl.bindBuffer(this.gl.ARRAY_BUFFER, vertexBuffer);
+        let attrLoc = this.gl.getAttribLocation(this.programs.get("simple") as WebGL2RenderingContext, "position");
+        this.gl.enableVertexAttribArray(attrLoc);
+        this.gl.vertexAttribPointer(attrLoc, 2, this.gl.FLOAT, false, 0, 0);
+
+
+        let indexBuffer = this.gl.createBuffer();
+        this.gl.bindBuffer(this.gl.ELEMENT_ARRAY_BUFFER, indexBuffer);
+
+        //set data on buffers
         let posDots = [
             -0.5, 0.5, 
             -0.5, -0.5,
@@ -26,29 +42,18 @@ export class Ctx{
             0.5, 0.5
         ];
         this.gl.bufferData(this.gl.ARRAY_BUFFER, new Float32Array(posDots), this.gl.STATIC_DRAW);
-        let attrLoc = this.gl.getAttribLocation(this.programs.get("simple") as WebGL2RenderingContext, "position");
-        this.gl.enableVertexAttribArray(attrLoc);
-        this.gl.vertexAttribPointer(attrLoc, 2, this.gl.FLOAT, false, 0, 0);
 
-        let indexBuffer = this.gl.createBuffer();
-        this.gl.bindBuffer(this.gl.ELEMENT_ARRAY_BUFFER, indexBuffer);
         let indxs = [0, 1, 2, 3, 0];
         this.gl.bufferData(this.gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(indxs), this.gl.STATIC_DRAW);
 
-
+        //clear screen
         this.gl.clearColor(0, 0, 0, 1);
         this.gl.clear(this.gl.COLOR_BUFFER_BIT);
-        this.gl.viewport(0, 0, this.w, this.h);
 
 
+        // draw
         this.gl.useProgram(this.programs.get("simple") as WebGL2RenderingContext);
-
-        let projMatrix = this.gl.getUniformLocation(this.programs.get("simple") as WebGL2RenderingContext, "m_projection");
-        let projection = mat4.create();
-        mat4.ortho(projection, -5, 5, -10, 10, -1, 1);
-        console.log(projection);
-        this.gl.uniformMatrix4fv(projMatrix, false, projection);
-
+        this.gl.uniformMatrix4fv(this.projMatrixLocation, false, this.setOrthoMatrix(10));
         this.gl.drawElements(this.gl.TRIANGLE_STRIP, 5, this.gl.UNSIGNED_SHORT, 0);
 
     }
@@ -83,6 +88,21 @@ export class Ctx{
 
         console.warn(this.gl.getProgramInfoLog(prgrm));
         throw new Error(this.gl.getProgramInfoLog(prgrm) as string);
+    }
+
+    private setOrthoMatrix(unitsOnMinAxis: number)
+    {
+        let min = Math.min(Sizer.width, Sizer.height);
+        let max = Math.max(Sizer.width, Sizer.height);
+        let unitPixels = max / (min / unitsOnMinAxis);
+        let projection = mat4.create();
+        mat4.ortho(projection,
+             min == Sizer.width ? -(unitsOnMinAxis / 2) : -(unitPixels / 2), 
+             min == Sizer.width ? unitsOnMinAxis  / 2: unitPixels / 2, 
+             min == Sizer.height ? -(unitsOnMinAxis / 2) : -(unitPixels / 2),
+             min == Sizer.height ? unitsOnMinAxis / 2 : unitPixels / 2, 
+             -10, 10);
+        return projection;
     }
 
 }
