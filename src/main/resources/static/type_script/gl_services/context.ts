@@ -9,6 +9,7 @@ export class Ctx{
     private h: number;
     private w: number;
     private projMatrixLocation: WebGLUniformLocation | null;
+
     constructor(canvas: HTMLCanvasElement){
         this.gl = canvas.getContext("webgl2") as WebGL2RenderingContext
         this.h = canvas.height;
