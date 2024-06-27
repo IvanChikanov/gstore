@@ -1,3 +1,4 @@
+import { Pos2D } from "../types/pos2d";
 import { ProgramType } from "../enums/pType";
 
 
@@ -7,6 +8,10 @@ export abstract class AbstractObject{
     abstract readonly pType: ProgramType;
 
     private static allObjects: Array<AbstractObject> = [];
+
+    protected abstract size: Pos2D;
+
+    protected abstract position: Pos2D;
 
     constructor()
     {
