@@ -1,6 +1,9 @@
+import { ProgramType } from "../enums/pType";
 import { mat4 } from "../node_modules/gl-matrix-ts/dist/index";
 import { simpleShaders } from "../shaders/shader_pairs";
 import { Sizer } from "../types/Sizer";
+import { GLObjectFactory } from "./objectFactory";
+import { ProgramKeeper } from "./programKeeper";
 
 export class Ctx{
 
@@ -10,11 +13,20 @@ export class Ctx{
     private w: number;
     private projMatrixLocation: WebGLUniformLocation | null;
 
+    private programKeeper: ProgramKeeper;
+    private objectFactory: GLObjectFactory;
+
     constructor(canvas: HTMLCanvasElement){
         this.gl = canvas.getContext("webgl2") as WebGL2RenderingContext
         this.h = canvas.height;
         this.w = canvas.width;
         this.gl.viewport(0, 0, this.w, this.h);
+        this.programKeeper = new ProgramKeeper(this.gl);
+        this.objectFactory = new GLObjectFactory();
+
+        let object = this.objectFactory.create(ProgramType.TEXTURE_SQUARE);
+        object.setProgram(this.programKeeper.getProgram(ProgramType.TEXTURE_SQUARE));
+        Object.keys(ProgramType).forEach( k => console.log(k));
 
         // create shaders & program
         let vertex = this.initShader(this.gl.VERTEX_SHADER, simpleShaders.vertex)  as WebGLShader;
