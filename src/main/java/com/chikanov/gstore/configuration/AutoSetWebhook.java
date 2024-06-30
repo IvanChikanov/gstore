@@ -32,7 +32,7 @@ public class AutoSetWebhook {
     {
         webhook = new Webhook();
     }
-    @EventListener(ApplicationReadyEvent.class)
+    //@EventListener(ApplicationReadyEvent.class)
     public void setWebhook() {
         try {
             RestTemplate rt = new RestTemplate();
