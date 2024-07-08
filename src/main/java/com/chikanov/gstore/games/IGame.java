@@ -10,7 +10,7 @@ public interface IGame {
 
     int getMax();
     boolean readMessage(WebSocketSession user, WebSocketMessage<?> message) throws IOException;
-    void sendMessage() throws IOException;
+    void sendMessage(String message) throws IOException;
     boolean addUser(WebSocketSession session, ChatRoles user);
 
 }

@@ -18,14 +18,12 @@ public class WSHandler implements WebSocketHandler {
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
 
         MultiValueMap<String, String> params = UriComponentsBuilder.fromUri(session.getUri()).build().getQueryParams();
-        session.sendMessage( new TextMessage("hello"));
         socketService.newUser(session, UUID.fromString(params.getFirst("game_id")));
     }
 
     @Override
     public void handleMessage(WebSocketSession session, WebSocketMessage<?> message) throws Exception {
         MultiValueMap<String, String> params = UriComponentsBuilder.fromUri(session.getUri()).build().getQueryParams();
-        //session.sendMessage( new TextMessage("hello"));
         socketService.message( UUID.fromString(params.getFirst("game_id")), session, message);
     }
 

@@ -14,11 +14,11 @@ public class XoGame implements IGame {
 
     private final Set<WebSocketSession> users = new HashSet<>();
 
+    private final int[] cells = new int[9];
     @Override
     public boolean readMessage(WebSocketSession user, WebSocketMessage<?> message) throws IOException {
         var mes = message.getPayload();
         System.out.println(mes);
-        sendMessage();
         return false;
     }
     @Override
@@ -27,15 +27,36 @@ public class XoGame implements IGame {
         return 2;
     }
     @Override
-    public void sendMessage() throws IOException {
-            for(var user : users){
-                user.sendMessage(new TextMessage("hoh- hhoho " + users.size()   ));
+    public void sendMessage(String message) {
+
+            for (var user : users) {
+                sendOneUserMessage(user, message);
             }
     }
 
     @Override
     public boolean addUser(WebSocketSession session, ChatRoles user) {
-        users.add(session);
-        return true;
+        if(users.size() < getMax()){
+            users.add(session);
+            sendOneUserMessage(session, String.valueOf(users.size()));
+            if(users.size() == getMax())
+            {
+                this.sendMessage("start");
+            }
+            return true;
+        }
+        return false;
     }
+    private void sendOneUserMessage(WebSocketSession user, String message)
+    {
+        try {
+            user.sendMessage(new TextMessage(message));
+        }
+        catch (IOException ex)
+        {
+            ex.printStackTrace();
+        }
+    }
+
+
 }
