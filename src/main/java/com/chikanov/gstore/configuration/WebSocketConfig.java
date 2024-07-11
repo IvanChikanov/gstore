@@ -19,7 +19,7 @@ import org.springframework.web.socket.server.support.DefaultHandshakeHandler;
 import java.util.Map;
 
 
-@Configuration
+//@Configuration
 @EnableWebSocket
 public class WebSocketConfig implements WebSocketConfigurer {
 
@@ -30,7 +30,4 @@ public class WebSocketConfig implements WebSocketConfigurer {
     public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
             registry.addHandler(wsHandler, "/connection").setAllowedOrigins("*");
     }
-    public class Shaker extends AbstractHandshakeHandler {
-    }
-
 }
