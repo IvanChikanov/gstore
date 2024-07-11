@@ -1,6 +1,7 @@
 package com.chikanov.gstore.games;
 
 import com.chikanov.gstore.entity.ChatRoles;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.NoArgsConstructor;
 import org.springframework.web.socket.WebSocketMessage;
 import org.springframework.web.socket.WebSocketSession;
@@ -11,11 +12,10 @@ public abstract class AbstractWsGameRoom {
 
     protected int online;
 
-    public abstract void addUser(WebSocketSession session, ChatRoles user);
-    public abstract void readMessage(WebSocketSession user, WebSocketMessage<?> message);
+    public abstract void addUser(WebSocketSession session, ChatRoles user) throws IOException;
+    public abstract void readMessage(WebSocketSession user, WebSocketMessage<?> message) throws JsonProcessingException;
     public abstract int getMax();
 
-    @NoArgsConstructor
     protected abstract class Player{
 
         protected WebSocketSession userSession;
