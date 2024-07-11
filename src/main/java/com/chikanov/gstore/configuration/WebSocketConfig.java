@@ -28,7 +28,7 @@ public class WebSocketConfig implements WebSocketConfigurer {
 
     @Override
     public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
-            registry.addHandler(wsHandler, "/connection").setAllowedOrigins("*").withSockJS();
+            registry.addHandler(wsHandler, "/connection").setAllowedOrigins("*");
     }
     public class Shaker extends AbstractHandshakeHandler {
     }
