@@ -25,7 +25,7 @@ public class XoGameRoom extends AbstractWsGameRoom {
 
     private void startGame(){
         Arrays.fill(cells, 0);
-        players.forEach(xoPlayer -> xoPlayer.sendMessageToUser(new TextMessage("start")));
+        //players.forEach(xoPlayer -> xoPlayer.sendMessageToUser(new TextMessage("start")));
     }
 
     private JsonNode messageParse(WebSocketMessage<String> message) throws JsonProcessingException{
@@ -49,6 +49,7 @@ public class XoGameRoom extends AbstractWsGameRoom {
 
     @Override
     public void readMessage(WebSocketSession user, WebSocketMessage<?> message) throws JsonProcessingException{
+        System.out.println(message.getPayload());
         JsonNode json = objectMapper.readTree(message.getPayload().toString());
         cells[json.get("action").asInt()] = json.get("who").asInt();
 
