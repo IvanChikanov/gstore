@@ -40,6 +40,7 @@ public class ReadJsonService {
         ObjectMapper om = new ObjectMapper();
         om.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         TgQueries query = om.readValue(jsonValue, TgQueries.class);
+        System.out.println(query.getUpdate());
         System.out.println(query.getInlineQuery());
         if(query.getInlineQuery() != null)
         {
