@@ -40,8 +40,10 @@ public class ReadJsonService {
         ObjectMapper om = new ObjectMapper();
         om.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         TgQueries query = om.readValue(jsonValue, TgQueries.class);
+        System.out.println(query.getInlineQuery());
         if(query.getInlineQuery() != null)
         {
+            System.out.println(query.getInlineQuery().getId());
             InlineAnswer answer = new InlineAnswer();
             answer.setInlineQueryId(query.getInlineQuery().getId());
             answer.getButton().setText("Play!");
