@@ -1,15 +1,10 @@
 package com.chikanov.gstore.filters;
 
-import jakarta.servlet.*;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
-import java.io.IOException;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
 import java.security.InvalidKeyException;
@@ -19,31 +14,14 @@ import java.util.TreeSet;
 import java.util.stream.Collectors;
 
 @Service
-public class TelegramValidateFilter implements Filter {
-
+public class Authenticator {
     @Value("${token.value}")
     private String token;
     private final String key = "WebAppData";
-
-    @Autowired
-    Authenticator authenticator;
-
-    @Override
-    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)
-            throws IOException, ServletException {
-        HttpServletRequest request = (HttpServletRequest) servletRequest;
-        System.out.println(request.getHeader("User-Game"));
-        boolean ok = authenticator.validation(request.getHeader("Authorization"));
-        if(ok)
-            filterChain.doFilter(servletRequest, servletResponse);
-        else{
-            HttpServletResponse response = (HttpServletResponse) servletResponse;
-            response.setStatus(401);
-        }
-    }
-    private boolean validate(String auth){
+    public boolean validation(String telegramSafeData)
+    {
         try {
-            String decoded = URLDecoder.decode(auth, StandardCharsets.UTF_8);
+            String decoded = URLDecoder.decode(telegramSafeData, StandardCharsets.UTF_8);
             String[] splitted = decoded.split("&");
             String hash = "";
             SortedSet<String> others = new TreeSet<>();

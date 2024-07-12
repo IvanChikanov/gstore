@@ -5,9 +5,11 @@ import com.chikanov.gstore.entity.ChatEntity;
 import com.chikanov.gstore.entity.ChatRoleKey;
 import com.chikanov.gstore.entity.ChatRoles;
 import com.chikanov.gstore.entity.User;
+import com.chikanov.gstore.entity.tgentities.TgQueries;
 import com.chikanov.gstore.enums.Role;
 import com.chikanov.gstore.enums.TelegramUpdates;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +33,8 @@ public class ReadJsonService {
     public void read(String jsonValue) throws JsonProcessingException {
         System.out.println(jsonValue);
         ObjectMapper om = new ObjectMapper();
+        om.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        TgQueries query = om.readValue(jsonValue, TgQueries.class);
         switchType(om.readTree(jsonValue));
     }
     private void switchType(JsonNode json)

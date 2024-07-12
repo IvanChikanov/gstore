@@ -7,10 +7,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.encrypt.Encryptors;
-import org.springframework.security.crypto.encrypt.TextEncryptor;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -22,6 +18,9 @@ public class GeneralConfiguration implements WebMvcConfigurer {
     @Autowired
     AutoSetWebhook autoSetWebhook;
 
+    @Autowired
+    TelegramValidateFilter telegramValidateFilter;
+
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry){
         registry.addResourceHandler("/static/**").addResourceLocations("classpath:/static/**");
@@ -30,7 +29,7 @@ public class GeneralConfiguration implements WebMvcConfigurer {
     public FilterRegistrationBean<TelegramValidateFilter> tgFilter()
     {
         FilterRegistrationBean<TelegramValidateFilter> registrationBean = new FilterRegistrationBean<>();
-        registrationBean.setFilter(new TelegramValidateFilter(token));
+        registrationBean.setFilter(telegramValidateFilter);
         registrationBean.addUrlPatterns("/inside/*");
         registrationBean.setOrder(1);
         return registrationBean;
@@ -43,10 +42,5 @@ public class GeneralConfiguration implements WebMvcConfigurer {
         registrationBean.addUrlPatterns("/bot");
         registrationBean.setOrder(2);
         return registrationBean;
-    }
-    @Bean
-    public PasswordEncoder passwordEncoder()
-    {
-        return new BCryptPasswordEncoder();
     }
 }

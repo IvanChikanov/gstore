@@ -1,5 +1,7 @@
 package com.chikanov.gstore.websock;
 
+import com.chikanov.gstore.websock.messages.WsMessage;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.MultiValueMap;
@@ -14,11 +16,20 @@ public class WSHandler implements WebSocketHandler {
     @Autowired
     private WebSocketGameService socketService;
 
+    private final ObjectMapper objectMapper = new ObjectMapper();
+
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
 
         MultiValueMap<String, String> params = UriComponentsBuilder.fromUri(session.getUri()).build().getQueryParams();
         socketService.newUser(session, UUID.fromString(params.getFirst("game_id")));
+        var mess = objectMapper.readValue(
+                "{\"type\":\"auth\",\"from\":\"russia\",\"game\":\""
+                        + UUID.randomUUID() +
+                        "\",\"payload\":{\"token\":\"ewrwesfdsadfsdfasdfagsjdfg askjfd\"}}",
+                WsMessage.class);
+        System.out.println(mess.getClass());
+        System.out.println(mess.getPayload().getClass());
     }
 
     @Override
