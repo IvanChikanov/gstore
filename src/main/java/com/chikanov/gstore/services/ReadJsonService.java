@@ -48,7 +48,7 @@ public class ReadJsonService {
             InlineAnswer answer = new InlineAnswer();
             answer.setInlineQueryId(query.getInlineQuery().getId());
             answer.getButton().setText("Play!");
-            answer.getButton().getWebApp().setURL("https://chisch.ru/miniapp");
+            answer.getButton().getWebApp().setURL("https://chisch.ru/miniapp?startapp=private");
             send.sendInlineAnswer(om.writeValueAsString(answer));
         }
         switchType(om.readTree(jsonValue));
