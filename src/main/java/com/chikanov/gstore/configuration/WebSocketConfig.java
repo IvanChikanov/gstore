@@ -19,7 +19,7 @@ import org.springframework.web.socket.server.support.DefaultHandshakeHandler;
 import java.util.Map;
 
 
-//@Configuration
+@Configuration
 @EnableWebSocket
 public class WebSocketConfig implements WebSocketConfigurer {
 
