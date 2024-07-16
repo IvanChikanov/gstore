@@ -14,11 +14,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class LoadResourcesController {
     @Autowired
     private UserAndChatsService userAndChatsService;
-    @PostMapping("/main")
-    public ResponseEntity<?> check(@RequestBody String body, @RequestHeader("User-Game") String userGame)
+    @PostMapping("/startapp")
+    public ResponseEntity<?> check(@RequestBody String body)
     {
         System.out.println(body);
-        userAndChatsService.connectUserToGame(userGame);
+        //userAndChatsService.connectUserToGame(userGame);
         return ResponseEntity.status(200).build();
     }
 }
