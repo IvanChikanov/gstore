@@ -21,7 +21,16 @@ public class Authenticator {
     public boolean validation(String telegramSafeData)
     {
         System.out.println("ALARANM");
+        System.out.println("ALARANM");
+        System.out.println("ALARANM");
+        System.out.println("ALARANM");
+        System.out.println("ALARANM");
         System.out.println(telegramSafeData);
+        System.out.println("ALARANM");
+        System.out.println("ALARANM");
+        System.out.println("ALARANM");
+        System.out.println("ALARANM");
+        System.out.println("ALARANM");
         try {
             String decoded = URLDecoder.decode(telegramSafeData, StandardCharsets.UTF_8);
             String[] splitted = decoded.split("&");
