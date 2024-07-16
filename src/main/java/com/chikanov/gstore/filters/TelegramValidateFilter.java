@@ -32,7 +32,7 @@ public class TelegramValidateFilter implements Filter {
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)
             throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
-        System.out.println(request.getHeader("User-Game"));
+        System.out.println(request.getHeader("Authorization"));
         boolean ok = authenticator.validation(request.getHeader("Authorization"));
         if(ok)
             filterChain.doFilter(servletRequest, servletResponse);
