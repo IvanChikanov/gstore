@@ -10,11 +10,11 @@ import java.util.Set;
 public class ChatEntity{
 
     @Id
-    private Long chat_id;
+    private Long id;
 
     private String name;
 
-    @OneToMany
+    @OneToMany(mappedBy = "chat")
     private Set<ChatRoles> chatRoles = new HashSet<>();
 
     @OneToMany(cascade = CascadeType.ALL)

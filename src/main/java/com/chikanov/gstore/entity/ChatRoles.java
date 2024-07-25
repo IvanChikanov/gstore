@@ -6,15 +6,17 @@ import lombok.Data;
 
 @Entity
 @Data
-@IdClass(ChatRoleKey.class)
-public class ChatRoles {
+@Table(name = "chat_role")
+public class  ChatRoles {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private  Long id;
+
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "user_id")
     private User user;
 
-    @Id
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "chat_id")
     private ChatEntity chat;
