@@ -22,16 +22,20 @@ public class Authenticator {
     {
         try {
             String decoded = URLDecoder.decode(telegramSafeData, StandardCharsets.UTF_8);
+            System.out.println(decoded);
             String[] splitted = decoded.split("&");
             String hash = "";
+            String user;
             SortedSet<String> others = new TreeSet<>();
             for(var s : splitted)
             {
                 if(s.contains("hash"))
                 {
                     hash = s.split("=")[1];
-                }
-                else
+
+                } else if (s.contains("user")) {
+                    user = s.split("=")[1];
+                } else
                 {
                     others.add(s);
                 }

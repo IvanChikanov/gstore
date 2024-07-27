@@ -1,6 +1,5 @@
 package com.chikanov.gstore.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -9,9 +8,9 @@ import java.util.UUID;
 
 @Controller
 @RequestMapping("/inside")
-public class LoadResourcesController {
+public class MenuController extends AbstractController{
 
-    @GetMapping("/game_list")
+    @GetMapping("/private")
     public ResponseEntity<?> getGames()
     {
         return ResponseEntity.ok("");
@@ -19,6 +18,12 @@ public class LoadResourcesController {
 
     @GetMapping("/chats")
     public ResponseEntity<?> getAdminChats()
+    {
+        return ResponseEntity.ok("");
+    }
+
+    @PostMapping("/send_game")
+    public ResponseEntity<?> sendGame()
     {
         return ResponseEntity.ok("");
     }
