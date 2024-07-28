@@ -10,7 +10,7 @@ import java.util.Set;
 @Table(name = "tg_user")
 public class User{
     @Id
-    private String id;
+    private Long id;
 
     private String customName;
 

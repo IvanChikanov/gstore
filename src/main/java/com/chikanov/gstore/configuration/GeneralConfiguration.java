@@ -2,6 +2,7 @@ package com.chikanov.gstore.configuration;
 
 import com.chikanov.gstore.filters.BotRequestFilter;
 import com.chikanov.gstore.filters.TelegramValidateFilter;
+import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
@@ -42,5 +43,10 @@ public class GeneralConfiguration implements WebMvcConfigurer {
         registrationBean.addUrlPatterns("/bot");
         registrationBean.setOrder(2);
         return registrationBean;
+    }
+    @PostConstruct
+    public void findGames()
+    {
+        System.out.println("games_finded");
     }
 }
