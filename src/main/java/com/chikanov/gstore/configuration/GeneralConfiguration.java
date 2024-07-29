@@ -15,11 +15,13 @@ import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 
 @Configuration
@@ -35,6 +37,9 @@ public class GeneralConfiguration implements WebMvcConfigurer {
 
     @Autowired
     TelegramValidateFilter telegramValidateFilter;
+
+    @Autowired
+    ResourceLoader resourceLoader;
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry){
@@ -64,7 +69,7 @@ public class GeneralConfiguration implements WebMvcConfigurer {
     {
         ObjectMapper om = new ObjectMapper();
         ClassPathResource classPathResource = new ClassPathResource("games/games.json");
-        List<GameType> gameTypeCollection = om.readValue(classPathResource.getFile(), new TypeReference<>() {});
+        List<GameType> gameTypeCollection = om.readValue(classPathResource.getInputStream(), new TypeReference<>() {});
         gameTypeService.updateGameList(gameTypeCollection);
     }
 }
