@@ -1,10 +1,8 @@
 package com.chikanov.gstore.entity;
 
+import com.chikanov.gstore.enums.TypesOfGame;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Data;
 
 @Entity
@@ -12,13 +10,15 @@ import lombok.Data;
 public class GameType {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
     private String name;
+
     private String module;
 
     @JsonProperty("src")
     private String imgSrc;
 
+    @Enumerated(EnumType.STRING)
+    private TypesOfGame type;
+    @JsonProperty("is_active")
+    private boolean isActive;
 }

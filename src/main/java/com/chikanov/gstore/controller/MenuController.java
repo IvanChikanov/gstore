@@ -2,6 +2,7 @@ package com.chikanov.gstore.controller;
 
 import com.chikanov.gstore.entity.User;
 import com.chikanov.gstore.entity.tgentities.TgUser;
+import com.chikanov.gstore.services.GameTypeService;
 import com.chikanov.gstore.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -19,10 +20,13 @@ public class MenuController extends AbstractController{
     @Autowired
     UserService userService;
 
+    @Autowired
+    GameTypeService gameTypeService;
+
     @GetMapping("/private")
     public ResponseEntity<?> getGames(@RequestAttribute("user") TgUser user) throws Exception {
         User insideUser = userService.getOrCreate(user);
-        return ResponseEntity.ok(insideUser.getId());
+        return ResponseEntity.ok(gameTypeService.getActiveGames());
     }
 
     @GetMapping("/chats")
