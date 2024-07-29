@@ -1,0 +1,8 @@
+{
+  "coop": [
+    {"name": "XO", "module": "XOGame", "src": "static/xo_icon.svg"}
+  ],
+  "single": [
+    {"name": "XO", "module": "XOGame", "src": "static/xo_icon.svg"}
+  ]
+}

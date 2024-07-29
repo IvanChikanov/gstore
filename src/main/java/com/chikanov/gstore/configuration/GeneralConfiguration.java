@@ -2,14 +2,19 @@ package com.chikanov.gstore.configuration;
 
 import com.chikanov.gstore.filters.BotRequestFilter;
 import com.chikanov.gstore.filters.TelegramValidateFilter;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
+import java.io.IOException;
 
 @Configuration
 public class GeneralConfiguration implements WebMvcConfigurer {
@@ -45,8 +50,11 @@ public class GeneralConfiguration implements WebMvcConfigurer {
         return registrationBean;
     }
     @PostConstruct
-    public void findGames()
+    public void findGames() throws IOException
     {
-        System.out.println("games_finded");
+        ObjectMapper om = new ObjectMapper();
+        ClassPathResource classPathResource = new ClassPathResource("games/games.json");
+        JsonNode json = om.readTree(classPathResource.getFile());
+        System.out.println(om.writeValueAsString(json));
     }
 }
