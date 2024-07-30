@@ -20,17 +20,14 @@ public class ReadJsonService {
 
     @Autowired
     private SendMessageService sendMessageService;
-
     @Autowired
     private SendToBot send;
-
     @Autowired
     private MessageService messageService;
-
     @Autowired
     private MessageTextKeeper messageTextKeeper;
+    private final ObjectMapper om;
 
-    private ObjectMapper om;
 
     public ReadJsonService()
     {
@@ -39,13 +36,8 @@ public class ReadJsonService {
         om.setSerializationInclusion(JsonInclude.Include.NON_NULL);
     }
 
-
     public void read(String jsonValue) throws JsonProcessingException {
-        System.out.println(jsonValue);
         TgQueries query = om.readValue(jsonValue, TgQueries.class);
-        System.out.println(query.getUpdate());
-        System.out.println(query.getInlineQuery());
-        System.out.println(query.getType());
         switchType(query);
     }
     private void switchType(TgQueries query) throws JsonProcessingException
@@ -58,7 +50,6 @@ public class ReadJsonService {
 
     private void handleInline(InlineQuery inlineQuery) throws JsonProcessingException
     {
-        System.out.println(inlineQuery.getId());
         InlineAnswer answer = new InlineAnswer();
         answer.setInlineQueryId(inlineQuery.getId());
         answer.getButton().setText("Play!");
