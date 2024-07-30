@@ -3,16 +3,11 @@ package com.chikanov.gstore.entity.tgentities;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
+import java.util.ArrayList;
+import java.util.List;
 @Data
 public class InlineKeyboard {
 
-    private String text;
-    private String url;
-
-    @JsonProperty("callback_data")
-    private String callback;
-    @JsonProperty("web_app")
-    private WebAppInfo webApp;
-
-
+    @JsonProperty("inline_keyboard")
+    private List<List<InlineKeyboardButton>> buttons = new ArrayList<>();
 }

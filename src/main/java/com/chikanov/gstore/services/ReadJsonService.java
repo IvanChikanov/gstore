@@ -1,25 +1,17 @@
 package com.chikanov.gstore.services;
 
 import com.chikanov.gstore.configuration.AutoSetWebhook;
-import com.chikanov.gstore.entity.ChatEntity;
-import com.chikanov.gstore.entity.ChatRoles;
-import com.chikanov.gstore.entity.User;
 import com.chikanov.gstore.entity.tgentities.*;
-import com.chikanov.gstore.enums.Role;
-import com.chikanov.gstore.enums.TelegramUpdates;
 import com.chikanov.gstore.services.tgservice.SendToBot;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class ReadJsonService {
@@ -76,12 +68,14 @@ public class ReadJsonService {
                 message.setText("Давай знакомится!\n Я бот в котором есть различные игры. " +
                         "Добавляй меня в чаты и вы сможете сорвеноваться и получать статистику побед в рамках конкретного чата!\n" +
                         "Так же есть и одиночные игры!\n Приятной игры!");
+                InlineKeyboardButton inlineKeyboardButton = new InlineKeyboardButton();
+                inlineKeyboardButton.setText("Войти в приложение");
+                inlineKeyboardButton.setUrl("https://t.me/Cooperation_chat_minigames_bot/coop_g_store?startapp=");
+                List<InlineKeyboardButton> inline = new ArrayList<>();
+                inline.add(inlineKeyboardButton);
                 InlineKeyboard inlineKeyboard = new InlineKeyboard();
-                inlineKeyboard.setText("Войти в приложение");
-                inlineKeyboard.setUrl("https://t.me/Cooperation_chat_minigames_bot/coop_g_store?startapp=");
-                List<InlineKeyboard> inline = new ArrayList<>();
-                inline.add(inlineKeyboard);
-                message.getReplyMarkup().add(inline);
+                inlineKeyboard.getButtons().add(inline);
+                message.setReplyMarkup(inlineKeyboard);
                 sendMessageService.send(om.writeValueAsString(message));
             }
         }
