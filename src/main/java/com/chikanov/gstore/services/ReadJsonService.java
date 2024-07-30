@@ -1,5 +1,6 @@
 package com.chikanov.gstore.services;
 
+import com.chikanov.gstore.components.MessageTextKeeper;
 import com.chikanov.gstore.configuration.AutoSetWebhook;
 import com.chikanov.gstore.entity.tgentities.*;
 import com.chikanov.gstore.services.tgservice.MessageService;
@@ -25,6 +26,9 @@ public class ReadJsonService {
 
     @Autowired
     private MessageService messageService;
+
+    @Autowired
+    private MessageTextKeeper messageTextKeeper;
 
     private ObjectMapper om;
 
@@ -67,16 +71,24 @@ public class ReadJsonService {
         if(newMember.getUser().getId().equals(AutoSetWebhook.getBOT())){
             if(newMember.getStatus().equals("member"))
             {
-                sendMessageService.send(om.writeValueAsString(messageService.oneButtonMessage(
-                        "Давай знакомится!\nЯ бот, в котором есть различные игры. " +
-                                "Добавляй меня в чаты и вы сможете сорвеноваться и получать статистику побед в рамках конкретного чата!\n" +
-                                "Так же есть и одиночные игры!\nПриятной игры!",
-                        myChatMember.getChat().getId(),
-                        messageService.oneButtonKeyboard(
-                                "Давай играть!",
-                                "https://chisch.ru/miniapp?startapp=private"
-                        )
-                )));
+                if(myChatMember.getChat().getType().equals("private"))
+                    sendMessageService.send(om.writeValueAsString(messageService.oneButtonMessage(
+                            messageTextKeeper.ru.get("private_hello"),
+                            myChatMember.getChat().getId(),
+                            messageService.oneButtonKeyboard(
+                                    "Давай играть!",
+                                    "https://t.me/Cooperation_chat_minigames_bot/coop_g_store?startapp="
+                            )
+                    )));
+                else
+                    sendMessageService.send(om.writeValueAsString(messageService.oneButtonMessage(
+                            messageTextKeeper.ru.get("group_hello"),
+                            myChatMember.getChat().getId(),
+                            messageService.oneButtonKeyboard(
+                                    "Начать личный чат!",
+                                    "https://t.me/Cooperation_chat_minigames_bot"
+                            )
+                    )));
             }
         }
     }
