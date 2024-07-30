@@ -1,6 +1,6 @@
 package com.chikanov.gstore.games.impl;
 
-import com.chikanov.gstore.entity.ChatRoles;
+import com.chikanov.gstore.entity.ChatRole;
 import com.chikanov.gstore.games.IGame;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketMessage;
@@ -35,7 +35,7 @@ public class XoGame implements IGame {
     }
 
     @Override
-    public boolean addUser(WebSocketSession session, ChatRoles user) {
+    public boolean addUser(WebSocketSession session, ChatRole user) {
         if(users.size() < getMax()){
             users.add(session);
             sendOneUserMessage(session, String.valueOf(users.size()));

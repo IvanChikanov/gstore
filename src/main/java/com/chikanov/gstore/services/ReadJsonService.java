@@ -2,7 +2,11 @@ package com.chikanov.gstore.services;
 
 import com.chikanov.gstore.components.MessageTextKeeper;
 import com.chikanov.gstore.configuration.AutoSetWebhook;
+import com.chikanov.gstore.entity.ChatEntity;
+import com.chikanov.gstore.entity.User;
 import com.chikanov.gstore.entity.tgentities.*;
+import com.chikanov.gstore.enums.Role;
+import com.chikanov.gstore.services.tgservice.ChatRoleService;
 import com.chikanov.gstore.services.tgservice.MessageService;
 import com.chikanov.gstore.services.tgservice.SendToBot;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -26,6 +30,14 @@ public class ReadJsonService {
     private MessageService messageService;
     @Autowired
     private MessageTextKeeper messageTextKeeper;
+
+    @Autowired
+    private UserService userService;
+    @Autowired
+    private ChatRoleService chatRoleService;
+    @Autowired
+    private ChatService chatService;
+
     private final ObjectMapper om;
 
 
@@ -60,9 +72,10 @@ public class ReadJsonService {
     private void handleChatMember(MyChatMember myChatMember) throws JsonProcessingException{
         ChatMember newMember = myChatMember.getNewMember();
         if(newMember.getUser().getId().equals(AutoSetWebhook.getBOT())){
+            Role role;
             if(newMember.getStatus().equals("member"))
             {
-                if(myChatMember.getChat().getType().equals("private"))
+                if(myChatMember.getChat().getType().equals("private")) {
                     sendMessageService.send(om.writeValueAsString(messageService.oneButtonMessage(
                             messageTextKeeper.ru.get("private_hello"),
                             myChatMember.getChat().getId(),
@@ -71,7 +84,9 @@ public class ReadJsonService {
                                     "https://t.me/Cooperation_chat_minigames_bot/coop_g_store?startapp=private"
                             )
                     )));
-                else
+                    role = Role.PRIVATE;
+                }
+                else {
                     sendMessageService.send(om.writeValueAsString(messageService.oneButtonMessage(
                             messageTextKeeper.ru.get("group_hello"),
                             myChatMember.getChat().getId(),
@@ -80,6 +95,11 @@ public class ReadJsonService {
                                     "https://t.me/Cooperation_chat_minigames_bot"
                             )
                     )));
+                    role = Role.ADMIN;
+                }
+                User user = userService.getOrCreate(myChatMember.getFrom());
+                ChatEntity chat = chatService.getOrCreate(myChatMember.getChat());
+                chatRoleService.createChatRole(user, chat, role);
             }
         }
     }

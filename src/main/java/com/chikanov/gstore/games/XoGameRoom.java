@@ -1,10 +1,9 @@
 package com.chikanov.gstore.games;
 
-import com.chikanov.gstore.entity.ChatRoles;
+import com.chikanov.gstore.entity.ChatRole;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketMessage;
@@ -35,7 +34,7 @@ public class XoGameRoom extends AbstractWsGameRoom {
     }
 
     @Override
-    public void addUser(WebSocketSession session, ChatRoles user) throws IOException {
+    public void addUser(WebSocketSession session, ChatRole user) throws IOException {
         if(players.size() < getMax())
         {
             players.add(new XoPlayer(session, user));
@@ -64,7 +63,7 @@ public class XoGameRoom extends AbstractWsGameRoom {
     }
 
     private class XoPlayer extends Player{
-        protected XoPlayer(WebSocketSession session, ChatRoles user) {
+        protected XoPlayer(WebSocketSession session, ChatRole user) {
             super(session, user);
             super.sendMessageToUser(new TextMessage(symbol[players.size()].toString()));
         }

@@ -15,7 +15,7 @@ public class ChatEntity{
     private String name;
 
     @OneToMany(mappedBy = "chat")
-    private Set<ChatRoles> chatRoles = new HashSet<>();
+    private Set<ChatRole> chatRoles = new HashSet<>();
 
     @OneToMany(cascade = CascadeType.ALL)
     private Set<Game> games = new HashSet<>();

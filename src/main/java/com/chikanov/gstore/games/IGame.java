@@ -1,6 +1,6 @@
 package com.chikanov.gstore.games;
 
-import com.chikanov.gstore.entity.ChatRoles;
+import com.chikanov.gstore.entity.ChatRole;
 import org.springframework.web.socket.WebSocketMessage;
 import org.springframework.web.socket.WebSocketSession;
 
@@ -11,6 +11,6 @@ public interface IGame {
     int getMax();
     boolean readMessage(WebSocketSession user, WebSocketMessage<?> message) throws IOException;
     void sendMessage(String message) throws IOException;
-    boolean addUser(WebSocketSession session, ChatRoles user);
+    boolean addUser(WebSocketSession session, ChatRole user);
 
 }
