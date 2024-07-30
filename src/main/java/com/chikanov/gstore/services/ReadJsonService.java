@@ -68,7 +68,7 @@ public class ReadJsonService {
                             myChatMember.getChat().getId(),
                             messageService.oneButtonKeyboard(
                                     "Давай играть!",
-                                    "https://t.me/Cooperation_chat_minigames_bot/coop_g_store?startapp="
+                                    "https://t.me/Cooperation_chat_minigames_bot/coop_g_store?startapp=private"
                             )
                     )));
                 else
