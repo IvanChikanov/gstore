@@ -78,7 +78,7 @@ public class ReadJsonService {
                         "Так же есть и одиночные игры!\n Приятной игры!");
                 InlineKeyboard inlineKeyboard = new InlineKeyboard();
                 inlineKeyboard.setText("Войти в приложение");
-                inlineKeyboard.setUrl("https://chisch.ru/miniapp?startapp=private");
+                inlineKeyboard.setUrl("https://t.me/Cooperation_chat_minigames_bot/coop_g_store?startapp=");
                 List<InlineKeyboard> inline = new ArrayList<>();
                 inline.add(inlineKeyboard);
                 message.getReplyMarkup().add(inline);
