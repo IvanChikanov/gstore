@@ -1,5 +1,5 @@
 [
-  {"name": "X-O", "module": "XOGame", "src": "static/xo_icon.svg", "type":  "COOPERATION", "is_active": true},
+  {"name": "X-O", "module": "XOGame", "src": "static/icons/xo_icon.svg", "type":  "COOPERATION", "is_active": true},
   {"name": "singleGame", "module": "singleGame", "src": "static/sg_icon.svg", "type":  "SINGLE", "is_active": false},
-  {"name": "secondSingle", "module": "secondSingle", "src": "static/ss_icon.svg", "type":  "SINGLE", "is_active": true}
+  {"name": "secondSingle", "module": "secondSingle", "src": "static/icons/xo_icon.svg", "type":  "SINGLE", "is_active": true}
 ]
