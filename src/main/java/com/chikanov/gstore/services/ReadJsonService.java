@@ -8,6 +8,7 @@ import com.chikanov.gstore.entity.tgentities.*;
 import com.chikanov.gstore.enums.Role;
 import com.chikanov.gstore.enums.TelegramUpdates;
 import com.chikanov.gstore.services.tgservice.SendToBot;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -35,6 +36,7 @@ public class ReadJsonService {
     {
         om = new ObjectMapper();
         om.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        om.setSerializationInclusion(JsonInclude.Include.NON_NULL);
     }
 
 
