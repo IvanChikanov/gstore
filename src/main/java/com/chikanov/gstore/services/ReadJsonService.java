@@ -2,6 +2,7 @@ package com.chikanov.gstore.services;
 
 import com.chikanov.gstore.configuration.AutoSetWebhook;
 import com.chikanov.gstore.entity.tgentities.*;
+import com.chikanov.gstore.services.tgservice.MessageService;
 import com.chikanov.gstore.services.tgservice.SendToBot;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -21,6 +22,9 @@ public class ReadJsonService {
 
     @Autowired
     private SendToBot send;
+
+    @Autowired
+    private MessageService messageService;
 
     private ObjectMapper om;
 
@@ -63,20 +67,16 @@ public class ReadJsonService {
         if(newMember.getUser().getId().equals(AutoSetWebhook.getBOT())){
             if(newMember.getStatus().equals("member"))
             {
-                TgMessage message = new TgMessage();
-                message.setChatId(myChatMember.getChat().getId());
-                message.setText("Давай знакомится!\n Я бот в котором есть различные игры. " +
-                        "Добавляй меня в чаты и вы сможете сорвеноваться и получать статистику побед в рамках конкретного чата!\n" +
-                        "Так же есть и одиночные игры!\n Приятной игры!");
-                InlineKeyboardButton inlineKeyboardButton = new InlineKeyboardButton();
-                inlineKeyboardButton.setText("Войти в приложение");
-                inlineKeyboardButton.setUrl("https://t.me/Cooperation_chat_minigames_bot/coop_g_store?startapp=");
-                List<InlineKeyboardButton> inline = new ArrayList<>();
-                inline.add(inlineKeyboardButton);
-                InlineKeyboard inlineKeyboard = new InlineKeyboard();
-                inlineKeyboard.getButtons().add(inline);
-                message.setReplyMarkup(inlineKeyboard);
-                sendMessageService.send(om.writeValueAsString(message));
+                sendMessageService.send(om.writeValueAsString(messageService.oneButtonMessage(
+                        "Давай знакомится!\nЯ бот, в котором есть различные игры. " +
+                                "Добавляй меня в чаты и вы сможете сорвеноваться и получать статистику побед в рамках конкретного чата!\n" +
+                                "Так же есть и одиночные игры!\nПриятной игры!",
+                        myChatMember.getChat().getId(),
+                        messageService.oneButtonKeyboard(
+                                "Давай играть!",
+                                "https://chisch.ru/miniapp?startapp=private"
+                        )
+                )));
             }
         }
     }
