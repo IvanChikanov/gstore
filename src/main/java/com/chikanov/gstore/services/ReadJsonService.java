@@ -4,10 +4,7 @@ import com.chikanov.gstore.configuration.AutoSetWebhook;
 import com.chikanov.gstore.entity.ChatEntity;
 import com.chikanov.gstore.entity.ChatRoles;
 import com.chikanov.gstore.entity.User;
-import com.chikanov.gstore.entity.tgentities.InlineAnswer;
-import com.chikanov.gstore.entity.tgentities.InlineQuery;
-import com.chikanov.gstore.entity.tgentities.MyChatMember;
-import com.chikanov.gstore.entity.tgentities.TgQueries;
+import com.chikanov.gstore.entity.tgentities.*;
 import com.chikanov.gstore.enums.Role;
 import com.chikanov.gstore.enums.TelegramUpdates;
 import com.chikanov.gstore.services.tgservice.SendToBot;
@@ -18,7 +15,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -66,7 +65,24 @@ public class ReadJsonService {
     }
 
     private void handleChatMember(MyChatMember myChatMember) throws JsonProcessingException{
-
+        ChatMember newMember = myChatMember.getNewMember();
+        if(newMember.getUser().getId().equals(AutoSetWebhook.getBOT())){
+            if(newMember.getStatus().equals("member"))
+            {
+                TgMessage message = new TgMessage();
+                message.setChatId(myChatMember.getChat().getId());
+                message.setText("Давай знакомится!\n Я бот в котором есть различные игры. " +
+                        "Добавляй меня в чаты и вы сможете сорвеноваться и получать статистику побед в рамках конкретного чата!\n" +
+                        "Так же есть и одиночные игры!\n Приятной игры!");
+                InlineKeyboard inlineKeyboard = new InlineKeyboard();
+                inlineKeyboard.setText("Войти в приложение");
+                inlineKeyboard.setUrl("https://chisch.ru/miniapp?startapp=private");
+                List<InlineKeyboard> inline = new ArrayList<>();
+                inline.add(inlineKeyboard);
+                message.getReplyMarkup().add(inline);
+                sendMessageService.send(om.writeValueAsString(message));
+            }
+        }
     }
 
 }

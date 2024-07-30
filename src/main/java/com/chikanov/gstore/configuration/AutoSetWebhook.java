@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
 @Component
 public class AutoSetWebhook {
     @Getter
-    private static String BOT;
+    private static Long BOT;
     @Value("${token.value}")
     private String TOKEN;
     private final String URL = "https://api.telegram.org/bot";
@@ -44,7 +44,7 @@ public class AutoSetWebhook {
             if(r.getStatusCode().equals(HttpStatus.OK)) {
                 var getMe = rt.exchange(URL + TOKEN + GET_ME, HttpMethod.GET, HttpEntity.EMPTY, String.class);
                 JsonNode json = om.readTree(getMe.getBody());
-                BOT = json.get("result").get("id").asText();
+                BOT = json.get("result").get("id").asLong();
             }
         }catch (JsonProcessingException ex){
             ex.printStackTrace();
