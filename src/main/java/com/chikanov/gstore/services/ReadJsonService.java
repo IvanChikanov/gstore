@@ -77,10 +77,10 @@ public class ReadJsonService {
             {
                 if(myChatMember.getChat().getType().equals("private")) {
                     sendMessageService.send(om.writeValueAsString(messageService.oneButtonMessage(
-                            messageTextKeeper.ru.get("private_hello"),
+                            messageTextKeeper.lang("ru").get("private_hello"),
                             myChatMember.getChat().getId(),
                             messageService.oneButtonKeyboard(
-                                    "Давай играть!",
+                                    messageTextKeeper.lang("ru").get("private_hello_button"),
                                     "https://t.me/Cooperation_chat_minigames_bot/coop_g_store?startapp=private"
                             )
                     )));
@@ -88,10 +88,10 @@ public class ReadJsonService {
                 }
                 else {
                     sendMessageService.send(om.writeValueAsString(messageService.oneButtonMessage(
-                            messageTextKeeper.ru.get("group_hello"),
+                            messageTextKeeper.lang("ru").get("group_hello"),
                             myChatMember.getChat().getId(),
                             messageService.oneButtonKeyboard(
-                                    "Начать личный чат!",
+                                    messageTextKeeper.lang("ru").get("group_hello_button"),
                                     "https://t.me/Cooperation_chat_minigames_bot"
                             )
                     )));

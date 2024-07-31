@@ -11,7 +11,6 @@ public class ExceptionController {
     @ExceptionHandler(Exception.class)
     public ResponseEntity<?> handleRuntimeException(Exception e)
     {
-        System.out.println("EEEE");
-        return new ResponseEntity<>(e.getMessage(), HttpStatusCode.valueOf(400));
+        return new ResponseEntity<>(e.getMessage(), HttpStatusCode.valueOf(500));
     }
 }
