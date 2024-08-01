@@ -6,7 +6,6 @@ import com.chikanov.gstore.entity.ChatEntity;
 import com.chikanov.gstore.entity.User;
 import com.chikanov.gstore.entity.tgentities.*;
 import com.chikanov.gstore.enums.Role;
-import com.chikanov.gstore.services.tgservice.ChatRoleService;
 import com.chikanov.gstore.services.tgservice.MessageService;
 import com.chikanov.gstore.services.tgservice.SendToBot;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -15,9 +14,6 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Service
 public class ReadJsonService {

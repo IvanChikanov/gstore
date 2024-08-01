@@ -1,4 +1,4 @@
-package com.chikanov.gstore.services.tgservice;
+package com.chikanov.gstore.services;
 
 import com.chikanov.gstore.entity.ChatEntity;
 import com.chikanov.gstore.entity.ChatRole;
@@ -9,6 +9,8 @@ import com.chikanov.gstore.repositories.ChatRoleRepository;
 import com.chikanov.gstore.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class ChatRoleService {
@@ -28,5 +30,8 @@ public class ChatRoleService {
         chatRole.setUser(user);
         chatRole.setRole(role);
         roleRepository.save(chatRole);
+    }
+    public List<ChatEntity> getChats(User user, Role role){
+        return roleRepository.getChats(user, role);
     }
 }
