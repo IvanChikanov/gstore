@@ -3,6 +3,7 @@ package com.chikanov.gstore.services;
 import com.chikanov.gstore.entity.ChatEntity;
 import com.chikanov.gstore.entity.ChatRole;
 import com.chikanov.gstore.entity.User;
+import com.chikanov.gstore.entity.dto.ChatDTO;
 import com.chikanov.gstore.enums.Role;
 import com.chikanov.gstore.repositories.ChatRepository;
 import com.chikanov.gstore.repositories.ChatRoleRepository;
@@ -15,7 +16,7 @@ import java.util.List;
 @Service
 public class ChatRoleService {
     @Autowired
-    private ChatRepository chatRepository;
+    private ChatService chatService;
 
     @Autowired
     private ChatRoleRepository roleRepository;
@@ -31,7 +32,8 @@ public class ChatRoleService {
         chatRole.setRole(role);
         roleRepository.save(chatRole);
     }
-    public List<ChatEntity> getChats(User user, Role role){
-        return roleRepository.getChats(user, role);
+    public List<ChatDTO> getChats(User user, Role role){
+        return roleRepository.getChats(user, role).stream().map(ch -> chatService.convertToDTO(ch)).toList();
     }
+
 }

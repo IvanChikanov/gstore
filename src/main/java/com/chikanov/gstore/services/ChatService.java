@@ -1,6 +1,7 @@
 package com.chikanov.gstore.services;
 
 import com.chikanov.gstore.entity.ChatEntity;
+import com.chikanov.gstore.entity.dto.ChatDTO;
 import com.chikanov.gstore.entity.tgentities.Chat;
 import com.chikanov.gstore.repositories.ChatRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,5 +23,9 @@ public class ChatService {
             newChat.setName(tgChat.getTitle());
             return newChat;
         });
+    }
+
+    public ChatDTO convertToDTO(ChatEntity chat){
+        return new ChatDTO(chat.getName(), chat.getId());
     }
 }

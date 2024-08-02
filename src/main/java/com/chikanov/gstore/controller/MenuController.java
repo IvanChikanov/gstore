@@ -1,6 +1,7 @@
 package com.chikanov.gstore.controller;
 
 import com.chikanov.gstore.entity.ChatEntity;
+import com.chikanov.gstore.entity.dto.ChatDTO;
 import com.chikanov.gstore.entity.dto.GameTypeFilteredDTO;
 import com.chikanov.gstore.entity.tgentities.TgUser;
 import com.chikanov.gstore.enums.Role;
@@ -37,7 +38,7 @@ public class MenuController extends AbstractController{
 
     @Transactional
     @GetMapping("/chats")
-    public ResponseEntity<List<ChatEntity>> getAdminChats(@RequestAttribute("user") TgUser user) throws Exception
+    public ResponseEntity<List<ChatDTO>> getAdminChats(@RequestAttribute("user") TgUser user) throws Exception
     {
         return ResponseEntity.ok(chatRoleService.getChats(userService.getOrCreate(user), Role.ADMIN));
     }
