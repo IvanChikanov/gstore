@@ -3,6 +3,7 @@ package com.chikanov.gstore.controller;
 import com.chikanov.gstore.entity.ChatEntity;
 import com.chikanov.gstore.entity.dto.ChatDTO;
 import com.chikanov.gstore.entity.dto.GameTypeFilteredDTO;
+import com.chikanov.gstore.entity.dto.SendGameDTO;
 import com.chikanov.gstore.entity.tgentities.TgUser;
 import com.chikanov.gstore.enums.Role;
 import com.chikanov.gstore.services.ChatRoleService;
@@ -44,9 +45,10 @@ public class MenuController extends AbstractController{
     }
 
     @GetMapping("/send_game")
-    public ResponseEntity<?> sendGame() throws Exception
+    public ResponseEntity<?> sendGame(@RequestBody SendGameDTO sendGameDTO) throws Exception
     {
-        return ResponseEntity.ok("");
+        System.out.println(sendGameDTO.game_id());
+        return ResponseEntity.ok(UUID.randomUUID());
     }
 
     @GetMapping("/load_module/{uuid}")

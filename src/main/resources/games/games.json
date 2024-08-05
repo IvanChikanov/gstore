@@ -1,5 +1,5 @@
 [
-  {"name": "Cross & Os", "module": "XO", "src": "/icons/xo_icon.svg", "type":  "COOPERATION", "is_active": true},
-  {"name": "singleGame", "module": "singleGame", "src": "static/sg_icon.svg", "type":  "SINGLE", "is_active": false},
-  {"name": "secondSingle", "module": "secondSingle", "src": "/icons/xo_icon.svg", "type":  "SINGLE", "is_active": true}
+  {"id": 1, "name": "Cross & Os", "module": "XO", "src": "/icons/xo_icon.svg", "type":  "COOPERATION", "is_active": true},
+  {"id": 2, "name": "singleGame", "module": "singleGame", "src": "static/sg_icon.svg", "type":  "SINGLE", "is_active": false},
+  {"id": 3, "name": "secondSingle", "module": "secondSingle", "src": "/icons/xo_icon.svg", "type":  "SINGLE", "is_active": true}
 ]

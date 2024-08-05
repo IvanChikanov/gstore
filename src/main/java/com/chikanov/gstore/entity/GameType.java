@@ -8,8 +8,9 @@ import lombok.Data;
 @Entity
 @Data
 public class GameType {
-
     @Id
+    private Long id;
+
     private String name;
 
     private String module;
