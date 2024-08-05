@@ -15,8 +15,13 @@ import java.util.UUID;
 @Setter
 @NoArgsConstructor
 public class Game {
+
     @Id
     private UUID id;
+
+    @ManyToOne
+    @JoinColumn(name = "game_type_id")
+    private GameType gameType;
 
     @ManyToOne
     @JoinColumn(name = "chat_id")
@@ -25,5 +30,5 @@ public class Game {
     @OneToMany(mappedBy = "id")
     private Set<Result> results = new HashSet<>();
 
-    private boolean finished;
+    private boolean finished = false;
 }
