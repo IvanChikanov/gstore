@@ -54,26 +54,26 @@ public class MenuController extends AbstractController{
     }
 
     @PostMapping("/send_game")
-    public ResponseEntity<?> sendGame(@RequestAttribute("user") TgUser user, @RequestBody SendGameDTO sendGameDTO) throws Exception
+    public ResponseEntity<String> sendGame(@RequestAttribute("user") TgUser user, @RequestBody SendGameDTO sendGameDTO) throws Exception
     {
         ObjectMapper om = new ObjectMapper();
+        String id = gameService.createGame(sendGameDTO.chat_id(), sendGameDTO.game_id());
         sendMessageService.send(om.writeValueAsString(messageService.oneButtonMessage(
                 String.format("@%s приглашает вас в игру", user.getUsername()),
                 sendGameDTO.chat_id(),
                 messageService.oneButtonKeyboard(
                         "Играть",
-                        String.format("https://t.me/Cooperation_chat_minigames_bot/coop_g_store?startapp=%s",
-                                gameService.createGame(sendGameDTO.chat_id())))
+                        String.format("https://t.me/Cooperation_chat_minigames_bot/coop_g_store?startapp=%s",id))
                         )
                 )
         );
-        return ResponseEntity.ok(UUID.randomUUID());
+        return ResponseEntity.ok(id);
     }
 
     @GetMapping("/load_module/{uuid}")
-    public ResponseEntity<?> loadModule(@PathVariable("uuid") UUID gameId) throws Exception
+    public ResponseEntity<String> loadModule(@PathVariable("uuid") UUID gameId) throws Exception
     {
-        return ResponseEntity.ok("");
+        return ResponseEntity.ok(gameService.getGameModule(gameId));
     }
 
 

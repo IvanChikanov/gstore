@@ -5,7 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
-public interface GameTypeRepository extends JpaRepository<GameType, String> {
+public interface GameTypeRepository extends JpaRepository<GameType, Long> {
 
     List<GameType> findByIsActive(boolean isActive);
 }

@@ -5,6 +5,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @Entity
 @Data
 public class GameType {
@@ -20,6 +23,10 @@ public class GameType {
 
     @Enumerated(EnumType.STRING)
     private TypesOfGame type;
+
     @JsonProperty("is_active")
     private boolean isActive;
+
+    @OneToMany(fetch = FetchType.LAZY)
+    private Set<Game> games = new HashSet<>();
 }

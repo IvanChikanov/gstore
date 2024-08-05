@@ -31,6 +31,9 @@ public class GameTypeService {
         return filteredDTO;
     }
 
+    public GameType getGame(Long id){
+        return gameTypeRepository.findById(id).orElseThrow();
+    }
     private GameTypeDTO convertToDTO(GameType gt)
     {
         GameTypeDTO gameTypeDTO = new GameTypeDTO();
