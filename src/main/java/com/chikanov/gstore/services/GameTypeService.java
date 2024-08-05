@@ -34,6 +34,7 @@ public class GameTypeService {
     private GameTypeDTO convertToDTO(GameType gt)
     {
         GameTypeDTO gameTypeDTO = new GameTypeDTO();
+        gameTypeDTO.setId(gt.getId());
         gameTypeDTO.setName(gt.getName());
         gameTypeDTO.setSrc(gt.getImgSrc());
         gameTypeDTO.setModule(gt.getModule());
