@@ -1,9 +1,11 @@
 package com.chikanov.gstore.entity.tgentities;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 @Data
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class TgUser {
 
     @JsonProperty("id")
@@ -23,4 +25,6 @@ public class TgUser {
 
     @JsonProperty("allows_write_to_pm")
     private boolean allows;
+
+
 }
