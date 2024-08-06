@@ -10,13 +10,22 @@ import org.springframework.web.socket.WebSocketSession;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 
 @Service
 public class WebSocketGameService {
 
+    private final ConcurrentHashMap<UUID, Set<WebSocketSession>> waitedUsers = new ConcurrentHashMap<>();
     private HashMap<UUID, AbstractWsGameRoom> rooms = new HashMap<>();
 
+    public void connectNewUser(UUID gameId, WebSocketSession user)
+    {
+        if(!waitedUsers.containsKey(gameId))
+            waitedUsers.put(gameId, new HashSet<>());
+    }
     public synchronized void newUser(WebSocketSession user, UUID gameId) throws IOException {
 
         if(!rooms.containsKey(gameId))

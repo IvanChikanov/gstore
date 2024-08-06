@@ -1,5 +1,6 @@
 package com.chikanov.gstore.websock.messages;
 
+import com.chikanov.gstore.exceptions.ResponseException;
 import com.fasterxml.jackson.core.JacksonException;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
@@ -26,7 +27,17 @@ public class WsMessageDeserializer extends StdDeserializer<WsMessage<?>> {
     @Override
     public WsMessage<?> deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException, JacksonException {
         JsonNode node = jsonParser.getCodec().readTree(jsonParser);
-        Auth auth = objectMapper.treeToValue(node.get("payload"), Auth.class);
-        return new WsMessage<>(node.get("type").asText(), node.get("from").asText(), UUID.fromString(node.get("game").asText()), auth);
+        switch (node.get("type").asText()){
+            case "auth" -> {
+                return new WsMessage<>(node.get("type").asText(),
+                        node.get("from").asText(),
+                        UUID.fromString(node.get("game").asText()),
+                        objectMapper.treeToValue(node.get("payload"), Auth.class));
+            }
+            default ->
+            {
+                return null;
+            }
+        }
     }
 }
