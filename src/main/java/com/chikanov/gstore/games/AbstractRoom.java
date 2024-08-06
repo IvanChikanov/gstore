@@ -1,29 +1,29 @@
 package com.chikanov.gstore.games;
 
+import com.chikanov.gstore.entity.ChatRole;
+import com.chikanov.gstore.records.WsPlayer;
 import org.springframework.web.socket.WebSocketMessage;
 import org.springframework.web.socket.WebSocketSession;
 
+import java.io.IOException;
 import java.util.Map;
 import java.util.UUID;
 
-public class AbstractRoom<T> implements IRoom{
+public abstract class AbstractRoom<T> implements IRoom{
 
-    protected Map<WebSocketSession, T> players;
+    protected UUID roomId;
+    protected Map<UUID, T> players;
+    protected int max;
 
-    @Override
-    public void createRoom(UUID gameId) {
-
+    public AbstractRoom(UUID id){
+        roomId = id;
     }
 
     @Override
-    public boolean addUser(WebSocketSession user) {
-        return false;
-    }
+    public abstract boolean addUser(WsPlayer player) throws IOException;
 
     @Override
-    public void readMessage(WebSocketSession user, WebSocketMessage<?> message) {
-
-    }
+    public abstract void readMessage(WebSocketSession user, WebSocketMessage<?> message);
 
     @Override
     public void sendMessage(WebSocketSession user, WebSocketMessage<?> message) {
@@ -34,4 +34,5 @@ public class AbstractRoom<T> implements IRoom{
     public void closeConnection(WebSocketSession user) {
 
     }
+
 }

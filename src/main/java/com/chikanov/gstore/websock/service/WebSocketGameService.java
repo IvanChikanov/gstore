@@ -1,4 +1,4 @@
-package com.chikanov.gstore.websock;
+package com.chikanov.gstore.websock.service;
 
 import com.chikanov.gstore.entity.ChatRole;
 import com.chikanov.gstore.games.AbstractWsGameRoom;
@@ -30,8 +30,8 @@ public class WebSocketGameService {
 
         if(!rooms.containsKey(gameId))
         {
-            XoGameRoom gameRoom = new XoGameRoom();
-            rooms.put(gameId, gameRoom);
+//            XoGameRoom gameRoom = new XoGameRoom();
+//            rooms.put(gameId, gameRoom);
         }
         rooms.get(gameId).addUser(user, new ChatRole());
     }

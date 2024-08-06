@@ -1,11 +1,11 @@
 package com.chikanov.gstore.games;
 
 import com.chikanov.gstore.entity.ChatRole;
+import com.chikanov.gstore.records.WsPlayer;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.web.socket.CloseStatus;
-import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketMessage;
 import org.springframework.web.socket.WebSocketSession;
 
@@ -13,17 +13,23 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.UUID;
 
-public class XoGameRoom extends AbstractWsGameRoom {
+public class XoGameRoom extends AbstractRoom<XoGameRoom.XoPlayer> {
 
     private final Integer[] symbol = new Integer[]{1, 2};
-    private final Set<XoPlayer> players = new HashSet<>();
     private final int[] cells = new int[9];
 
     private final ObjectMapper objectMapper = new ObjectMapper();
+    public XoGameRoom(UUID id){
+        super(id);
+        max = 2;
+        Arrays.fill(cells, 0);
+    }
+
 
     private void startGame(){
-        Arrays.fill(cells, 0);
+
         //players.forEach(xoPlayer -> xoPlayer.sendMessageToUser(new TextMessage("start")));
     }
 
@@ -34,38 +40,30 @@ public class XoGameRoom extends AbstractWsGameRoom {
     }
 
     @Override
-    public void addUser(WebSocketSession session, ChatRole user) throws IOException {
-        if(players.size() < getMax())
+    public boolean addUser(WsPlayer player) throws IOException {
+        if(players.size() < max)
         {
-            players.add(new XoPlayer(session, user));
-            if (players.size() == getMax())
+            players.put(player.wsUser().externalId(), new XoPlayer(player, symbol[players.size()], false));
+            if (players.size() == max)
                 startGame();
+            return true;
         }
         else{
-            session.close(CloseStatus.TOO_BIG_TO_PROCESS);
+            player.wsUser().session().close(CloseStatus.TOO_BIG_TO_PROCESS);
+            return false;
         }
     }
 
     @Override
-    public void readMessage(WebSocketSession user, WebSocketMessage<?> message) throws JsonProcessingException{
+    public void readMessage(WebSocketSession user, WebSocketMessage<?> message){
         System.out.println(message.getPayload());
-        JsonNode json = objectMapper.readTree(message.getPayload().toString());
-        cells[json.get("action").asInt()] = json.get("who").asInt();
-
-        players.stream().
-                filter(xoPlayer -> xoPlayer.userSession != user).
-                forEach(xoPlayer -> xoPlayer.sendMessageToUser(message));
+//        JsonNode json = objectMapper.readTree(message.getPayload().toString());
+//        cells[json.get("action").asInt()] = json.get("who").asInt();
+//
+//        players.stream().
+//                filter(xoPlayer -> xoPlayer.userSession != user).
+//                forEach(xoPlayer -> xoPlayer.sendMessageToUser(message));
     }
 
-    @Override
-    public int getMax(){
-       return 2;
-    }
-
-    private class XoPlayer extends Player{
-        protected XoPlayer(WebSocketSession session, ChatRole user) {
-            super(session, user);
-            super.sendMessageToUser(new TextMessage(symbol[players.size()].toString()));
-        }
-    }
+    public record XoPlayer(WsPlayer wsPlayer, int number, boolean winner){}
 }

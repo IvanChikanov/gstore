@@ -72,4 +72,8 @@ public class GeneralConfiguration implements WebMvcConfigurer {
         List<GameType> gameTypeCollection = om.readValue(classPathResource.getInputStream(), new TypeReference<>() {});
         gameTypeService.updateGameList(gameTypeCollection);
     }
+    @Bean
+    public ObjectMapper getObjectMapper(){
+        return new ObjectMapper();
+    }
 }

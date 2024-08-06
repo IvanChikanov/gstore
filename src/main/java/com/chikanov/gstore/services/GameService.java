@@ -39,4 +39,5 @@ public class GameService {
         Game game = gameRepository.findById(uuid).orElseThrow();
         return game.getGameType().getModule();
     }
+
 }
