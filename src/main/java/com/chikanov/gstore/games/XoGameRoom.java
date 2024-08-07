@@ -43,7 +43,6 @@ public class XoGameRoom extends AbstractRoom<XoGameRoom.XoPlayer> {
             XoPlayer xop =  new XoPlayer(player, symbol[players.size()], false);
             players.put(player.wsUser().externalId(), xop);
             player.wsUser().session().sendMessage(new TextMessage(String.valueOf(xop.number)));
-            System.out.println("Number is sended");
             if (players.size() == max)
                 startGame();
             return true;
