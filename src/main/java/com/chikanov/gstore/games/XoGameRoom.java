@@ -1,6 +1,7 @@
 package com.chikanov.gstore.games;
 
 import com.chikanov.gstore.entity.ChatRole;
+import com.chikanov.gstore.records.ActionMessage;
 import com.chikanov.gstore.records.WsPlayer;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -59,8 +60,9 @@ public class XoGameRoom extends AbstractRoom<XoGameRoom.XoPlayer> {
     }
 
     @Override
-    public void readMessage(WebSocketSession user, WebSocketMessage<?> message){
-        System.out.println(message.getPayload());
+    public void readMessage(ActionMessage message){
+
+
 //        JsonNode json = objectMapper.readTree(message.getPayload().toString());
 //        cells[json.get("action").asInt()] = json.get("who").asInt();
 //

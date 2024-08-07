@@ -1,6 +1,7 @@
 package com.chikanov.gstore.games;
 
 import com.chikanov.gstore.entity.ChatRole;
+import com.chikanov.gstore.records.ActionMessage;
 import com.chikanov.gstore.records.WsPlayer;
 import org.springframework.web.socket.WebSocketMessage;
 import org.springframework.web.socket.WebSocketSession;
@@ -23,7 +24,7 @@ public abstract class AbstractRoom<T> implements IRoom{
     public abstract boolean addUser(WsPlayer player) throws IOException;
 
     @Override
-    public abstract void readMessage(WebSocketSession user, WebSocketMessage<?> message);
+    public abstract void readMessage(ActionMessage message);
 
     @Override
     public void sendMessage(WebSocketSession user, WebSocketMessage<?> message) {
