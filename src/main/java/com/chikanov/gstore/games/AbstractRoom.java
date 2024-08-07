@@ -7,6 +7,7 @@ import org.springframework.web.socket.WebSocketMessage;
 import org.springframework.web.socket.WebSocketSession;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
@@ -18,6 +19,7 @@ public abstract class AbstractRoom<T> implements IRoom{
 
     public AbstractRoom(UUID id){
         roomId = id;
+        players = new HashMap<>();
     }
 
     @Override
