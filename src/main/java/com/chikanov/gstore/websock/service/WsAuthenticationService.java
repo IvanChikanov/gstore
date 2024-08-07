@@ -48,5 +48,6 @@ public class WsAuthenticationService {
         UUID createdID = UUID.randomUUID();
         unauthorizedSessions.put(createdID, session);
         session.sendMessage(new TextMessage(createdID.toString()));
+        System.out.println("authMessageSended");
     }
 }

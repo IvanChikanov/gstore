@@ -39,7 +39,9 @@ public class WSHandler implements WebSocketHandler {
 
     @Override
     public void handleTransportError(WebSocketSession session, Throwable exception) throws Exception {
-
+       exception.printStackTrace();
+       System.out.println();
+       System.out.println(exception.getMessage());
     }
 
     @Override
