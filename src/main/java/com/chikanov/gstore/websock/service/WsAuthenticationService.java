@@ -37,7 +37,7 @@ public class WsAuthenticationService {
     public WsPlayer authenticate(AuthenticationMessage authMessage) throws JsonProcessingException {
         AuthData auth = authenticator.validation(authMessage.token());
         if(auth.statusCode().equals(HttpStatus.OK)) {
-            User user =  userService.getUserFromTg(objectMapper.readValue(auth.result(), TgUser.class)).orElseThrow();
+            User user =  userService.getOrCreate(objectMapper.readValue(auth.result(), TgUser.class));
             WsUser wsUser = new WsUser(authMessage.from(), unauthorizedSessions.computeIfPresent(authMessage.from(), (k,v)-> null));
             return new WsPlayer(wsUser, user);
         }
