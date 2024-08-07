@@ -48,6 +48,11 @@ public class WebSocketRouteService {
             wsRoomService.addUser(target, player);
     }
     private void gameEvent(String message) throws Exception{
+        System.out.println(message);
+        System.out.println(message);
+        System.out.println(message);
+        System.out.println(message);
+        System.out.println(message);
         JsonNode json = objectMapper.readTree(message);
         ActionMessage actionMessage = new ActionMessage(
                 UUID.fromString(json.get("from").asText()),
