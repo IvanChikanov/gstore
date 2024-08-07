@@ -38,7 +38,9 @@ public class WsAuthenticationService {
         AuthData auth = authenticator.validation(authMessage.token());
         if(auth.statusCode().equals(HttpStatus.OK)) {
             User user =  userService.getOrCreate(objectMapper.readValue(auth.result(), TgUser.class));
-            WsUser wsUser = new WsUser(authMessage.from(), unauthorizedSessions.computeIfPresent(authMessage.from(), (k,v)-> null));
+            var sess = unauthorizedSessions.remove(authMessage.from());
+            System.out.println(sess);
+            WsUser wsUser = new WsUser(authMessage.from(), sess);
             return new WsPlayer(wsUser, user);
         }
         throw new RuntimeException("token not valid");
