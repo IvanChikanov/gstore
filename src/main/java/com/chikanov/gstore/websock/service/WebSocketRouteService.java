@@ -1,9 +1,11 @@
 package com.chikanov.gstore.websock.service;
 
 import com.chikanov.gstore.entity.User;
+import com.chikanov.gstore.records.ActionMessage;
 import com.chikanov.gstore.records.AuthenticationMessage;
 import com.chikanov.gstore.records.WsPlayer;
 import com.chikanov.gstore.records.WsUser;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -45,8 +47,14 @@ public class WebSocketRouteService {
     private void addUserToRoom(WsPlayer player, UUID target) throws Exception{
             wsRoomService.addUser(target, player);
     }
-    private void gameEvent(String message){
-
+    private void gameEvent(String message) throws Exception{
+        JsonNode json = objectMapper.readTree(message);
+        ActionMessage actionMessage = new ActionMessage(
+                UUID.fromString(json.get("from").asText()),
+                UUID.fromString(json.get("game").asText()),
+                json.get("action").asText()
+        );
+        wsRoomService.actionMessageToRoom(actionMessage);
     }
 
 }

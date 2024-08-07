@@ -6,6 +6,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.web.socket.CloseStatus;
+import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketMessage;
 import org.springframework.web.socket.WebSocketSession;
 
@@ -28,9 +29,10 @@ public class XoGameRoom extends AbstractRoom<XoGameRoom.XoPlayer> {
     }
 
 
-    private void startGame(){
-
-        //players.forEach(xoPlayer -> xoPlayer.sendMessageToUser(new TextMessage("start")));
+    private void startGame() throws IOException{
+        for(var player : players.values()){
+            player.wsPlayer.wsUser().session().sendMessage(new TextMessage("start"));
+        }
     }
 
     private JsonNode messageParse(WebSocketMessage<String> message) throws JsonProcessingException{
@@ -43,7 +45,9 @@ public class XoGameRoom extends AbstractRoom<XoGameRoom.XoPlayer> {
     public boolean addUser(WsPlayer player) throws IOException {
         if(players.size() < max)
         {
-            players.put(player.wsUser().externalId(), new XoPlayer(player, symbol[players.size()], false));
+            XoPlayer xop =  new XoPlayer(player, symbol[players.size()], false);
+            players.put(player.wsUser().externalId(), xop);
+            player.wsUser().session().sendMessage(new TextMessage(String.valueOf(xop.number)));
             if (players.size() == max)
                 startGame();
             return true;

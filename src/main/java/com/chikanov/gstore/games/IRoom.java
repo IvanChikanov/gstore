@@ -1,5 +1,6 @@
 package com.chikanov.gstore.games;
 
+import com.chikanov.gstore.records.ActionMessage;
 import com.chikanov.gstore.records.WsPlayer;
 import org.springframework.web.socket.WebSocketMessage;
 import org.springframework.web.socket.WebSocketSession;
@@ -11,7 +12,7 @@ public interface IRoom {
 
     boolean addUser(WsPlayer player) throws IOException;
 
-    void readMessage(WebSocketSession user, WebSocketMessage<?> message);
+    void readMessage(ActionMessage message);
 
     void sendMessage(WebSocketSession user, WebSocketMessage<?> message);
 

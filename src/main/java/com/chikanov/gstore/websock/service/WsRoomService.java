@@ -3,6 +3,7 @@ package com.chikanov.gstore.websock.service;
 import com.chikanov.gstore.games.AbstractRoom;
 import com.chikanov.gstore.games.IRoom;
 import com.chikanov.gstore.games.XoGameRoom;
+import com.chikanov.gstore.records.ActionMessage;
 import com.chikanov.gstore.records.WsPlayer;
 import com.chikanov.gstore.services.GameService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +16,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public class WsRoomService {
 
     @Autowired
-    GameService gameService;
+    private GameService gameService;
 
     private final ConcurrentHashMap<UUID, IRoom> rooms = new ConcurrentHashMap<>();
 
@@ -32,5 +33,9 @@ public class WsRoomService {
             case "XO" -> new XoGameRoom(id);
             default -> throw new RuntimeException("module not find!");
         };
+    }
+
+    public void actionMessageToRoom(ActionMessage message){
+        rooms.get(message.game()).readMessage(message);
     }
 }
