@@ -12,7 +12,7 @@ public interface IRoom {
 
     boolean addUser(WsPlayer player) throws IOException;
 
-    void readMessage(ActionMessage message);
+    void readMessage(ActionMessage message) throws Exception;
 
     void sendMessage(WebSocketSession user, WebSocketMessage<?> message);
 

@@ -26,7 +26,7 @@ public abstract class AbstractRoom<T> implements IRoom{
     public abstract boolean addUser(WsPlayer player) throws IOException;
 
     @Override
-    public abstract void readMessage(ActionMessage message);
+    public abstract void readMessage(ActionMessage message) throws Exception;
 
     @Override
     public void sendMessage(WebSocketSession user, WebSocketMessage<?> message) {

@@ -35,6 +35,14 @@ public class XoGameRoom extends AbstractRoom<XoGameRoom.XoPlayer> {
             player.wsPlayer.wsUser().session().sendMessage(new TextMessage("start"));
         }
     }
+    private void sendAllBut(UUID id, int index) throws Exception
+    {
+        for(var key: players.keySet()){
+            if(key != id){
+                players.get(key).wsPlayer.wsUser().session().sendMessage(new TextMessage(String.valueOf(index)));
+            }
+        }
+    }
 
     @Override
     public boolean addUser(WsPlayer player) throws IOException {
@@ -54,9 +62,13 @@ public class XoGameRoom extends AbstractRoom<XoGameRoom.XoPlayer> {
     }
 
     @Override
-    public void readMessage(ActionMessage message){
-
+    public void readMessage(ActionMessage message) throws Exception{
+        Index index = objectMapper.readValue(message.jsonAction(), Index.class);
+        XoPlayer player = players.get(message.from());
+        cells[index.index()] = player.number;
+        sendAllBut(player.wsPlayer.wsUser().externalId(), index.index());
     }
 
     public record XoPlayer(WsPlayer wsPlayer, int number, boolean winner){}
+    private record Index(int index){}
 }

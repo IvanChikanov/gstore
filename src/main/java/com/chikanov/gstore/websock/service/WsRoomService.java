@@ -35,7 +35,7 @@ public class WsRoomService {
         };
     }
 
-    public void actionMessageToRoom(ActionMessage message){
+    public void actionMessageToRoom(ActionMessage message) throws Exception{
         rooms.get(message.game()).readMessage(message);
     }
 }
