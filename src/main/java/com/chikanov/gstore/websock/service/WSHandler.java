@@ -1,7 +1,5 @@
 package com.chikanov.gstore.websock.service;
 
-import com.chikanov.gstore.records.AuthorizeMessage;
-import com.chikanov.gstore.websock.messages.WsMessage;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,9 +10,6 @@ import java.util.concurrent.ConcurrentHashMap;
 
 @Service
 public class WSHandler implements WebSocketHandler {
-
-    @Autowired
-    private WebSocketGameService socketService;
 
     @Autowired
     private WebSocketRouteService webSocketRouteService;

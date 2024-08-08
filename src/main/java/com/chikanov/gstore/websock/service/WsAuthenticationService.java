@@ -8,7 +8,6 @@ import com.chikanov.gstore.records.AuthenticationMessage;
 import com.chikanov.gstore.records.WsPlayer;
 import com.chikanov.gstore.records.WsUser;
 import com.chikanov.gstore.services.UserService;
-import com.chikanov.gstore.websock.messages.impl.AuthMessage;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
