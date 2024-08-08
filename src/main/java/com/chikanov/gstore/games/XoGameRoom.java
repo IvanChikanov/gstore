@@ -12,20 +12,20 @@ import org.springframework.web.socket.WebSocketMessage;
 import org.springframework.web.socket.WebSocketSession;
 
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 public class XoGameRoom extends AbstractRoom<XoGameRoom.XoPlayer> {
 
     private final Integer[] symbol = new Integer[]{1, 2};
-    private final int[] cells = new int[9];
+    private final int size;
+    private final int[] cells;
 
     private final ObjectMapper objectMapper = new ObjectMapper();
     public XoGameRoom(UUID id){
         super(id);
+        size = 3;
         max = 2;
+        cells = new int[size*size];
         Arrays.fill(cells, 0);
     }
 
@@ -42,6 +42,25 @@ public class XoGameRoom extends AbstractRoom<XoGameRoom.XoPlayer> {
                 players.get(key).wsPlayer.wsUser().session().sendMessage(new TextMessage(String.valueOf(index)));
             }
         }
+    }
+
+    private List<int[]> filler(int size)
+    {
+        List<int[]> lines = new ArrayList<>();
+        for(int col = 0; col < size; col++)
+        {
+            int[] rows = new int[size];
+            for(int row = 0; row < size; row++)
+            {
+                rows[row] = col * size + row;
+            }
+            lines.add(rows);
+        }
+
+        return lines;
+    }
+    private void checkResults(){
+
     }
 
     @Override

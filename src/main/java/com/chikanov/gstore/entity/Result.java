@@ -15,6 +15,7 @@ public class Result {
     private boolean winner;
 
     @ManyToOne
+    @JoinColumn(name = "game_id")
     private Game game;
 
 }
