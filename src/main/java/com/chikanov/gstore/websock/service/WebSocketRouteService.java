@@ -39,6 +39,7 @@ public class WebSocketRouteService {
 
     }
     private void authenticationMessage(String message) throws Exception{
+        System.out.println(message);
         AuthenticationMessage authMessage = objectMapper.readValue(message, AuthenticationMessage.class);
         WsPlayer user =  wsAuthenticationService.authenticate(authMessage);
         addUserToRoom(user, authMessage.game());
