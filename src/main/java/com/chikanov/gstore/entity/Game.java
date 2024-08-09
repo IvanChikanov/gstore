@@ -27,7 +27,7 @@ public class Game {
     @JoinColumn(name = "chat_id")
     private ChatEntity chatId;
 
-    @OneToMany(mappedBy = "id")
+    @OneToMany(mappedBy = "game")
     private Set<Result> results = new HashSet<>();
 
     private boolean finished = false;

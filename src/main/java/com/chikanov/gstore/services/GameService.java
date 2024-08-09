@@ -25,12 +25,6 @@ public class GameService {
     @Transactional
     public String createGame(Long chatId, Long gameId)
     {
-        System.out.println(gameId);
-        System.out.println(gameId);
-        System.out.println(gameId);
-        System.out.println(gameId);
-        System.out.println(gameId);
-
         Game game = new Game();
         game.setId(UUID.randomUUID());
         game.setGameType(gameTypeService.getGame(gameId));

@@ -27,6 +27,6 @@ public class GameType {
     @JsonProperty("is_active")
     private boolean isActive;
 
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "gameType")
     private Set<Game> games = new HashSet<>();
 }
