@@ -6,40 +6,31 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.BiFunction;
+
 
 class OneHandGamesApplicationTests {
 
 	@Test
 	void contextLoads() {
 		int size = 3;
-		BiFunction<Integer, Integer, Integer[]> call = (c, s)->{
-			Integer[] rows = new Integer[s];
-			for (int row = 0; row < s; row++) {
-				rows[row] = c * s + row;
-			}
-			return rows;
-		};
-		List<Integer[]> lines = new ArrayList<>();
-		for (int col = 0; col < size; col++) {
-			lines.add(call.apply(col, size));
-		}
+		List<int[]> lines = new ArrayList<>();
+		int[] right = new int[size];
+		int[] left = new int[size];
 		for (int col = 0; col < size; col++) {
 			int[] rows = new int[size];
+			int[] cols = new int[size];
 			for (int row = 0; row < size; row++) {
-				rows[row] = row * size + col;
+				rows[row] = col * size + row;
+				cols[row] = row * size + col;
 			}
+			lines.add(rows);
+			lines.add(cols);
+			right[col] = col * size + col;
+			left[col] = col * size + (size - 1 - col);
 		}
-		for(var r: lines){
-			for(var o : r){
-				System.out.print(o);
-			}
-			System.out.println();
-		}
+		lines.add(right);
+		lines.add(left);
 	}
 
-	void counter(BiFunction<Integer, Integer, Integer[]> call){
-
-	}
 
 }
