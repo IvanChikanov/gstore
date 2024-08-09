@@ -41,6 +41,9 @@ public class MenuController extends AbstractController{
     @Autowired
     private GameService gameService;
 
+    @Autowired
+    private ObjectMapper om;
+
     @GetMapping("/private")
     public ResponseEntity<GameTypeFilteredDTO> getGames() throws Exception {
         return ResponseEntity.ok(gameTypeService.getActiveGames());
@@ -56,7 +59,6 @@ public class MenuController extends AbstractController{
     @PostMapping("/send_game")
     public ResponseEntity<String> sendGame(@RequestAttribute("user") TgUser user, @RequestBody SendGameDTO sendGameDTO) throws Exception
     {
-        ObjectMapper om = new ObjectMapper();
         String id = gameService.createGame(sendGameDTO.chat_id(), sendGameDTO.game_id());
         sendMessageService.send(om.writeValueAsString(messageService.oneButtonMessage(
                 String.format("@%s приглашает вас в игру", user.getUsername()),
