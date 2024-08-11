@@ -68,8 +68,6 @@ public class XoGameRoom extends AbstractRoom<XoGameRoom.XoPlayer> {
         return lines;
     }
     private boolean checkResults(int number){
-        Arrays.stream(cells).forEach(System.out::print);
-        System.out.println();
         for(int[] line: lines){
             boolean find = true;
             for(int index : line){
@@ -110,12 +108,14 @@ public class XoGameRoom extends AbstractRoom<XoGameRoom.XoPlayer> {
         cells[index.index()] = player.number;
         boolean result = checkResults(player.number());
         if(!result){
-            sendAllBut(player.wsPlayer.wsUser().externalId(), new Message(false, index.index(), false));
+            sendAllBut(player.wsPlayer.wsUser().externalId(),
+                    new Message(false, index.index(), false, player.number()));
         }
         else{
-            sendAllBut(player.wsPlayer.wsUser().externalId(), new Message(true, index.index(), false));
+            sendAllBut(player.wsPlayer.wsUser().externalId(),
+                    new Message(true, index.index(), false, player.number()));
             player.wsPlayer.wsUser().session().sendMessage(new TextMessage(objectMapper.writeValueAsString(
-                    new Message(true, index.index(), true)
+                    new Message(true, index.index(), true, player.number())
             )));
         }
 
@@ -123,5 +123,5 @@ public class XoGameRoom extends AbstractRoom<XoGameRoom.XoPlayer> {
 
     public record XoPlayer(WsPlayer wsPlayer, int number, boolean winner){}
     private record Index(int index){}
-    private record Message(boolean finish, int index, boolean win){}
+    private record Message(boolean finish, int index, boolean win, int playerNumber){}
 }
