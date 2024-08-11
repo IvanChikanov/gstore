@@ -2,6 +2,9 @@ package com.chikanov.gstore.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import org.hibernate.annotations.CreationTimestamp;
+
+import java.time.Instant;
 
 @Entity
 @Data
@@ -17,5 +20,8 @@ public class Result {
     @ManyToOne
     @JoinColumn(name = "game_id")
     private Game game;
+
+    @CreationTimestamp
+    private Instant created;
 
 }
