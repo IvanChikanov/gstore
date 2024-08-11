@@ -102,6 +102,7 @@ public class XoGameRoom extends AbstractRoom<XoGameRoom.XoPlayer> {
 
     @Override
     public void readMessage(ActionMessage message) throws Exception{
+        System.out.println(message.jsonAction());
         Index index = objectMapper.readValue(message.jsonAction(), Index.class);
         XoPlayer player = players.get(message.from());
         cells[index.index()] = player.number;
