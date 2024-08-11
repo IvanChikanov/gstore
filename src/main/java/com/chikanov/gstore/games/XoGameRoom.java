@@ -68,6 +68,8 @@ public class XoGameRoom extends AbstractRoom<XoGameRoom.XoPlayer> {
         return lines;
     }
     private boolean checkResults(int number){
+        Arrays.stream(cells).forEach(System.out::print);
+        System.out.println();
         for(int[] line: lines){
             boolean find = true;
             for(int index : line){
