@@ -39,6 +39,7 @@ public class XoGameRoom extends AbstractRoom<XoGameRoom.XoPlayer> {
     }
     private void sendAllBut(UUID id, Message message) throws Exception
     {
+        System.out.println(message.playerNumber);
         for(var key: players.keySet()){
             if(key != id){
                 players.get(key).wsPlayer.wsUser().session().sendMessage(new TextMessage(objectMapper.writeValueAsString(message)));
