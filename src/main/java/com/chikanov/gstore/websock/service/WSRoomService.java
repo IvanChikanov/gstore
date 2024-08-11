@@ -1,6 +1,5 @@
 package com.chikanov.gstore.websock.service;
 
-import com.chikanov.gstore.games.AbstractRoom;
 import com.chikanov.gstore.games.IRoom;
 import com.chikanov.gstore.games.XoGameRoom;
 import com.chikanov.gstore.records.ActionMessage;
@@ -13,7 +12,7 @@ import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Service
-public class WsRoomService {
+public class WSRoomService {
 
     @Autowired
     private GameService gameService;

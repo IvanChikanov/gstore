@@ -12,11 +12,11 @@ import java.util.concurrent.ConcurrentHashMap;
 public class WSHandler implements WebSocketHandler {
 
     @Autowired
-    private WebSocketRouteService webSocketRouteService;
+    private WSRouteService webSocketRouteService;
+
 
     private final ConcurrentHashMap<WebSocketSession, UUID> unauthorizedSessions = new ConcurrentHashMap<>();
 
-    private final ObjectMapper objectMapper = new ObjectMapper();
 
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
@@ -28,7 +28,7 @@ public class WSHandler implements WebSocketHandler {
     @Override
     public void handleMessage(WebSocketSession session, WebSocketMessage<?> message) throws Exception {
 
-        webSocketRouteService.switchController(message.getPayload().toString());
+            webSocketRouteService.switchController(message.getPayload().toString());
 
     }
 
@@ -40,7 +40,7 @@ public class WSHandler implements WebSocketHandler {
 
     @Override
     public void afterConnectionClosed(WebSocketSession session, CloseStatus closeStatus) throws Exception {
-
+        System.out.println(closeStatus);
     }
 
     @Override

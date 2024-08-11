@@ -1,10 +1,8 @@
 package com.chikanov.gstore.websock.service;
 
-import com.chikanov.gstore.entity.User;
 import com.chikanov.gstore.records.ActionMessage;
 import com.chikanov.gstore.records.AuthenticationMessage;
 import com.chikanov.gstore.records.WsPlayer;
-import com.chikanov.gstore.records.WsUser;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,23 +12,25 @@ import org.springframework.web.socket.WebSocketSession;
 import java.util.UUID;
 
 @Service
-public class WebSocketRouteService {
+public class WSRouteService {
 
     @Autowired
-    private WsAuthenticationService wsAuthenticationService;
+    private WSAuthenticationService wsAuthenticationService;
 
     @Autowired
     private ObjectMapper objectMapper;
 
     @Autowired
-    private WsRoomService wsRoomService;
+    private WSRoomService wsRoomService;
 
 
     public void switchController(String message) throws Exception{
         String[] cutMessage = message.split(":::");
-        switch (cutMessage[0]){
-            case "AUTH" -> authenticationMessage(cutMessage[1]);
-            case "ACTION" -> gameEvent(cutMessage[1]);
+        if(cutMessage.length == 2) {
+            switch (cutMessage[0]) {
+                case "AUTH" -> authenticationMessage(cutMessage[1]);
+                case "ACTION" -> gameEvent(cutMessage[1]);
+            }
         }
     }
     public void newConnection(WebSocketSession session) throws Exception
@@ -39,7 +39,6 @@ public class WebSocketRouteService {
 
     }
     private void authenticationMessage(String message) throws Exception{
-        System.out.println(message);
         AuthenticationMessage authMessage = objectMapper.readValue(message, AuthenticationMessage.class);
         WsPlayer user =  wsAuthenticationService.authenticate(authMessage);
         addUserToRoom(user, authMessage.game());

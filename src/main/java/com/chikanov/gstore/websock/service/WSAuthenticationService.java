@@ -20,7 +20,7 @@ import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Service
-public class WsAuthenticationService {
+public class WSAuthenticationService {
 
     @Autowired
     private Authenticator authenticator;
@@ -38,7 +38,6 @@ public class WsAuthenticationService {
         if(auth.statusCode().equals(HttpStatus.OK)) {
             User user =  userService.getOrCreate(objectMapper.readValue(auth.result(), TgUser.class));
             var sess = unauthorizedSessions.remove(authMessage.from());
-            System.out.println(sess);
             WsUser wsUser = new WsUser(authMessage.from(), sess);
             return new WsPlayer(wsUser, user);
         }
