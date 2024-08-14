@@ -27,7 +27,7 @@ public class Game {
     @JoinColumn(name = "chat_id")
     private ChatEntity chatId;
 
-    @OneToMany(mappedBy = "game")
+    @OneToMany(mappedBy = "game", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private Set<Result> results = new HashSet<>();
 
     private boolean finished = false;
