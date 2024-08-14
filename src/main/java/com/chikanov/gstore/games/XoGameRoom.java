@@ -104,7 +104,10 @@ public class XoGameRoom extends AbstractRoom<XoGameRoom.XoPlayer> {
     public void readMessage(ActionMessage message) throws Exception{
         Index index = objectMapper.readValue(message.jsonAction(), Index.class);
         XoPlayer player = players.get(message.from());
-        cells[index.index()] = player.number;
+
+        if(index.index() >= 0)
+            cells[index.index()] = player.number;
+
         boolean result = checkResults(player.number());
         if(!result){
             sendAllBut(player.wsPlayer.wsUser().externalId(),
