@@ -57,6 +57,7 @@ public class WSRoomService {
                 r.setUser(user);
                 r.setWinner(res.winner());
                 r.setPoints(res.points());
+                r.setGame(game);
                 return r;
             }).collect(Collectors.toSet()));
             gameService.saveGame(game);
