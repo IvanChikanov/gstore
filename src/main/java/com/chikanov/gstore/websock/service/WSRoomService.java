@@ -50,6 +50,12 @@ public class WSRoomService {
         IRoom room = rooms.get(message.game());
         if(room.readMessage(message)){
             var results = room.endGame();
+            System.out.println();
+            System.out.println();
+            System.out.println(results.size());
+            System.out.println();
+            System.out.println();
+            System.out.println();
             Game game = gameService.getGame(message.game());
             game.setResults(results.stream().map(res ->{
                 var r =  new Result();
