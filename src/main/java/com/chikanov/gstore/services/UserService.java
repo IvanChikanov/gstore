@@ -31,4 +31,8 @@ public class UserService {
         var us = getUserFromTg(tgUser);
         return us.orElseGet(() -> createUser(tgUser));
     }
+
+    public User getById(Long id){
+        return userRepository.findById(id).orElseThrow();
+    }
 }

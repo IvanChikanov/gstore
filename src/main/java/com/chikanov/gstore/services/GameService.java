@@ -35,9 +35,17 @@ public class GameService {
         return game.getId().toString();
     }
 
+    public Game getGame(UUID id){
+        return gameRepository.findById(id).orElseThrow();
+    }
+
     public String getGameModule(UUID uuid){
         Game game = gameRepository.findById(uuid).orElseThrow();
         return game.getGameType().getModule();
+    }
+
+    public void saveGame(Game game){
+        gameRepository.save(game);
     }
 
 }

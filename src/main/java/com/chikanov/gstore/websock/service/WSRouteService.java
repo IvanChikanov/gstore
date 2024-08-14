@@ -2,11 +2,14 @@ package com.chikanov.gstore.websock.service;
 
 import com.chikanov.gstore.records.ActionMessage;
 import com.chikanov.gstore.records.AuthenticationMessage;
+import com.chikanov.gstore.records.CloseMessage;
 import com.chikanov.gstore.records.WsPlayer;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.WebSocketSession;
 
 import java.util.UUID;
@@ -38,6 +41,12 @@ public class WSRouteService {
         wsAuthenticationService.addToWaitList(session);
 
     }
+    public void disconnectHandler(CloseStatus closeStatus) throws JsonProcessingException {
+        if(closeStatus.getCode() == 3001){
+            wsRoomService.closeConnection(objectMapper.readValue(closeStatus.getReason(), CloseMessage.class));
+        }
+    }
+
     private void authenticationMessage(String message) throws Exception{
         AuthenticationMessage authMessage = objectMapper.readValue(message, AuthenticationMessage.class);
         WsPlayer user =  wsAuthenticationService.authenticate(authMessage);
@@ -57,5 +66,6 @@ public class WSRouteService {
         );
         wsRoomService.actionMessageToRoom(actionMessage);
     }
+
 
 }

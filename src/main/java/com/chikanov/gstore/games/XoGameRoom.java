@@ -1,7 +1,10 @@
 package com.chikanov.gstore.games;
 
 import com.chikanov.gstore.entity.ChatRole;
+import com.chikanov.gstore.entity.Result;
 import com.chikanov.gstore.records.ActionMessage;
+import com.chikanov.gstore.records.CloseMessage;
+import com.chikanov.gstore.records.ResultData;
 import com.chikanov.gstore.records.WsPlayer;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -13,6 +16,7 @@ import org.springframework.web.socket.WebSocketSession;
 
 import java.io.IOException;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class XoGameRoom extends AbstractRoom<XoGameRoom.XoPlayer> {
 
@@ -101,7 +105,7 @@ public class XoGameRoom extends AbstractRoom<XoGameRoom.XoPlayer> {
     }
 
     @Override
-    public void readMessage(ActionMessage message) throws Exception{
+    public boolean readMessage(ActionMessage message) throws Exception{
         Index index = objectMapper.readValue(message.jsonAction(), Index.class);
         XoPlayer player = players.get(message.from());
 
@@ -112,15 +116,30 @@ public class XoGameRoom extends AbstractRoom<XoGameRoom.XoPlayer> {
         if(!result){
             sendAllBut(player.wsPlayer.wsUser().externalId(),
                     new Message(false, index.index(), false, player.number()));
+            return false;
         }
         else{
+            players.put(message.from(), new XoPlayer(player.wsPlayer(), player.number(), true));
             sendAllBut(player.wsPlayer.wsUser().externalId(),
                     new Message(true, index.index(), false, player.number()));
             player.wsPlayer.wsUser().session().sendMessage(new TextMessage(objectMapper.writeValueAsString(
                     new Message(true, index.index(), true, player.number())
             )));
+            return true;
         }
+    }
 
+    public Set<ResultData> endGame()
+    {
+        return players.values().stream().map(player ->
+                new ResultData(player.wsPlayer.dbUser().getId(), player.winner ? 1 : 0,
+                        player.winner())).collect(Collectors.toSet());
+    }
+
+    @Override
+    public boolean closeConnection(CloseMessage message) {
+        players.remove(message.from());
+        return players.isEmpty();
     }
 
     public record XoPlayer(WsPlayer wsPlayer, int number, boolean winner){}

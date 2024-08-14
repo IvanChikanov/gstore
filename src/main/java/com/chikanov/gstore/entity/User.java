@@ -18,4 +18,7 @@ public class User{
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
     private Set<ChatRole> chatRoles = new HashSet<>();
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user", fetch = FetchType.LAZY)
+    private Set<Result> results = new HashSet<>();
 }
