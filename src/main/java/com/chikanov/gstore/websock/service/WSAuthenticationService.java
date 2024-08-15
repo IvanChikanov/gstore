@@ -52,7 +52,7 @@ public class WSAuthenticationService {
             User user =  userService.getOrCreate(objectMapper.readValue(auth.result(), TgUser.class));
             var sess = unauthorizedSessions.remove(authMessage.from());
             ChatEntity chat = gameService.getChatFromGameId(authMessage.game());
-            var chr = user.getChatRoles().stream().filter(cr -> cr.getChat().equals(chat)).findFirst();
+            var chr = user.getChatRoles().stream().filter(cr -> cr.getChat().getId().equals(chat.getId())).findFirst();
             if(chr.isEmpty()){
                 chatRoleService.createChatRole(user, chat, Role.USER);
             }
