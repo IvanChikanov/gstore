@@ -61,6 +61,7 @@ public class WSAuthenticationService {
             }).findFirst();
             if(chr.isEmpty()){
                user.getChatRoles().add(chatRoleService.createChatRole(user, chat, Role.USER));
+               userService.saveUser(user);
             }
             WsUser wsUser = new WsUser(authMessage.from(), sess);
             return new WsPlayer(wsUser, user);
