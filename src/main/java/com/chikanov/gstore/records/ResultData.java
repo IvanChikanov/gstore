@@ -1,4 +1,6 @@
 package com.chikanov.gstore.records;
 
-public record ResultData(Long user, int points, boolean winner) {
+import com.chikanov.gstore.entity.User;
+
+public record ResultData(User user, int points, boolean winner) {
 }

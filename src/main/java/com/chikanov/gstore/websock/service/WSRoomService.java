@@ -25,9 +25,6 @@ public class WSRoomService {
     @Autowired
     private GameService gameService;
 
-    @Autowired
-    private UserService userService;
-
     private final ConcurrentHashMap<UUID, IRoom> rooms = new ConcurrentHashMap<>();
 
     public void addUser(UUID gameId, WsPlayer player) throws Exception
@@ -53,8 +50,7 @@ public class WSRoomService {
             Game game = gameService.getGame(message.game());
             game.setResults(results.stream().map(res ->{
                 var r =  new Result();
-                User user = userService.getById(res.user());
-                r.setUser(user);
+                r.setUser(res.user());
                 r.setWinner(res.winner());
                 r.setPoints(res.points());
                 r.setGame(game);

@@ -132,7 +132,7 @@ public class XoGameRoom extends AbstractRoom<XoGameRoom.XoPlayer> {
     public Set<ResultData> endGame()
     {
         return players.values().stream().map(player ->
-                new ResultData(player.wsPlayer.dbUser().getId(), player.winner ? 1 : 0,
+                new ResultData(player.wsPlayer.dbUser(), player.winner ? 1 : 0,
                         player.winner())).collect(Collectors.toSet());
     }
 
