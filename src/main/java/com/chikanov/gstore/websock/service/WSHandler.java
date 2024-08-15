@@ -1,6 +1,5 @@
 package com.chikanov.gstore.websock.service;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.socket.*;
@@ -27,7 +26,10 @@ public class WSHandler implements WebSocketHandler {
 
     @Override
     public void handleMessage(WebSocketSession session, WebSocketMessage<?> message) {
+        System.out.println();
         System.out.println(message.getPayload());
+        System.out.println();
+
         try {
             webSocketRouteService.switchController(message.getPayload().toString());
 

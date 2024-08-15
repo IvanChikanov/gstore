@@ -36,4 +36,5 @@ public class ChatRoleService {
         return roleRepository.getChats(user, role).stream().map(ch -> chatService.convertToDTO(ch)).toList();
     }
 
+
 }
