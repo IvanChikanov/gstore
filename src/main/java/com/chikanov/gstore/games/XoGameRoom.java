@@ -71,16 +71,31 @@ public class XoGameRoom extends AbstractRoom<XoGameRoom.XoPlayer> {
         lines.add(left);
         return lines;
     }
-    private boolean checkResults(int number){
+    private Finish checkResults(int number){
+        List<Integer> indexesToDelete = new ArrayList<>();
+        int count = 0;
         for(int[] line: lines){
             boolean find = true;
             for(int index : line){
                 if(cells[index] != number){
                     find = false;
+                    if(maybeWin(line, number)){
+                        indexesToDelete.add(count);
+                    }
                     break;
                 }
             }
             if(find){
+                return new Finish(true, true);
+            }
+            count++;
+        }
+        indexesToDelete.forEach(i -> lines.remove((int)i));
+        return lines.isEmpty() ? new Finish(false, false) : new Finish(false, true);
+    }
+    private boolean maybeWin(int[] line, int number){
+        for(int i : line){
+            if(cells[i] != 0 || cells[i] != number){
                 return true;
             }
         }
@@ -99,7 +114,7 @@ public class XoGameRoom extends AbstractRoom<XoGameRoom.XoPlayer> {
             return true;
         }
         else{
-            player.wsUser().session().close(CloseStatus.TOO_BIG_TO_PROCESS);
+            player.wsUser().session().close(new CloseStatus(4005, "Комната переполнена"));
             return false;
         }
     }
@@ -111,11 +126,17 @@ public class XoGameRoom extends AbstractRoom<XoGameRoom.XoPlayer> {
         if(index.index() >= 0)
             cells[index.index()] = player.number;
 
-        boolean result = checkResults(player.number());
-        if(!result){
-            sendAllBut(player.wsPlayer.wsUser().externalId(),
-                    new Message(false, index.index(), false, player.number()));
-            return false;
+        Finish result = checkResults(player.number());
+        if(!result.winner()){
+            if(result.may()) {
+                sendAllBut(player.wsPlayer.wsUser().externalId(),
+                        new Message(false, index.index(), false, player.number()));
+                return false;
+            }
+            else{
+                sendAllBut(UUID.randomUUID(), new Message(true, 0, false, 0));
+                return true;
+            }
         }
         else{
             players.put(message.from(), new XoPlayer(player.wsPlayer(), player.number(), true));
@@ -144,4 +165,5 @@ public class XoGameRoom extends AbstractRoom<XoGameRoom.XoPlayer> {
     public record XoPlayer(WsPlayer wsPlayer, int number, boolean winner){}
     private record Index(int index){}
     private record Message(boolean finish, int index, boolean win, int playerNumber){}
+    private record Finish(boolean winner, boolean may){}
 }

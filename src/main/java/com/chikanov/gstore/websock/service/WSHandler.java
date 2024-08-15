@@ -26,10 +26,6 @@ public class WSHandler implements WebSocketHandler {
 
     @Override
     public void handleMessage(WebSocketSession session, WebSocketMessage<?> message) {
-        System.out.println();
-        System.out.println(message.getPayload());
-        System.out.println();
-
         try {
             webSocketRouteService.switchController(message.getPayload().toString());
 
