@@ -3,9 +3,12 @@ package com.chikanov.gstore.entity;
 import com.chikanov.gstore.enums.Role;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
-@Data
+@Getter
+@Setter
 @Table(name = "chat_role")
 public class ChatRole {
 

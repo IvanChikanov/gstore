@@ -2,11 +2,14 @@ package com.chikanov.gstore.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.HashSet;
 import java.util.Set;
 @Entity
-@Data
+@Getter
+@Setter
 @Table(name = "tg_user")
 public class User{
     @Id
