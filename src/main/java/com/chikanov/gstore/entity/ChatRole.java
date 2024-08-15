@@ -13,7 +13,7 @@ public class ChatRole {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private  Long id;
 
-    @ManyToOne()
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
     @JoinColumn(name = "user_id")
     private User user;
 
