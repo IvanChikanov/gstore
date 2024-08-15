@@ -14,6 +14,7 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class ReadJsonService {
@@ -65,6 +66,7 @@ public class ReadJsonService {
         send.sendInlineAnswer(om.writeValueAsString(answer));
     }
 
+    @Transactional
     private void handleChatMember(MyChatMember myChatMember) throws JsonProcessingException{
         ChatMember newMember = myChatMember.getNewMember();
         if(newMember.getUser().getId().equals(AutoSetWebhook.getBOT())){
@@ -95,7 +97,9 @@ public class ReadJsonService {
                 }
                 User user = userService.getOrCreate(myChatMember.getFrom());
                 ChatEntity chat = chatService.getOrCreate(myChatMember.getChat());
-                chatRoleService.createChatRole(user, chat, role);
+                user.getChatRoles().add(chatRoleService.createChatRole(user, chat, role));
+                userService.saveUser(user);
+
             }
         }
     }

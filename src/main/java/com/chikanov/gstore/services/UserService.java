@@ -24,7 +24,6 @@ public class UserService {
         User user = new User();
         user.setId(tgUser.getId());
         user.setPremium(false);
-        userRepository.save(user);
         return user;
     }
     public User getOrCreate(TgUser tgUser)
@@ -35,5 +34,9 @@ public class UserService {
 
     public User getById(Long id){
         return userRepository.findById(id).orElseThrow();
+    }
+
+    public void saveUser(User user){
+        userRepository.save(user);
     }
 }

@@ -53,7 +53,7 @@ public class MenuController extends AbstractController{
     @GetMapping("/chats")
     public ResponseEntity<List<ChatDTO>> getAdminChats(@RequestAttribute("user") TgUser user) throws Exception
     {
-        return ResponseEntity.ok(chatRoleService.getChats(userService.getOrCreate(user), Role.ADMIN));
+        return ResponseEntity.ok(chatRoleService.getChats(userService.getById(user.getId()), Role.ADMIN));
     }
 
     @PostMapping("/send_game")

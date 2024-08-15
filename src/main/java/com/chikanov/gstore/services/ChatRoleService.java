@@ -24,13 +24,13 @@ public class ChatRoleService {
     @Autowired
     private UserRepository userRepository;
 
-    public void createChatRole(User user, ChatEntity chat, Role role)
+    public ChatRole createChatRole(User user, ChatEntity chat, Role role)
     {
         ChatRole chatRole = new ChatRole();
         chatRole.setChat(chat);
         chatRole.setUser(user);
         chatRole.setRole(role);
-        roleRepository.save(chatRole);
+        return chatRole;
     }
     public List<ChatDTO> getChats(User user, Role role){
         return roleRepository.getChats(user, role).stream().map(ch -> chatService.convertToDTO(ch)).toList();

@@ -60,7 +60,7 @@ public class WSAuthenticationService {
                 return cr.getChat().getId().equals(chat.getId());
             }).findFirst();
             if(chr.isEmpty()){
-                chatRoleService.createChatRole(user, chat, Role.USER);
+               user.getChatRoles().add(chatRoleService.createChatRole(user, chat, Role.USER));
             }
             WsUser wsUser = new WsUser(authMessage.from(), sess);
             return new WsPlayer(wsUser, user);
