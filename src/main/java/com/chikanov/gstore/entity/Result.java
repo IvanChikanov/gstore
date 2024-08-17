@@ -20,6 +20,9 @@ public class Result {
     private int points;
     private boolean winner;
 
+    @Column(columnDefinition = "TEXT")
+    private String info;
+
     @ManyToOne
     @JoinColumn(name = "game_id")
     private Game game;

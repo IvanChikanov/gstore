@@ -1,9 +1,7 @@
 package com.chikanov.gstore.websock.service;
 
-import com.chikanov.gstore.records.ActionMessage;
-import com.chikanov.gstore.records.AuthenticationMessage;
-import com.chikanov.gstore.records.CloseMessage;
-import com.chikanov.gstore.records.WsPlayer;
+import com.chikanov.gstore.enums.TypesOfMessage;
+import com.chikanov.gstore.records.*;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -12,7 +10,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.WebSocketSession;
 
+import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 
 @Service
 public class WSRouteService {
@@ -27,14 +27,14 @@ public class WSRouteService {
     private WSRoomService wsRoomService;
 
 
-    public void switchController(String message) throws Exception{
-        String[] cutMessage = message.split(":::");
-        if(cutMessage.length == 2) {
-            switch (cutMessage[0]) {
-                case "AUTH" -> authenticationMessage(cutMessage[1]);
-                case "ACTION" -> gameEvent(cutMessage[1]);
+
+
+    public void switchController(WebSocketSession session, String message) throws Exception{
+        Message m = rawMessageHandler(session, message);
+            switch (m.tos()) {
+                case AUTH -> authenticationMessage(session, m.payload());
+                case ACTION -> wsRoomService.actionMessageToRoom(m);
             }
-        }
     }
     public void newConnection(WebSocketSession session) throws Exception
     {
@@ -47,25 +47,19 @@ public class WSRouteService {
         }
     }
 
-    private void authenticationMessage(String message) throws Exception{
+    private void authenticationMessage(WebSocketSession session, String message) throws Exception{
         AuthenticationMessage authMessage = objectMapper.readValue(message, AuthenticationMessage.class);
         WsPlayer user =  wsAuthenticationService.authenticate(authMessage);
-        addUserToRoom(user, authMessage.game());
+        if (user.session().equals(session)){
+            wsRoomService.addUser(authMessage.game(), user);
+        }
+
     }
 
-    private void addUserToRoom(WsPlayer player, UUID target) throws Exception{
-            wsRoomService.addUser(target, player);
+    private Message rawMessageHandler(WebSocketSession session, String message){
+        String[] cutPayload = message.split(":::");
+        String[] types = cutPayload[0].split(":");
+        return new Message(TypesOfMessage.valueOf(types[0]), Integer.parseInt(types[1]), cutPayload[1], session);
     }
-    private void gameEvent(String message) throws Exception{
-        JsonNode json = objectMapper.readTree(message);
-        JsonNode action = json.get("action");
-        ActionMessage actionMessage = new ActionMessage(
-                UUID.fromString(json.get("from").asText()),
-                UUID.fromString(json.get("game").asText()),
-                objectMapper.writeValueAsString(action)
-        );
-        wsRoomService.actionMessageToRoom(actionMessage);
-    }
-
 
 }

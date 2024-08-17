@@ -1,24 +1,22 @@
-package com.chikanov.gstore.games;
+package com.chikanov.gstore.games.components;
 
-import com.chikanov.gstore.entity.ChatRole;
+import com.chikanov.gstore.entity.Game;
 import com.chikanov.gstore.entity.Result;
-import com.chikanov.gstore.records.ActionMessage;
-import com.chikanov.gstore.records.CloseMessage;
-import com.chikanov.gstore.records.ResultData;
-import com.chikanov.gstore.records.WsPlayer;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonNode;
+import com.chikanov.gstore.entity.User;
+import com.chikanov.gstore.records.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
-import org.springframework.web.socket.WebSocketMessage;
-import org.springframework.web.socket.WebSocketSession;
 
 import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class XoGameRoom extends AbstractRoom<XoGameRoom.XoPlayer> {
+@Component
+@Scope("prototype")
+public class XoGameRoom extends AbstractRoom<WsPlayer> {
 
     private final Integer[] symbol = new Integer[]{1, 2};
     private final int size;
@@ -26,8 +24,8 @@ public class XoGameRoom extends AbstractRoom<XoGameRoom.XoPlayer> {
     private List<int[]> lines;
 
     private final ObjectMapper objectMapper = new ObjectMapper();
-    public XoGameRoom(UUID id){
-        super(id);
+    public XoGameRoom(Game g){
+        super(g);
         size = 3;
         max = 2;
         cells = new int[size * size];
@@ -38,14 +36,14 @@ public class XoGameRoom extends AbstractRoom<XoGameRoom.XoPlayer> {
 
     private void startGame() throws IOException{
         for(var player : players.values()){
-            player.wsPlayer.wsUser().session().sendMessage(new TextMessage("start"));
+            player.session().sendMessage(new TextMessage("start"));
         }
     }
-    private void sendAllBut(UUID id, Message message) throws Exception
+    private void sendAllBut(String id, Message message) throws Exception
     {
         for(var key: players.keySet()){
             if(key != id){
-                players.get(key).wsPlayer.wsUser().session().sendMessage(new TextMessage(objectMapper.writeValueAsString(message)));
+                players.get(key).session().sendMessage(new TextMessage(objectMapper.writeValueAsString(message)));
             }
         }
     }
@@ -106,21 +104,30 @@ public class XoGameRoom extends AbstractRoom<XoGameRoom.XoPlayer> {
     public boolean addUser(WsPlayer player) throws IOException {
         if(players.size() < max)
         {
-            XoPlayer xop =  new XoPlayer(player, symbol[players.size()], false);
-            players.put(player.wsUser().externalId(), xop);
-            player.wsUser().session().sendMessage(new TextMessage(String.valueOf(xop.number)));
+            players.put(player.session().getId(), player);
+            game.
             if (players.size() == max)
                 startGame();
             return true;
         }
         else{
-            player.wsUser().session().close(new CloseStatus(4005, "Комната переполнена"));
+            player.session().close(new CloseStatus(4005, "Комната переполнена"));
             return false;
         }
     }
 
     @Override
-    public boolean readMessage(ActionMessage message) throws Exception{
+    public void action(Message message) {
+
+    }
+
+    @Override
+    public void disconnect(Message message) {
+
+    }
+
+    @Override
+    public boolean readMessage(Message message) throws Exception{
         Index index = objectMapper.readValue(message.jsonAction(), Index.class);
         XoPlayer player = players.get(message.from());
         if(index.index() >= 0)
@@ -164,6 +171,5 @@ public class XoGameRoom extends AbstractRoom<XoGameRoom.XoPlayer> {
 
     public record XoPlayer(WsPlayer wsPlayer, int number, boolean winner){}
     private record Index(int index){}
-    private record Message(boolean finish, int index, boolean win, int playerNumber){}
     private record Finish(boolean winner, boolean may){}
 }

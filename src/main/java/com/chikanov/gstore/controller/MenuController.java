@@ -20,7 +20,7 @@ import java.util.UUID;
 
 @Controller
 @RequestMapping("/inside")
-public class MenuController extends AbstractController{
+public class MenuController {
 
 
     @Autowired

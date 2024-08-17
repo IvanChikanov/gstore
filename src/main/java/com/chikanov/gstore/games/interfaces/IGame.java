@@ -1,4 +1,4 @@
-package com.chikanov.gstore.games;
+package com.chikanov.gstore.games.interfaces;
 
 import com.chikanov.gstore.entity.ChatRole;
 import org.springframework.web.socket.WebSocketMessage;

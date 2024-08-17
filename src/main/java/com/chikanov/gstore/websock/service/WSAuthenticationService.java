@@ -2,6 +2,7 @@ package com.chikanov.gstore.websock.service;
 
 import com.chikanov.gstore.entity.ChatEntity;
 import com.chikanov.gstore.entity.ChatRole;
+import com.chikanov.gstore.entity.Result;
 import com.chikanov.gstore.entity.User;
 import com.chikanov.gstore.entity.tgentities.TgUser;
 import com.chikanov.gstore.enums.Role;
@@ -43,7 +44,7 @@ public class WSAuthenticationService {
     @Autowired
     private GameService gameService;
 
-    private final ConcurrentHashMap<UUID, WebSocketSession> unauthorizedSessions = new ConcurrentHashMap<>();
+    private final ConcurrentHashMap<String, WebSocketSession> unauthorizedSessions = new ConcurrentHashMap<>();
 
     @Transactional
     public WsPlayer authenticate(AuthenticationMessage authMessage) throws JsonProcessingException {
@@ -57,16 +58,13 @@ public class WSAuthenticationService {
                user.getChatRoles().add(chatRoleService.createChatRole(user, chat, Role.USER));
                userService.saveUser(user);
             }
-            WsUser wsUser = new WsUser(authMessage.from(), sess);
-            return new WsPlayer(wsUser, user);
+            return new WsPlayer(sess, user, new Result());
         }
         throw new RuntimeException("token not valid");
     }
 
     public void addToWaitList(WebSocketSession session) throws Exception{
-        UUID createdID = UUID.randomUUID();
-        unauthorizedSessions.put(createdID, session);
-        session.sendMessage(new TextMessage(createdID.toString()));
-
+        unauthorizedSessions.put(session.getId(), session);
+        session.sendMessage(new TextMessage(session.getId()));
     }
 }
