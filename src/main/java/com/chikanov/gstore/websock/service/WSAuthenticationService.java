@@ -47,7 +47,7 @@ public class WSAuthenticationService {
     private final ConcurrentHashMap<String, WebSocketSession> unauthorizedSessions = new ConcurrentHashMap<>();
 
     @Transactional
-    public WsPlayer authenticate(AuthenticationMessage authMessage) throws JsonProcessingException {
+    public User authenticate(AuthenticationMessage authMessage) throws JsonProcessingException {
         AuthData auth = authenticator.validation(authMessage.token());
         if(auth.statusCode().equals(HttpStatus.OK)) {
             User user =  userService.getOrCreate(objectMapper.readValue(auth.result(), TgUser.class));
@@ -58,7 +58,7 @@ public class WSAuthenticationService {
                user.getChatRoles().add(chatRoleService.createChatRole(user, chat, Role.USER));
                userService.saveUser(user);
             }
-            return new WsPlayer(sess, user, new Result());
+            return user;
         }
         throw new RuntimeException("token not valid");
     }

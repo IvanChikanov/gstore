@@ -1,5 +1,6 @@
 package com.chikanov.gstore.websock.service;
 
+import com.chikanov.gstore.entity.User;
 import com.chikanov.gstore.enums.TypesOfMessage;
 import com.chikanov.gstore.records.*;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -29,11 +30,10 @@ public class WSRouteService {
 
 
 
-    public void switchController(WebSocketSession session, String message) throws Exception{
-        Message m = rawMessageHandler(session, message);
-            switch (m.tos()) {
-                case AUTH -> authenticationMessage(session, m.payload());
-                case ACTION -> wsRoomService.actionMessageToRoom(m);
+    public void switchController(Message message) throws Exception{
+            switch (message.tos()) {
+                case AUTH -> authenticationMessage(message);
+                case ACTION -> wsRoomService.actionMessageToRoom(message);
             }
     }
     public void newConnection(WebSocketSession session) throws Exception
@@ -47,19 +47,13 @@ public class WSRouteService {
         }
     }
 
-    private void authenticationMessage(WebSocketSession session, String message) throws Exception{
-        AuthenticationMessage authMessage = objectMapper.readValue(message, AuthenticationMessage.class);
-        WsPlayer user =  wsAuthenticationService.authenticate(authMessage);
-        if (user.session().equals(session)){
-            wsRoomService.addUser(authMessage.game(), user);
+    private void authenticationMessage(Message message) throws Exception{
+        AuthenticationMessage authMessage = objectMapper.readValue(message.payload(), AuthenticationMessage.class);
+        User user =  wsAuthenticationService.authenticate(authMessage);
+        if (message.session().getId().equals(message.session().getId())){
+            wsRoomService.addUser(authMessage.game(), user, message.session());
         }
 
-    }
-
-    private Message rawMessageHandler(WebSocketSession session, String message){
-        String[] cutPayload = message.split(":::");
-        String[] types = cutPayload[0].split(":");
-        return new Message(TypesOfMessage.valueOf(types[0]), Integer.parseInt(types[1]), cutPayload[1], session);
     }
 
 }

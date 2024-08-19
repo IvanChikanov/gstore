@@ -13,6 +13,9 @@ public class WSHandler implements WebSocketHandler {
     @Autowired
     private WSRouteService webSocketRouteService;
 
+    @Autowired
+    private WsMessageConverter wsMessageConverter;
+
 
     private final ConcurrentHashMap<WebSocketSession, UUID> unauthorizedSessions = new ConcurrentHashMap<>();
 
@@ -27,7 +30,9 @@ public class WSHandler implements WebSocketHandler {
     @Override
     public void handleMessage(WebSocketSession session, WebSocketMessage<?> message) {
         try {
-            webSocketRouteService.switchController(session, message.getPayload().toString());
+            webSocketRouteService.switchController(
+                    wsMessageConverter.createMessage(session, message.getPayload().toString())
+            );
         }
         catch (Exception ex){
                 ex.printStackTrace();

@@ -2,6 +2,7 @@ package com.chikanov.gstore.websock.service;
 
 import com.chikanov.gstore.entity.Game;
 import com.chikanov.gstore.entity.Result;
+import com.chikanov.gstore.entity.User;
 import com.chikanov.gstore.games.interfaces.IRoom;
 import com.chikanov.gstore.games.components.XoGameRoom;
 import com.chikanov.gstore.records.ActionMessage;
@@ -32,13 +33,13 @@ public class WSRoomService {
     private final ConcurrentHashMap<UUID, IRoom> rooms = new ConcurrentHashMap<>();
     private final Map<String, UUID> users = new ConcurrentHashMap<>();
 
-    public void addUser(UUID gameId, WsPlayer player) throws Exception
+    public void addUser(UUID gameId, User user,  WebSocketSession session) throws Exception
     {
         if(!rooms.containsKey(gameId)) {
-            users.put(player.session().getId(), gameId);
+            users.put(session.getId(), gameId);
             rooms.put(gameId, switchGameTypes(gameId));
         }
-        rooms.get(gameId).addUser(player);
+        rooms.get(gameId).addUser(user, session);
     }
 
     private IRoom switchGameTypes(UUID id){
@@ -56,8 +57,6 @@ public class WSRoomService {
     }
 
     public void closeConnection(CloseMessage reason){
-        if(rooms.get(reason.game()).closeConnection(reason)){
-            rooms.remove(reason.game());
-        }
+
     }
 }
