@@ -58,7 +58,12 @@ public class XoGameRoom extends AbstractRoom<XoGameRoom.XoPlayer> {
                 new Random().nextInt(1, 3):
                 randomNumber == 1 ? 2 : 1;
 
-            player.getSession().sendMessage(new TextMessage(String.valueOf(randomNumber)));
+            player.getSession().sendMessage(new TextMessage(
+                    wsMessageConverter.createFullMessage(
+                            TypesOfMessage.START, 0,
+                            String.valueOf(randomNumber))
+                    )
+            );
         }
     }
     private void sendAllBut(String id, String message) throws Exception
