@@ -6,6 +6,7 @@ import com.chikanov.gstore.entity.Result;
 import com.chikanov.gstore.entity.User;
 import com.chikanov.gstore.entity.tgentities.TgUser;
 import com.chikanov.gstore.enums.Role;
+import com.chikanov.gstore.enums.TypesOfMessage;
 import com.chikanov.gstore.filters.Authenticator;
 import com.chikanov.gstore.records.AuthData;
 import com.chikanov.gstore.records.AuthenticationMessage;
@@ -44,6 +45,9 @@ public class WSAuthenticationService {
     @Autowired
     private GameService gameService;
 
+    @Autowired
+    private WsMessageConverter wsMessageConverter;
+
     private final ConcurrentHashMap<String, WebSocketSession> unauthorizedSessions = new ConcurrentHashMap<>();
 
     @Transactional
@@ -51,13 +55,13 @@ public class WSAuthenticationService {
         AuthData auth = authenticator.validation(authMessage.token());
         if(auth.statusCode().equals(HttpStatus.OK)) {
             User user =  userService.getOrCreate(objectMapper.readValue(auth.result(), TgUser.class));
-            var sess = unauthorizedSessions.remove(authMessage.from());
             ChatEntity chat = gameService.getChatFromGameId(authMessage.game());
             var chr = user.getChatRoles().stream().filter(cr ->cr.getChat().getId().equals(chat.getId())).findFirst();
             if(chr.isEmpty()){
                user.getChatRoles().add(chatRoleService.createChatRole(user, chat, Role.USER));
                userService.saveUser(user);
             }
+            var s = unauthorizedSessions.remove(authMessage.from());
             return user;
         }
         throw new RuntimeException("token not valid");
@@ -65,5 +69,6 @@ public class WSAuthenticationService {
 
     public void addToWaitList(WebSocketSession session) throws Exception{
         unauthorizedSessions.put(session.getId(), session);
+        session.sendMessage(new TextMessage(wsMessageConverter.createFullMessage(TypesOfMessage.AUTH, 0, session.getId())));
     }
 }
