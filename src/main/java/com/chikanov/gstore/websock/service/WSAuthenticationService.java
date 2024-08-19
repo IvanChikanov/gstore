@@ -65,6 +65,5 @@ public class WSAuthenticationService {
 
     public void addToWaitList(WebSocketSession session) throws Exception{
         unauthorizedSessions.put(session.getId(), session);
-        session.sendMessage(new TextMessage(session.getId()));
     }
 }
