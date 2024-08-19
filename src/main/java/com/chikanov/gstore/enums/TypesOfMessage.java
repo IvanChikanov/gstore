@@ -9,4 +9,7 @@ public enum TypesOfMessage {
     TypesOfMessage(String type){
         string = type;
     }
+    public String get(){
+        return string;
+    }
 }
