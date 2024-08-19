@@ -2,7 +2,6 @@ package com.chikanov.gstore.websock.service;
 
 import com.chikanov.gstore.enums.TypesOfMessage;
 import com.chikanov.gstore.records.Message;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,7 +22,15 @@ public class WsMessageConverter {
 
     public String createFullMessage(TypesOfMessage t, int n, String p) {
         String s = String.format("%s:%d:::%s", t, n, p);
+        System.out.println();
+        System.out.println();
+        System.out.println();
+        System.out.println();
         System.out.println(s);
+        System.out.println();
+        System.out.println();
+        System.out.println();
+        System.out.println();
         return s;
     }
 }

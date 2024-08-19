@@ -52,7 +52,6 @@ public class WSRoomService {
 
     @Transactional
     public void actionMessageToRoom(Message message) throws Exception{
-
         rooms.get(users.get(message.session().getId())).action(message);
     }
 
