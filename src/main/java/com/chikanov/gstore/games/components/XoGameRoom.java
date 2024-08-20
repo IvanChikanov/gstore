@@ -34,7 +34,7 @@ public class XoGameRoom extends AbstractRoom<XoGameRoom.XoPlayer> {
     private final Integer[] symbol = new Integer[]{1, 2};
     private final int size;
     private final int[] cells;
-    private List<int[]> lines;
+    private List<Integer[]> lines;
 
     private final ObjectMapper objectMapper = new ObjectMapper();
     public XoGameRoom(Game g){
@@ -75,14 +75,14 @@ public class XoGameRoom extends AbstractRoom<XoGameRoom.XoPlayer> {
         }
     }
 
-    private List<int[]> filler(int size)
+    private List<Integer[]> filler(int size)
     {
-        List<int[]> lines = new ArrayList<>();
-        int[] right = new int[size];
-        int[] left = new int[size];
+        List<Integer[]> lines = new ArrayList<>();
+        Integer[] right = new Integer[size];
+        Integer[] left = new Integer[size];
         for (int col = 0; col < size; col++) {
-            int[] rows = new int[size];
-            int[] cols = new int[size];
+            Integer[] rows = new Integer[size];
+            Integer[] cols = new Integer[size];
             for (int row = 0; row < size; row++) {
                 rows[row] = col * size + row;
                 cols[row] = row * size + col;
@@ -96,26 +96,20 @@ public class XoGameRoom extends AbstractRoom<XoGameRoom.XoPlayer> {
         lines.add(left);
         return lines;
     }
-    private Finish checkResults(int number){
-        List<Integer> indexesToDelete = new ArrayList<>();
-        int count = 0;
-        for(int[] line: lines.stream().sorted().toList()){
+    private Finish checkResults(int index, int number){
+        List<Integer[]> l = lines.stream().filter(li -> Arrays.stream(li).toList().contains(index)).toList();
+        for(Integer[] line: l){
             boolean find = true;
-            for(int index : line){
-                if(cells[index] != number){
+            for(int in : line){
+                if(cells[in] != number){
                     find = false;
-                    if(!maybeWin(line, number)){
-                        indexesToDelete.add(count);
-                    }
                     break;
                 }
             }
             if(find){
                 return new Finish(true, true);
             }
-            count++;
         }
-        indexesToDelete.stream().sorted(Collections.reverseOrder()).forEach(i -> lines.remove((int)i));
         return lines.isEmpty() ? new Finish(false, false) : new Finish(false, true);
     }
     private boolean maybeWin(int[] line, int number){
@@ -158,7 +152,7 @@ public class XoGameRoom extends AbstractRoom<XoGameRoom.XoPlayer> {
         int number = players.get(message.session().getId()).getRealTimeData().number;
         if(index >= 0)
             cells[index] = number;
-        Finish result = checkResults(number);
+        Finish result = checkResults(index, number);
         if(result.may()) {
             if (!result.winner()) {
                 sendAllBut(message.session().getId(),
