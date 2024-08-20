@@ -68,6 +68,9 @@ public class XoGameRoom extends AbstractRoom<XoGameRoom.XoPlayer> {
     }
     private void sendAllBut(String id, String message) throws Exception
     {
+        System.out.println(message);
+        System.out.println(players.size());
+        System.out.println();
         for(var key: players.keySet()){
             if(!Objects.equals(key, id)){
                 players.get(key).getSession().sendMessage(new TextMessage(message));
