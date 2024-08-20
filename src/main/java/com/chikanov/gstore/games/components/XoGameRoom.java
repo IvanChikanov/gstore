@@ -99,7 +99,7 @@ public class XoGameRoom extends AbstractRoom<XoGameRoom.XoPlayer> {
     private Finish checkResults(int number){
         List<Integer> indexesToDelete = new ArrayList<>();
         int count = 0;
-        for(int[] line: lines){
+        for(int[] line: lines.stream().sorted().toList()){
             boolean find = true;
             for(int index : line){
                 if(cells[index] != number){
