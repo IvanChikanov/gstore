@@ -126,7 +126,6 @@ public class XoGameRoom extends AbstractRoom<XoGameRoom.XoPlayer> {
         if(players.size() < max)
         {
             Player<XoPlayer> player = new Player<>();
-            game.setFinished(true);
             Result result = new Result();
             result.setGame(game);
             result.setUser(user);
@@ -185,10 +184,9 @@ public class XoGameRoom extends AbstractRoom<XoGameRoom.XoPlayer> {
     }
 
     private void endGame(){
-        game.setFinished(true);
         List<Result> res = players.values().stream().map(p-> p.getRealTimeData().result).toList();
         resultRepository.saveAll(res);
-        eventPublisher.publishEvent(game.getId());
+        eventPublisher.publishEvent(game);
     }
 
     @Setter
@@ -202,7 +200,7 @@ public class XoGameRoom extends AbstractRoom<XoGameRoom.XoPlayer> {
     private record Finish(boolean winner, boolean may){}
 
     private class Line{
-        List<Integer> is = new ArrayList<>();
+        List<Integer> is;
         Line(List<Integer> is){
             this.is = is;
         }

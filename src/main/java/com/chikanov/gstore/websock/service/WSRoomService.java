@@ -63,13 +63,15 @@ public class WSRoomService {
 
     }
     @EventListener
-    public void deleteGame(UUID id){
+    public void deleteGame(Game game){
+        game.setFinished(true);
+        gameService.saveGame(game);
         List<String> us = new ArrayList<>();
         users.forEach((k, v) -> {
-            if(v.equals(id))
+            if(v.equals(game.getId()))
                 us.add(k);
         });
         us.forEach(users::remove);
-        rooms.remove(id);
+        rooms.remove(game.getId());
     }
 }
