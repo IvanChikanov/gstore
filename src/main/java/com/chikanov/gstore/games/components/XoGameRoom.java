@@ -6,6 +6,7 @@ import com.chikanov.gstore.entity.User;
 import com.chikanov.gstore.enums.TypesOfMessage;
 import com.chikanov.gstore.games.objects.Player;
 import com.chikanov.gstore.records.*;
+import com.chikanov.gstore.repositories.ResultRepository;
 import com.chikanov.gstore.services.UserService;
 import com.chikanov.gstore.websock.service.WsMessageConverter;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -29,7 +30,7 @@ public class XoGameRoom extends AbstractRoom<XoGameRoom.XoPlayer> {
     private WsMessageConverter wsMessageConverter;
 
     @Autowired
-    private UserService userService;
+    private ResultRepository resultRepository;
 
     private final Integer[] symbol = new Integer[]{1, 2};
     private final int size;
@@ -183,10 +184,8 @@ public class XoGameRoom extends AbstractRoom<XoGameRoom.XoPlayer> {
     }
 
     private void endGame(){
-        userService.saveUsers(players.values().stream().map(p->{
-            p.getUser().getResults().add(p.getRealTimeData().result);
-            return p.getUser();
-        }).collect(Collectors.toList()));
+        List<Result> res = players.values().stream().map(p-> p.getRealTimeData().result).toList();
+        resultRepository.saveAll(res);
     }
 
     @Setter
