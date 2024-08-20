@@ -94,7 +94,7 @@ public class XoGameRoom extends AbstractRoom<XoGameRoom.XoPlayer> {
         }
         lines.add(right);
         lines.add(left);
-        return lines.stream().map(l-> new Line(Arrays.stream(l).toList())).toList();
+        return new ArrayList<>(lines.stream().map(l-> new Line(Arrays.stream(l).toList())).toList());
     }
     private Finish checkResults(int index, int number){
         List<Line> l = lines.stream().filter(li -> li.contains(index)).toList();
