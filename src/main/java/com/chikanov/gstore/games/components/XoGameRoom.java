@@ -147,34 +147,33 @@ public class XoGameRoom extends AbstractRoom<XoGameRoom.XoPlayer> {
     public void action(Message message) throws Exception{
         int index = Integer.parseInt(message.payload());
         int number = players.get(message.session().getId()).getRealTimeData().number;
-        if(index >= 0)
-            cells[index] = number;
-        Finish result = checkResults(index, number);
         sendAllBut(message.session().getId(),
                 wsMessageConverter.createFullMessage(TypesOfMessage.ACTION, number, String.valueOf(index)));
-        if(result.may()) {
-            if (result.winner()){
-                for(var x : players.values()){
-                    if(x.getSession().getId().equals(message.session().getId())){
-                        x.getRealTimeData().result.setPoints(1);
-                        x.getRealTimeData().result.setWinner(true);
+        if(index >= 0) {
+            cells[index] = number;
+            Finish result = checkResults(index, number);
+            if (result.may()) {
+                if (result.winner()) {
+                    for (var x : players.values()) {
+                        if (x.getSession().getId().equals(message.session().getId())) {
+                            x.getRealTimeData().result.setPoints(1);
+                            x.getRealTimeData().result.setWinner(true);
+                        } else {
+                            x.getRealTimeData().result.setPoints(0);
+                            x.getRealTimeData().result.setWinner(false);
+                        }
+                        x.getSession().sendMessage(new TextMessage(wsMessageConverter.createFullMessage(TypesOfMessage.FINISH, 0, String.valueOf(number))));
                     }
-                    else {
-                        x.getRealTimeData().result.setPoints(0);
-                        x.getRealTimeData().result.setWinner(false);
-                    }
-                    x.getSession().sendMessage(new TextMessage(wsMessageConverter.createFullMessage(TypesOfMessage.FINISH, 0, String.valueOf(number))));
+                    endGame();
+                }
+            } else {
+                for (var x : players.values()) {
+                    x.getRealTimeData().result.setPoints(0);
+                    x.getRealTimeData().result.setWinner(false);
+                    x.getSession().sendMessage(new TextMessage(wsMessageConverter.createFullMessage(TypesOfMessage.FINISH, 0, String.valueOf(-1))));
                 }
                 endGame();
             }
-        }
-        else{
-            for(var x : players.values()){
-                x.getRealTimeData().result.setPoints(0);
-                x.getRealTimeData().result.setWinner(false);
-                x.getSession().sendMessage(new TextMessage(wsMessageConverter.createFullMessage(TypesOfMessage.FINISH, 0, String.valueOf(-1))));
-            }
-            endGame();
         }
     }
 
@@ -214,7 +213,6 @@ public class XoGameRoom extends AbstractRoom<XoGameRoom.XoPlayer> {
                if(cells[i] != num){
                    r = cells[i] != 0 ? -1 : 0;
                    break;
-
                }
             }
             return r;
