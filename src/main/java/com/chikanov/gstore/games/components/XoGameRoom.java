@@ -187,7 +187,7 @@ public class XoGameRoom extends AbstractRoom<XoGameRoom.XoPlayer> {
         game.setFinished(true);
         List<Result> res = players.values().stream().map(p-> p.getRealTimeData().result).toList();
         resultRepository.saveAll(res);
-        eventPublisher.publishEvent(res);
+        eventPublisher.publishEvent(game.getId());
     }
 
     @Setter

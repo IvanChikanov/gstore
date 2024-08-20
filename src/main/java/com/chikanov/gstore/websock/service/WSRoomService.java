@@ -62,7 +62,7 @@ public class WSRoomService {
 
     }
     @EventListener
-    public void deleteGame(List<Result> res){
-        System.out.println("Удаляю Команту");
+    public void deleteGame(UUID id){
+        System.out.println("Удаляю Команту " + id);
     }
 }
