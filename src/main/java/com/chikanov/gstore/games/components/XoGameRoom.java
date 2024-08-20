@@ -114,20 +114,10 @@ public class XoGameRoom extends AbstractRoom<XoGameRoom.XoPlayer> {
             }
         }
         toDel.forEach(del -> lines.remove(del));
-        if(f == null && lines.isEmpty()){
+        if(lines.isEmpty()){
             f = new Finish(false, false);
         }
         return f;
-    }
-    private boolean maybeWin(int[] line, int number){
-        boolean res = true;
-        for(int i : line){
-            if(cells[i] != 0 && cells[i] != number){
-                res = false;
-                break;
-            }
-        }
-        return res;
     }
 
     @Override
