@@ -101,7 +101,7 @@ public class XoGameRoom extends AbstractRoom<XoGameRoom.XoPlayer> {
         Finish f = null;
         List<Line> toDel = new ArrayList<>();
         for(Line line: l){
-            int r = line.check(cells, number);
+            int r = line.check(number);
             if(r == number) {
                 f = new Finish(true, true);
                 break;
@@ -210,7 +210,7 @@ public class XoGameRoom extends AbstractRoom<XoGameRoom.XoPlayer> {
         boolean contains(int i){
             return  is.contains(i);
         }
-        int check(int[] cells, int num){
+        int check(int num){
             int r = num;
             for(var i : is){
                if(cells[i] != num){
