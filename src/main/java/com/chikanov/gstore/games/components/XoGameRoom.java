@@ -155,6 +155,7 @@ public class XoGameRoom extends AbstractRoom<XoGameRoom.XoPlayer> {
 
     @Override
     public void action(Message message) throws Exception{
+        System.out.println(message.payload());
         int index = Integer.parseInt(message.payload());
         int number = players.get(message.session().getId()).getRealTimeData().number;
         if(index >= 0)
