@@ -1,4 +1,4 @@
-FROM openjdk:22-alpine
+FROM openjdk:21-alpine
 ARG JAR_FILE=gstore.jar
 COPY ${JAR_FILE} app.jar
 ENTRYPOINT ["java", "-jar", "app.jar"]
