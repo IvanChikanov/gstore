@@ -162,7 +162,8 @@ public class XoGameRoom extends AbstractRoom<XoGameRoom.XoPlayer> {
         if(result.may()) {
             if (!result.winner()) {
                 sendAllBut(message.session().getId(),
-                        wsMessageConverter.createFullMessage(TypesOfMessage.ACTION, 0, String.valueOf(index)));
+                        wsMessageConverter.createFullMessage(TypesOfMessage.ACTION, 0,
+                                objectMapper.writeValueAsString(new Action(number, index))));
             }
             else{
                 for(var x : players.values()){
@@ -207,4 +208,5 @@ public class XoGameRoom extends AbstractRoom<XoGameRoom.XoPlayer> {
 
     }
     private record Finish(boolean winner, boolean may){}
+    private  record Action(int number, int index){}
 }
