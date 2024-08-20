@@ -64,8 +64,6 @@ public class WSRoomService {
     }
     @EventListener
     public void deleteGame(UUID id){
-        System.out.println(users.size());
-        System.out.println(rooms.size());
         List<String> us = new ArrayList<>();
         users.forEach((k, v) -> {
             if(v.equals(id))
@@ -73,8 +71,5 @@ public class WSRoomService {
         });
         us.forEach(users::remove);
         rooms.remove(id);
-        System.out.println("Удаляю Команту " + id);
-        System.out.println(users.size());
-        System.out.println(rooms.size());
     }
 }

@@ -126,6 +126,7 @@ public class XoGameRoom extends AbstractRoom<XoGameRoom.XoPlayer> {
         if(players.size() < max)
         {
             Player<XoPlayer> player = new Player<>();
+            game.setFinished(true);
             Result result = new Result();
             result.setGame(game);
             result.setUser(user);
