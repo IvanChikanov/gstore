@@ -1,4 +1,4 @@
-FROM openjdk:17-alpine3.14
+FROM amazoncorretto:17-alpine3.20-jdk
 ARG JAR_FILE=gstore.jar
 COPY ${JAR_FILE} app.jar
 ENTRYPOINT ["java", "-jar", "app.jar"]
