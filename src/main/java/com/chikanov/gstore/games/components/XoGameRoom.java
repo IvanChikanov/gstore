@@ -113,7 +113,7 @@ public class XoGameRoom extends AbstractRoom<XoGameRoom.XoPlayer> {
                     f = new Finish(false, true);
             }
         }
-        toDel.forEach(del -> lines.remove(del));
+        lines.removeAll(toDel);
         if(lines.isEmpty()){
             f = new Finish(false, false);
         }
