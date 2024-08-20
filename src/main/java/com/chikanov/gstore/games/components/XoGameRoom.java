@@ -150,12 +150,10 @@ public class XoGameRoom extends AbstractRoom<XoGameRoom.XoPlayer> {
         if(index >= 0)
             cells[index] = number;
         Finish result = checkResults(index, number);
+        sendAllBut(message.session().getId(),
+                wsMessageConverter.createFullMessage(TypesOfMessage.ACTION, number, String.valueOf(index)));
         if(result.may()) {
-            if (!result.winner()) {
-                sendAllBut(message.session().getId(),
-                        wsMessageConverter.createFullMessage(TypesOfMessage.ACTION, number, String.valueOf(index)));
-            }
-            else{
+            if (result.winner()){
                 for(var x : players.values()){
                     if(x.getSession().getId().equals(message.session().getId())){
                         x.getRealTimeData().result.setPoints(1);
