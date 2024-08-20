@@ -37,7 +37,7 @@ public class GameService {
     }
 
     public Game getGame(UUID id){
-        return gameRepository.findById(id).orElseThrow();
+        return gameRepository.findByIdAndFinished(id, false).orElseThrow();
     }
 
     public String getGameModule(UUID uuid){
