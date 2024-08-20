@@ -34,7 +34,7 @@ public class XoGameRoom extends AbstractRoom<XoGameRoom.XoPlayer> {
     private final Integer[] symbol = new Integer[]{1, 2};
     private final int size;
     private final int[] cells;
-    private List<Integer[]> lines;
+    private List<Line> lines;
 
     private final ObjectMapper objectMapper = new ObjectMapper();
     public XoGameRoom(Game g){
@@ -75,7 +75,7 @@ public class XoGameRoom extends AbstractRoom<XoGameRoom.XoPlayer> {
         }
     }
 
-    private List<Integer[]> filler(int size)
+    private List<Line> filler(int size)
     {
         List<Integer[]> lines = new ArrayList<>();
         Integer[] right = new Integer[size];
@@ -94,23 +94,30 @@ public class XoGameRoom extends AbstractRoom<XoGameRoom.XoPlayer> {
         }
         lines.add(right);
         lines.add(left);
-        return lines;
+        return lines.stream().map(l-> new Line(Arrays.stream(l).toList())).toList();
     }
     private Finish checkResults(int index, int number){
-        List<Integer[]> l = lines.stream().filter(li -> Arrays.stream(li).toList().contains(index)).toList();
-        for(Integer[] line: l){
-            boolean find = true;
-            for(int in : line){
-                if(cells[in] != number){
-                    find = false;
-                    break;
-                }
+        List<Line> l = lines.stream().filter(li -> li.contains(index)).toList();
+        Finish f = null;
+        List<Line> toDel = new ArrayList<>();
+        for(Line line: l){
+            int r = line.check(cells, number);
+            if(r == number) {
+                f = new Finish(true, true);
+                break;
             }
-            if(find){
-                return new Finish(true, true);
+            else {
+                if(r == -1)
+                    toDel.add(line);
+                else
+                    f = new Finish(false, true);
             }
         }
-        return lines.isEmpty() ? new Finish(false, false) : new Finish(false, true);
+        toDel.forEach(del -> lines.remove(del));
+        if(f == null && lines.isEmpty()){
+            f = new Finish(false, false);
+        }
+        return f;
     }
     private boolean maybeWin(int[] line, int number){
         boolean res = true;
@@ -189,7 +196,10 @@ public class XoGameRoom extends AbstractRoom<XoGameRoom.XoPlayer> {
     }
 
     private void endGame(){
-        userService.saveUsers(players.values().stream().map(Player::getUser).collect(Collectors.toList()));
+        userService.saveUsers(players.values().stream().map(p->{
+            p.getUser().getResults().add(p.getRealTimeData().result);
+            return p.getUser();
+        }).collect(Collectors.toList()));
     }
 
     @Setter
@@ -201,5 +211,21 @@ public class XoGameRoom extends AbstractRoom<XoGameRoom.XoPlayer> {
 
     }
     private record Finish(boolean winner, boolean may){}
-    private  record Action(int number, int index){}
+
+    private record Line(List<Integer> is){
+        boolean contains(int i){
+            return  is.contains(i);
+        }
+        int check(int[] cells, int num){
+            int r = num;
+            for(var i : is){
+               if(cells[i] != num){
+                   r = cells[i] != 0 ? -1 : 0;
+                   break;
+
+               }
+            }
+            return r;
+        }
+    }
 }
