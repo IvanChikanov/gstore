@@ -160,25 +160,23 @@ public class XoGameRoom extends AbstractRoom<XoGameRoom.XoPlayer> {
         if(index >= 0)
             cells[index] = number;
         Finish result = checkResults(number);
-        System.out.println(result);
         if(result.may()) {
             if (!result.winner()) {
                 sendAllBut(message.session().getId(),
                         wsMessageConverter.createFullMessage(TypesOfMessage.ACTION, 0, String.valueOf(index)));
             }
             else{
-                players.values().stream().forEach(xoPlayerPlayer ->{
-                        if(xoPlayerPlayer.getSession().getId().equals(message.session().getId())){
-                            xoPlayerPlayer.getRealTimeData().result.setPoints(1);
-                            xoPlayerPlayer.getRealTimeData().result.setWinner(true);
-                        }
-                        else {
-                            xoPlayerPlayer.getRealTimeData().result.setPoints(0);
-                            xoPlayerPlayer.getRealTimeData().result.setWinner(false);
-                        }
-                        wsMessageConverter.createFullMessage(TypesOfMessage.FINISH, 0, String.valueOf(number));
+                for(var x : players.values()){
+                    if(x.getSession().getId().equals(message.session().getId())){
+                        x.getRealTimeData().result.setPoints(1);
+                        x.getRealTimeData().result.setWinner(true);
+                    }
+                    else {
+                        x.getRealTimeData().result.setPoints(0);
+                        x.getRealTimeData().result.setWinner(false);
+                    }
+                    x.getSession().sendMessage(new TextMessage(wsMessageConverter.createFullMessage(TypesOfMessage.FINISH, 0, String.valueOf(number))));
                 }
-                );
                 endGame();
             }
         }
