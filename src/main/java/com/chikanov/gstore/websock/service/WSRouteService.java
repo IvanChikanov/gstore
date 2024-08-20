@@ -31,7 +31,6 @@ public class WSRouteService {
 
 
     public void switchController(Message message) throws Exception{
-        System.out.println("SWIIIIIIIITCH!!!!");
             switch (message.tos()) {
                 case AUTH -> authenticationMessage(message);
                 case ACTION -> wsRoomService.actionMessageToRoom(message);

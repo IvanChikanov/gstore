@@ -140,15 +140,6 @@ public class XoGameRoom extends AbstractRoom<XoGameRoom.XoPlayer> {
             player.setRealTimeData(new XoPlayer());
             player.getRealTimeData().setResult(result);
             players.put(session.getId(), player);
-            //session.sendMessage(new TextMessage(wsMessageConverter.createFullMessage(TypesOfMessage.AUTH, 0, session.getId())));
-
-            System.out.println();
-            System.out.println();
-            System.out.println();
-            System.out.println(players.size());
-            System.out.println();
-            System.out.println();
-            System.out.println();
             if (players.size() == max)
                 startGame();
             return true;

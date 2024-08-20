@@ -36,9 +36,9 @@ public class WSRoomService {
     public void addUser(UUID gameId, User user,  WebSocketSession session) throws Exception
     {
         if(!rooms.containsKey(gameId)) {
-            users.put(session.getId(), gameId);
             rooms.put(gameId, switchGameTypes(gameId));
         }
+        users.put(session.getId(), gameId);
         rooms.get(gameId).addUser(user, session);
     }
 
