@@ -52,7 +52,8 @@ public class WSRoomService {
 
     @Transactional
     public void actionMessageToRoom(Message message) throws Exception{
-        rooms.get(users.get(message.session().getId())).action(message);
+        UUID game = users.get(message.session().getId());
+        rooms.get(game).action(message);
     }
 
     public void closeConnection(CloseMessage reason){
