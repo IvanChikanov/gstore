@@ -202,7 +202,11 @@ public class XoGameRoom extends AbstractRoom<XoGameRoom.XoPlayer> {
     }
     private record Finish(boolean winner, boolean may){}
 
-    private record Line(List<Integer> is){
+    private class Line{
+        List<Integer> is = new ArrayList<>();
+        Line(List<Integer> is){
+            this.is = is;
+        }
         boolean contains(int i){
             return  is.contains(i);
         }
