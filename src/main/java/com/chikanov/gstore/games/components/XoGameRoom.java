@@ -55,7 +55,7 @@ public class XoGameRoom extends AbstractRoom<XoGameRoom.XoPlayer> {
 
             count++;
             randomNumber = count < 2 ?
-                new Random().nextInt(1, 3):
+                new Random().nextInt(3 -1) + 1:
                 randomNumber == 1 ? 2 : 1;
 
             player.getSession().sendMessage(new TextMessage(
