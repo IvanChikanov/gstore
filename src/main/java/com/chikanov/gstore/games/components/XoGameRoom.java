@@ -155,12 +155,12 @@ public class XoGameRoom extends AbstractRoom<XoGameRoom.XoPlayer> {
 
     @Override
     public void action(Message message) throws Exception{
-        System.out.println(message.payload());
         int index = Integer.parseInt(message.payload());
         int number = players.get(message.session().getId()).getRealTimeData().number;
         if(index >= 0)
             cells[index] = number;
         Finish result = checkResults(number);
+        System.out.println(result);
         if(result.may()) {
             if (!result.winner()) {
                 sendAllBut(message.session().getId(),
