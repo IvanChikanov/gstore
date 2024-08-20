@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.socket.WebSocketSession;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -63,6 +64,17 @@ public class WSRoomService {
     }
     @EventListener
     public void deleteGame(UUID id){
+        System.out.println(users.size());
+        System.out.println(rooms.size());
+        List<String> us = new ArrayList<>();
+        users.forEach((k, v) -> {
+            if(v.equals(id))
+                us.add(k);
+        });
+        us.forEach(users::remove);
+        rooms.remove(id);
         System.out.println("Удаляю Команту " + id);
+        System.out.println(users.size());
+        System.out.println(rooms.size());
     }
 }
