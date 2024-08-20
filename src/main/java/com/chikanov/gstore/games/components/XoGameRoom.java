@@ -104,7 +104,7 @@ public class XoGameRoom extends AbstractRoom<XoGameRoom.XoPlayer> {
             for(int index : line){
                 if(cells[index] != number){
                     find = false;
-                    if(maybeWin(line, number)){
+                    if(!maybeWin(line, number)){
                         indexesToDelete.add(count);
                     }
                     break;
@@ -115,17 +115,18 @@ public class XoGameRoom extends AbstractRoom<XoGameRoom.XoPlayer> {
             }
             count++;
         }
-        System.out.println(lines.size());
-        indexesToDelete.forEach(i -> lines.remove((int)i));
+        indexesToDelete.stream().sorted(Collections.reverseOrder()).forEach(i -> lines.remove((int)i));
         return lines.isEmpty() ? new Finish(false, false) : new Finish(false, true);
     }
     private boolean maybeWin(int[] line, int number){
+        boolean res = true;
         for(int i : line){
             if(cells[i] != 0 || cells[i] != number){
-                return true;
+                res = false;
+                break;
             }
         }
-        return false;
+        return res;
     }
 
     @Override
