@@ -5,6 +5,8 @@ import com.chikanov.gstore.enums.TypesOfMessage;
 import com.chikanov.gstore.games.interfaces.IRoom;
 import com.chikanov.gstore.games.objects.Player;
 import com.chikanov.gstore.records.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.WebSocketMessage;
@@ -23,6 +25,9 @@ public abstract class AbstractRoom<T> implements IRoom {
     protected Game game;
     protected Map<String, Player<T>> players;
     protected int max;
+
+    @Autowired
+    protected ApplicationEventPublisher eventPublisher;
 
     public AbstractRoom(Game g){
         this.game = g;

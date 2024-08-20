@@ -12,10 +12,12 @@ import com.chikanov.gstore.records.WsPlayer;
 import com.chikanov.gstore.services.GameService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.socket.WebSocketSession;
 
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
@@ -58,5 +60,9 @@ public class WSRoomService {
 
     public void closeConnection(CloseMessage reason){
 
+    }
+    @EventListener
+    public void deleteGame(List<Result> res){
+        System.out.println("Удаляю Команту");
     }
 }
