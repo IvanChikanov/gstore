@@ -162,8 +162,7 @@ public class XoGameRoom extends AbstractRoom<XoGameRoom.XoPlayer> {
         if(result.may()) {
             if (!result.winner()) {
                 sendAllBut(message.session().getId(),
-                        wsMessageConverter.createFullMessage(TypesOfMessage.ACTION, 0,
-                                objectMapper.writeValueAsString(new Action(number, index))));
+                        wsMessageConverter.createFullMessage(TypesOfMessage.ACTION, number, String.valueOf(index)));
             }
             else{
                 for(var x : players.values()){
