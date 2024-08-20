@@ -57,7 +57,7 @@ public class XoGameRoom extends AbstractRoom<XoGameRoom.XoPlayer> {
             randomNumber = count < 2 ?
                 new Random().nextInt(1, 3):
                 randomNumber == 1 ? 2 : 1;
-
+            player.getRealTimeData().number = randomNumber;
             player.getSession().sendMessage(new TextMessage(
                     wsMessageConverter.createFullMessage(
                             TypesOfMessage.START, 0,
@@ -68,9 +68,6 @@ public class XoGameRoom extends AbstractRoom<XoGameRoom.XoPlayer> {
     }
     private void sendAllBut(String id, String message) throws Exception
     {
-        System.out.println(message);
-        System.out.println(players.size());
-        System.out.println();
         for(var key: players.keySet()){
             if(!Objects.equals(key, id)){
                 players.get(key).getSession().sendMessage(new TextMessage(message));
