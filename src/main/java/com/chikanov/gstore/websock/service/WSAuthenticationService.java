@@ -55,7 +55,7 @@ public class WSAuthenticationService {
         AuthData auth = authenticator.validation(authMessage.token());
         if(auth.statusCode().equals(HttpStatus.OK)) {
             User user =  userService.getOrCreate(objectMapper.readValue(auth.result(), TgUser.class));
-            user.getResults();
+            user.setResults(user.getResults());
             ChatEntity chat = gameService.getChatFromGameId(authMessage.game());
             var chr = user.getChatRoles().stream().filter(cr ->cr.getChat().getId().equals(chat.getId())).findFirst();
             if(chr.isEmpty()){
