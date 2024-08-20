@@ -115,6 +115,7 @@ public class XoGameRoom extends AbstractRoom<XoGameRoom.XoPlayer> {
             }
             count++;
         }
+        System.out.println(lines.size());
         indexesToDelete.forEach(i -> lines.remove((int)i));
         return lines.isEmpty() ? new Finish(false, false) : new Finish(false, true);
     }
