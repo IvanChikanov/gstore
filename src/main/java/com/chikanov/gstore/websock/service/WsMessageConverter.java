@@ -17,7 +17,7 @@ public class WsMessageConverter {
     {
         String[] cutPayload = message.split(":::");
         String[] types = cutPayload[0].split(":");
-        return new Message(TypesOfMessage.valueOf(types[0]), Integer.parseInt(types[1]), cutPayload[1], session);
+        return new Message(TypesOfMessage.getType(types[0]), Integer.parseInt(types[1]), cutPayload[1], session);
     }
 
     public String createFullMessage(TypesOfMessage t, int n, String p) {
