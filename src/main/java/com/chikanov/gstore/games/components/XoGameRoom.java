@@ -121,7 +121,7 @@ public class XoGameRoom extends AbstractRoom<XoGameRoom.XoPlayer> {
     private boolean maybeWin(int[] line, int number){
         boolean res = true;
         for(int i : line){
-            if(cells[i] != 0 || cells[i] != number){
+            if(cells[i] != 0 && cells[i] != number){
                 res = false;
                 break;
             }
@@ -180,11 +180,11 @@ public class XoGameRoom extends AbstractRoom<XoGameRoom.XoPlayer> {
             }
         }
         else{
-            players.values().stream().forEach(xoPlayerPlayer ->{
-                xoPlayerPlayer.getRealTimeData().result.setPoints(0);
-                xoPlayerPlayer.getRealTimeData().result.setWinner(false);
-                wsMessageConverter.createFullMessage(TypesOfMessage.FINISH, 0, String.valueOf(-1));
-            });
+            for(var x : players.values()){
+                x.getRealTimeData().result.setPoints(0);
+                x.getRealTimeData().result.setWinner(false);
+                x.getSession().sendMessage(new TextMessage(wsMessageConverter.createFullMessage(TypesOfMessage.FINISH, 0, String.valueOf(-1))));
+            }
             endGame();
         }
     }
