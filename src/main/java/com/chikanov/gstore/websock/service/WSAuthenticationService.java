@@ -54,6 +54,7 @@ public class WSAuthenticationService {
     public User authenticate(AuthenticationMessage authMessage) throws WsException {
         try {
             AuthData auth = authenticator.validation(authMessage.token());
+            var s = unauthorizedSessions.remove(authMessage.from().toString());
             if (auth.statusCode().equals(HttpStatus.OK)) {
                 User user = userService.getOrCreate(objectMapper.readValue(auth.result(), TgUser.class));
                 ChatEntity chat = gameService.getChatFromGameId(authMessage.game());
@@ -62,7 +63,6 @@ public class WSAuthenticationService {
                     user.getChatRoles().add(chatRoleService.createChatRole(user, chat, Role.USER));
                     userService.saveUser(user);
                 }
-                var s = unauthorizedSessions.remove(authMessage.from());
                 return user;
             }
             throw new WsException("Ошибка авторизации, вы случаем не злоумышленник?!", WsExceptionType.AUTH_ERROR);

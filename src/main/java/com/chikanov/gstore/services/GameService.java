@@ -2,6 +2,8 @@ package com.chikanov.gstore.services;
 
 import com.chikanov.gstore.entity.ChatEntity;
 import com.chikanov.gstore.entity.Game;
+import com.chikanov.gstore.exceptions.WsException;
+import com.chikanov.gstore.exceptions.enums.WsExceptionType;
 import com.chikanov.gstore.repositories.ChatRepository;
 import com.chikanov.gstore.repositories.GameRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,8 +51,8 @@ public class GameService {
         gameRepository.save(game);
     }
 
-    public ChatEntity getChatFromGameId(UUID id){
-        return gameRepository.findById(id).orElseThrow().getChatId();
+    public ChatEntity getChatFromGameId(UUID id) throws WsException{
+        return gameRepository.findById(id).orElseThrow(() -> new WsException("Игра не найдена!", WsExceptionType.DB_NOT_FOUND)).getChatId();
     }
 
 }
