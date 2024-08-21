@@ -63,8 +63,9 @@ public class WSRoomService {
         rooms.get(game).action(message);
     }
 
-    public void closeConnection(CloseMessage reason){
-
+    public void closeConnection(WebSocketSession session, int status) throws WsException{
+        UUID game = users.get(session.getId());
+        rooms.get(game).disconnect(session);
     }
     @EventListener
     public void deleteGame(Game game){

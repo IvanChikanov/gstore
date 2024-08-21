@@ -43,14 +43,8 @@ public class WSRouteService {
         wsAuthenticationService.addToWaitList(session);
 
     }
-    public void disconnectHandler(CloseStatus closeStatus) throws WsException {
-        try {
-            if (closeStatus.getCode() == 3001) {
-                wsRoomService.closeConnection(objectMapper.readValue(closeStatus.getReason(), CloseMessage.class));
-            }
-        }catch (JsonProcessingException jsonProcessingException){
-            throw new WsException(jsonProcessingException.getMessage(), WsExceptionType.INVALID_JSON);
-        }
+    public void disconnectHandler(WebSocketSession session, CloseStatus closeStatus) throws WsException {
+            wsRoomService.closeConnection(session, closeStatus.getCode());
     }
 
     private void authenticationMessage(Message message) throws WsException{

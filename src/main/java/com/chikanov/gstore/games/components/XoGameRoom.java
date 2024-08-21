@@ -178,8 +178,8 @@ public class XoGameRoom extends AbstractRoom<XoGameRoom.XoPlayer> {
     }
 
     @Override
-    public void disconnect(Message message) {
-
+    public void disconnect(WebSocketSession session) throws WsException{
+        sendAllBut(session.getId(), wsMessageConverter.createFullMessage(TypesOfMessage.ERROR, 0, "Противник отключился, ждем..."));
     }
 
     private void endGame(){
