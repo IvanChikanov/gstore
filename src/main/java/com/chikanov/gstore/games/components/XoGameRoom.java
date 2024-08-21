@@ -63,7 +63,7 @@ public class XoGameRoom extends AbstractRoom<XoGameRoom.XoPlayer> {
             player.getRealTimeData().number = randomNumber;
             player.sendMessage(
                     wsMessageConverter.createFullMessage(
-                            TypesOfMessage.START, 0,
+                            TypesOfMessage.START, num,
                             String.valueOf(randomNumber)
                     )
             );
