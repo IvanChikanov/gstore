@@ -140,7 +140,9 @@ public class XoGameRoom extends AbstractRoom<XoGameRoom.XoPlayer> {
                     startGame(0);
             } else {
                 Optional<Player<XoPlayer>> us = players.values().stream().filter(p -> p.getUser().getId().equals(user.getId())).findFirst();
-                us.orElseThrow(()-> new WsException("Комната уже полна игроков!", WsExceptionType.ROOM_OVERLOAD)).replaceSession(session);
+                var p = us.orElseThrow(()-> new WsException("Комната уже полна игроков!", WsExceptionType.ROOM_OVERLOAD));
+                eventPublisher.publishEvent(new ReplaceSession(p.getSession().getId(), session.getId()));
+                p.replaceSession(session);
                 startGame(1);
             }
     }

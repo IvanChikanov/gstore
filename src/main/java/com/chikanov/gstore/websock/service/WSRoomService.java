@@ -7,10 +7,7 @@ import com.chikanov.gstore.exceptions.WsException;
 import com.chikanov.gstore.exceptions.enums.WsExceptionType;
 import com.chikanov.gstore.games.interfaces.IRoom;
 import com.chikanov.gstore.games.components.XoGameRoom;
-import com.chikanov.gstore.records.ActionMessage;
-import com.chikanov.gstore.records.CloseMessage;
-import com.chikanov.gstore.records.Message;
-import com.chikanov.gstore.records.WsPlayer;
+import com.chikanov.gstore.records.*;
 import com.chikanov.gstore.services.GameService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -67,7 +64,7 @@ public class WSRoomService {
         UUID game = users.get(session.getId());
         rooms.get(game).disconnect(session);
     }
-    @EventListener
+    @EventListener(Game.class)
     public void deleteGame(Game game){
         game.setFinished(true);
         gameService.saveGame(game);
@@ -79,4 +76,11 @@ public class WSRoomService {
         us.forEach(users::remove);
         rooms.remove(game.getId());
     }
+
+    @EventListener(ReplaceSession.class)
+    public void replaceUser(ReplaceSession replaceSession){
+        UUID game = users.remove(replaceSession.oldSession());
+        users.put(replaceSession.newSession(), game);
+    }
+
 }
