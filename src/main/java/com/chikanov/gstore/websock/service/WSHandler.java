@@ -63,6 +63,7 @@ public class WSHandler implements WebSocketHandler {
 
     @Override
     public void afterConnectionClosed(WebSocketSession session, CloseStatus closeStatus) throws Exception {
+        System.out.println("Ля лЯ лЯ лЯ я закрытие сессии!!!!");
         webSocketRouteService.disconnectHandler(closeStatus);
 
     }
