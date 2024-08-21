@@ -1,9 +1,14 @@
 package com.chikanov.gstore.games.objects;
 
 import com.chikanov.gstore.entity.User;
+import com.chikanov.gstore.exceptions.WsException;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.web.socket.CloseStatus;
+import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
+
+import java.io.IOException;
 
 @Getter
 @Setter
@@ -14,6 +19,15 @@ public class Player<T>{
 
     public void replaceSession(WebSocketSession newSession){
         session = newSession;
+    }
+
+    public void sendMessage(String message) throws WsException{
+        try{
+            session.sendMessage(new TextMessage(message));
+        }
+        catch (IOException ioException){
+            throw new WsException("Сессия не найдена!", new CloseStatus(4014));
+        }
     }
 
 }

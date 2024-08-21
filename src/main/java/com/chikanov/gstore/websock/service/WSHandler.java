@@ -1,9 +1,11 @@
 package com.chikanov.gstore.websock.service;
 
+import com.chikanov.gstore.exceptions.WsException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.socket.*;
 
+import java.io.IOException;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -34,8 +36,14 @@ public class WSHandler implements WebSocketHandler {
                     wsMessageConverter.createMessage(session, message.getPayload().toString())
             );
         }
-        catch (Exception ex){
-                ex.printStackTrace();
+        catch (WsException exception){
+            try {
+                session.sendMessage(new TextMessage(exception.getMessage()));
+                session.close(exception.status);
+            }
+            catch (IOException ioException){
+                System.out.println(ioException.getMessage());
+            }
         }
 
     }

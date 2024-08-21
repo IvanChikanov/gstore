@@ -4,6 +4,7 @@ import com.chikanov.gstore.entity.Game;
 import com.chikanov.gstore.entity.Result;
 import com.chikanov.gstore.entity.User;
 import com.chikanov.gstore.enums.TypesOfMessage;
+import com.chikanov.gstore.exceptions.WsException;
 import com.chikanov.gstore.games.objects.Player;
 import com.chikanov.gstore.records.*;
 import com.chikanov.gstore.repositories.ResultRepository;
@@ -48,7 +49,7 @@ public class XoGameRoom extends AbstractRoom<XoGameRoom.XoPlayer> {
     }
 
 
-    private void startGame() throws IOException{
+    private void startGame() throws WsException{
         int count = 0;
         int randomNumber = 0;
 
@@ -59,19 +60,19 @@ public class XoGameRoom extends AbstractRoom<XoGameRoom.XoPlayer> {
                 new Random().nextInt(1, 3):
                 randomNumber == 1 ? 2 : 1;
             player.getRealTimeData().number = randomNumber;
-            player.getSession().sendMessage(new TextMessage(
+            player.sendMessage(
                     wsMessageConverter.createFullMessage(
                             TypesOfMessage.START, 0,
-                            String.valueOf(randomNumber))
+                            String.valueOf(randomNumber)
                     )
             );
         }
     }
-    private void sendAllBut(String id, String message) throws Exception
+    private void sendAllBut(String id, String message) throws WsException
     {
         for(var key: players.keySet()){
             if(!Objects.equals(key, id)){
-                players.get(key).getSession().sendMessage(new TextMessage(message));
+                players.get(key).sendMessage(message);
             }
         }
     }
@@ -122,30 +123,27 @@ public class XoGameRoom extends AbstractRoom<XoGameRoom.XoPlayer> {
     }
 
     @Override
-    public boolean addUser(User user, WebSocketSession session) throws IOException {
-        if(players.size() < max)
-        {
-            Player<XoPlayer> player = new Player<>();
-            Result result = new Result();
-            result.setGame(game);
-            result.setUser(user);
-            player.setUser(user);
-            player.setSession(session);
-            player.setRealTimeData(new XoPlayer());
-            player.getRealTimeData().setResult(result);
-            players.put(session.getId(), player);
-            if (players.size() == max)
-                startGame();
-            return true;
-        }
-        else{
-            session.close(new CloseStatus(4005, "Комната переполнена"));
-            return false;
-        }
+    public boolean addUser(User user, WebSocketSession session) throws WsException {
+            if (players.size() < max) {
+                Player<XoPlayer> player = new Player<>();
+                Result result = new Result();
+                result.setGame(game);
+                result.setUser(user);
+                player.setUser(user);
+                player.setSession(session);
+                player.setRealTimeData(new XoPlayer());
+                player.getRealTimeData().setResult(result);
+                players.put(session.getId(), player);
+                if (players.size() == max)
+                    startGame();
+                return true;
+            } else {
+                throw new WsException("Комната уже полна игроков!", new CloseStatus(4005));
+            }
     }
 
     @Override
-    public void action(Message message) throws Exception{
+    public void action(Message message) throws WsException{
         int index = Integer.parseInt(message.payload());
         int number = players.get(message.session().getId()).getRealTimeData().number;
         sendAllBut(message.session().getId(),
@@ -163,7 +161,7 @@ public class XoGameRoom extends AbstractRoom<XoGameRoom.XoPlayer> {
                             x.getRealTimeData().result.setPoints(0);
                             x.getRealTimeData().result.setWinner(false);
                         }
-                        x.getSession().sendMessage(new TextMessage(wsMessageConverter.createFullMessage(TypesOfMessage.FINISH, 0, String.valueOf(number))));
+                        x.sendMessage(wsMessageConverter.createFullMessage(TypesOfMessage.FINISH, 0, String.valueOf(number)));
                     }
                     endGame();
                 }
@@ -171,7 +169,7 @@ public class XoGameRoom extends AbstractRoom<XoGameRoom.XoPlayer> {
                 for (var x : players.values()) {
                     x.getRealTimeData().result.setPoints(0);
                     x.getRealTimeData().result.setWinner(false);
-                    x.getSession().sendMessage(new TextMessage(wsMessageConverter.createFullMessage(TypesOfMessage.FINISH, 0, String.valueOf(-1))));
+                    x.sendMessage(wsMessageConverter.createFullMessage(TypesOfMessage.FINISH, 0, String.valueOf(-1)));
                 }
                 endGame();
             }
