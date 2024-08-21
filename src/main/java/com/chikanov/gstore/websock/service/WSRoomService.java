@@ -4,6 +4,7 @@ import com.chikanov.gstore.entity.Game;
 import com.chikanov.gstore.entity.Result;
 import com.chikanov.gstore.entity.User;
 import com.chikanov.gstore.exceptions.WsException;
+import com.chikanov.gstore.exceptions.enums.WsExceptionType;
 import com.chikanov.gstore.games.interfaces.IRoom;
 import com.chikanov.gstore.games.components.XoGameRoom;
 import com.chikanov.gstore.records.ActionMessage;
@@ -52,7 +53,7 @@ public class WSRoomService {
         Game game = gameService.getGame(id);
         return switch (game.getGameType().getModule()){
             case "XO" -> applicationContext.getBean(XoGameRoom.class, game);
-            default -> throw new WsException("Игра не определена!", new CloseStatus(4009));
+            default -> throw new WsException("Игра не определена!", WsExceptionType.DB_NOT_FOUND);
         };
     }
 

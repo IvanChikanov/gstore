@@ -1,5 +1,6 @@
 package com.chikanov.gstore.websock.service;
 
+import com.chikanov.gstore.enums.TypesOfMessage;
 import com.chikanov.gstore.exceptions.WsException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -38,8 +39,14 @@ public class WSHandler implements WebSocketHandler {
         }
         catch (WsException exception){
             try {
-                session.sendMessage(new TextMessage(exception.getMessage()));
-                session.close(exception.status);
+                session.sendMessage(
+                        new TextMessage(wsMessageConverter.createFullMessage(
+                                TypesOfMessage.ERROR, 0,
+                                exception.getMessage())
+                        )
+                );
+
+                session.close(new CloseStatus(exception.status.getCode()));
             }
             catch (IOException ioException){
                 System.out.println(ioException.getMessage());
@@ -51,7 +58,7 @@ public class WSHandler implements WebSocketHandler {
     @Override
     public void handleTransportError(WebSocketSession session, Throwable exception) throws Exception {
 
-       System.out.println(session.getRemoteAddress());
+       System.out.println("Ля лЯ лЯ лЯ я ошибка транспорта!!");
     }
 
     @Override

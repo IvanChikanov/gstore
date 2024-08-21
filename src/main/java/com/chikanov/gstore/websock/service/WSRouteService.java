@@ -3,6 +3,7 @@ package com.chikanov.gstore.websock.service;
 import com.chikanov.gstore.entity.User;
 import com.chikanov.gstore.enums.TypesOfMessage;
 import com.chikanov.gstore.exceptions.WsException;
+import com.chikanov.gstore.exceptions.enums.WsExceptionType;
 import com.chikanov.gstore.records.*;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -37,7 +38,7 @@ public class WSRouteService {
                 case ACTION -> wsRoomService.actionMessageToRoom(message);
             }
     }
-    public void newConnection(WebSocketSession session) throws Exception
+    public void newConnection(WebSocketSession session) throws WsException
     {
         wsAuthenticationService.addToWaitList(session);
 
@@ -48,7 +49,7 @@ public class WSRouteService {
                 wsRoomService.closeConnection(objectMapper.readValue(closeStatus.getReason(), CloseMessage.class));
             }
         }catch (JsonProcessingException jsonProcessingException){
-            throw new WsException(jsonProcessingException.getMessage(), new CloseStatus(4010));
+            throw new WsException(jsonProcessingException.getMessage(), WsExceptionType.INVALID_JSON);
         }
     }
 
@@ -60,7 +61,7 @@ public class WSRouteService {
             wsRoomService.addUser(authMessage.game(), user, message.session());
         }
         }catch (JsonProcessingException jsonProcessingException){
-            throw new WsException(jsonProcessingException.getMessage(), new CloseStatus(4010));
+            throw new WsException(jsonProcessingException.getMessage(),WsExceptionType.INVALID_JSON);
         }
 
     }

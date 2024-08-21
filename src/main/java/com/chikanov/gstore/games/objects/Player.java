@@ -2,6 +2,7 @@ package com.chikanov.gstore.games.objects;
 
 import com.chikanov.gstore.entity.User;
 import com.chikanov.gstore.exceptions.WsException;
+import com.chikanov.gstore.exceptions.enums.WsExceptionType;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.web.socket.CloseStatus;
@@ -26,7 +27,7 @@ public class Player<T>{
             session.sendMessage(new TextMessage(message));
         }
         catch (IOException ioException){
-            throw new WsException("Сессия не найдена!", new CloseStatus(4014));
+            throw new WsException("Сессия не найдена!", WsExceptionType.SESSION_ERROR);
         }
     }
 

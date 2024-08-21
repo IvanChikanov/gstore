@@ -5,6 +5,7 @@ import com.chikanov.gstore.entity.Result;
 import com.chikanov.gstore.entity.User;
 import com.chikanov.gstore.enums.TypesOfMessage;
 import com.chikanov.gstore.exceptions.WsException;
+import com.chikanov.gstore.exceptions.enums.WsExceptionType;
 import com.chikanov.gstore.games.objects.Player;
 import com.chikanov.gstore.records.*;
 import com.chikanov.gstore.repositories.ResultRepository;
@@ -138,7 +139,7 @@ public class XoGameRoom extends AbstractRoom<XoGameRoom.XoPlayer> {
                     startGame();
                 return true;
             } else {
-                throw new WsException("Комната уже полна игроков!", new CloseStatus(4005));
+                throw new WsException("Комната уже полна игроков!", WsExceptionType.ROOM_OVERLOAD);
             }
     }
 
