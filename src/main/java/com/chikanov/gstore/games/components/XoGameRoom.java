@@ -50,7 +50,7 @@ public class XoGameRoom extends AbstractRoom<XoGameRoom.XoPlayer> {
     }
 
 
-    private void startGame() throws WsException{
+    private void startGame(int num) throws WsException{
         int count = 0;
         int randomNumber = 0;
 
@@ -73,8 +73,6 @@ public class XoGameRoom extends AbstractRoom<XoGameRoom.XoPlayer> {
     {
         for(var key: players.keySet()){
             if(!key.equals(id)){
-                System.out.println(key);
-                System.out.println(id);
                 players.get(key).sendMessage(message);
             }
         }
@@ -126,7 +124,7 @@ public class XoGameRoom extends AbstractRoom<XoGameRoom.XoPlayer> {
     }
 
     @Override
-    public boolean addUser(User user, WebSocketSession session) throws WsException {
+    public void addUser(User user, WebSocketSession session) throws WsException {
             if (players.size() < max) {
                 Player<XoPlayer> player = new Player<>();
                 Result result = new Result();
@@ -134,14 +132,16 @@ public class XoGameRoom extends AbstractRoom<XoGameRoom.XoPlayer> {
                 result.setUser(user);
                 player.setUser(user);
                 player.setSession(session);
+                player.setActive(true);
                 player.setRealTimeData(new XoPlayer());
                 player.getRealTimeData().setResult(result);
                 players.put(session.getId(), player);
                 if (players.size() == max)
-                    startGame();
-                return true;
+                    startGame(0);
             } else {
-                throw new WsException("Комната уже полна игроков!", WsExceptionType.ROOM_OVERLOAD);
+                Optional<Player<XoPlayer>> us = players.values().stream().filter(p -> p.getUser().getId().equals(user.getId())).findFirst();
+                us.orElseThrow(()-> new WsException("Комната уже полна игроков!", WsExceptionType.ROOM_OVERLOAD)).replaceSession(session);
+                startGame(1);
             }
     }
 
@@ -181,6 +181,7 @@ public class XoGameRoom extends AbstractRoom<XoGameRoom.XoPlayer> {
 
     @Override
     public void disconnect(WebSocketSession session) throws WsException{
+        players.get(session.getId()).setActive(false);
         sendAllBut(session.getId(), wsMessageConverter.createFullMessage(TypesOfMessage.ERROR, 0, "Противник отключился, ждем..."));
     }
 

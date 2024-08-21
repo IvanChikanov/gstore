@@ -12,7 +12,7 @@ import java.util.UUID;
 
 public interface IRoom {
 
-    boolean addUser(User user,  WebSocketSession session) throws WsException;
+    void addUser(User user,  WebSocketSession session) throws WsException;
     void action(Message message) throws WsException;
     void disconnect(WebSocketSession session) throws WsException;
 }

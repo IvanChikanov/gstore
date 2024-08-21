@@ -17,6 +17,7 @@ public class Player<T>{
     private WebSocketSession session;
     private User user;
     private T realTimeData;
+    private boolean isActive;
 
     public void replaceSession(WebSocketSession newSession){
         session = newSession;
