@@ -72,7 +72,9 @@ public class XoGameRoom extends AbstractRoom<XoGameRoom.XoPlayer> {
     private void sendAllBut(String id, String message) throws WsException
     {
         for(var key: players.keySet()){
-            if(!Objects.equals(key, id)){
+            if(!key.equals(id)){
+                System.out.println(key);
+                System.out.println(id);
                 players.get(key).sendMessage(message);
             }
         }
