@@ -89,7 +89,8 @@ public class ReadJsonService {
                             messageTextKeeper.lang("ru").get("group_hello"),
                             myChatMember.getChat().getId(),
                             messageService.oneButtonKeyboard(
-                                    messageTextKeeper.lang("ru").get("group_hello_button"),
+                                    String.format(messageTextKeeper.lang("ru").get("group_hello_button"),
+                                            myChatMember.getChat().getType().equals("chanel")? "канале" : "чате"),
                                     "https://t.me/Cooperation_chat_minigames_bot"
                             )
                     )));
