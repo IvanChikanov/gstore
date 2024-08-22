@@ -86,8 +86,8 @@ public class ReadJsonService {
                 }
                 else {
                     sendMessageService.send(om.writeValueAsString(messageService.oneButtonMessage(
-                            String.format(messageTextKeeper.lang("ru").get("group_hello"),
-                                    myChatMember.getChat().getType().equals("group")? "чате" : "канале"),
+                            String.format(messageTextKeeper.lang("ru").get("group_hello")
+                                    .replaceAll("%s", myChatMember.getChat().getType().equals("group")? "чате" : "канале")),
                             myChatMember.getChat().getId(),
                             messageService.oneButtonKeyboard(
                                     messageTextKeeper.lang("ru").get("group_hello_button"),
