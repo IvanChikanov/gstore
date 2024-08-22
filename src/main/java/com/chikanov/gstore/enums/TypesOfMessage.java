@@ -5,7 +5,8 @@ public enum TypesOfMessage {
     AUTH("AU"),
     FINISH("F"),
     START("S"),
-    ERROR("E");
+    ERROR("E"),
+    RECONNECT("RE");
     private String string;
     TypesOfMessage(String type){
         string = type;

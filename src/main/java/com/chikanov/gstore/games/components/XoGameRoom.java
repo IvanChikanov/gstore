@@ -11,6 +11,7 @@ import com.chikanov.gstore.records.*;
 import com.chikanov.gstore.repositories.ResultRepository;
 import com.chikanov.gstore.services.UserService;
 import com.chikanov.gstore.websock.service.WsMessageConverter;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -145,7 +146,15 @@ public class XoGameRoom extends AbstractRoom<XoGameRoom.XoPlayer> {
                 players.put(session.getId(), p);
                 eventPublisher.publishEvent(new ReplaceSession(p.getSession().getId(), session.getId()));
                 p.replaceSession(session);
-                startGame(1);
+                try {
+                    p.sendMessage(wsMessageConverter.createFullMessage(
+                            TypesOfMessage.RECONNECT, 0,
+                            objectMapper.writeValueAsString(new Reconnect(cells, p.isActive()))
+                    ));
+                }catch (JsonProcessingException jex){
+                    throw new WsException(jex.getMessage(), WsExceptionType.INVALID_JSON);
+                }
+
             }
     }
 
@@ -204,6 +213,7 @@ public class XoGameRoom extends AbstractRoom<XoGameRoom.XoPlayer> {
 
     }
     private record Finish(boolean winner, boolean may){}
+    private record Reconnect(int[] cells, boolean active){}
 
     private class Line{
         List<Integer> is;
