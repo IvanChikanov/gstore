@@ -86,10 +86,11 @@ public class ReadJsonService {
                 }
                 else {
                     sendMessageService.send(om.writeValueAsString(messageService.oneButtonMessage(
-                            messageTextKeeper.lang("ru").get("group_hello"),
+                            String.format(messageTextKeeper.lang("ru").get("group_hello"),
+                                    myChatMember.getChat().getType().equals("group")? "чате" : "канале"),
                             myChatMember.getChat().getId(),
                             messageService.oneButtonKeyboard(
-                                    messageTextKeeper.lang("ru").get("group_hello_button").replaceAll("%s",  myChatMember.getChat().getType().equals("group")? "чате" : "канале"),
+                                    messageTextKeeper.lang("ru").get("group_hello_button"),
                                     "https://t.me/Cooperation_chat_minigames_bot"
                             )
                     )));
