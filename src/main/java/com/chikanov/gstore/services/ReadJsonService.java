@@ -71,7 +71,7 @@ public class ReadJsonService {
         ChatMember newMember = myChatMember.getNewMember();
         if(newMember.getUser().getId().equals(AutoSetWebhook.getBOT())){
             Role role;
-            if(newMember.getStatus().equals("member"))
+            if(newMember.getStatus().equals("member") || newMember.getStatus().equals("administrator"))
             {
                 if(myChatMember.getChat().getType().equals("private")) {
                     sendMessageService.send(om.writeValueAsString(messageService.oneButtonMessage(
