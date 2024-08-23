@@ -22,6 +22,7 @@ public class WsMessageConverter {
 
     public String createFullMessage(TypesOfMessage t, int n, String p) {
         String s = String.format("%s:%d:::%s", t.get(), n, p);
+        System.out.println(s);
         return s;
     }
 }
