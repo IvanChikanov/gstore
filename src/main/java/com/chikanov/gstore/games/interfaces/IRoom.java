@@ -15,4 +15,5 @@ public interface IRoom {
     void addUser(User user,  WebSocketSession session) throws WsException;
     void action(Message message) throws WsException;
     void disconnect(WebSocketSession session) throws WsException;
+    void reconnect(WebSocketSession session) throws WsException;
 }

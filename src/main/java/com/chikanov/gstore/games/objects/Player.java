@@ -5,7 +5,6 @@ import com.chikanov.gstore.exceptions.WsException;
 import com.chikanov.gstore.exceptions.enums.WsExceptionType;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 
@@ -17,7 +16,9 @@ public class Player<T>{
     private WebSocketSession session;
     private User user;
     private T realTimeData;
-    private boolean isActive;
+    private boolean isConnected;
+    private boolean isActive = false;
+
 
     public void replaceSession(WebSocketSession newSession){
         session = newSession;
