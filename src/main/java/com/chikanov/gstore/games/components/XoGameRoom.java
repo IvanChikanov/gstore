@@ -200,7 +200,15 @@ public class XoGameRoom extends AbstractRoom<XoGameRoom.XoPlayer> {
     @Override
     public void reconnect(WebSocketSession session) throws WsException {
         players.get(session.getId()).setConnected(true);
-        startGame(1);
+        if(players.values().stream().filter(Player::isConnected).count() == players.size()){
+            for(var player : players.values()){
+                player.sendMessage(wsMessageConverter.createFullMessage(
+                        TypesOfMessage.START, 1,
+                        String.valueOf(player.isActive()))
+                );
+            }
+        }
+
     }
 
     private void endGame(){
