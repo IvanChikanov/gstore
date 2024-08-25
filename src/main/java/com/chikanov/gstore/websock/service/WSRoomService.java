@@ -56,13 +56,14 @@ public class WSRoomService {
 
     @Transactional
     public void actionMessageToRoom(Message message) throws WsException{
-        UUID game = users.get(message.session().getId());
-        rooms.get(game).action(message);
+        findRoom(message.session().getId()).action(message);
     }
 
     public void closeConnection(WebSocketSession session, int status) throws WsException{
-        UUID game = users.get(session.getId());
-        rooms.get(game).disconnect(session);
+        findRoom(session.getId()).disconnect(session);
+    }
+    public void reconnectHandler(Message message) throws WsException{
+        findRoom(message.session().getId()).reconnect(message.session());
     }
     @EventListener(Game.class)
     public void deleteGame(Game game){
@@ -83,4 +84,8 @@ public class WSRoomService {
         users.put(replaceSession.newSession(), game);
     }
 
+    private IRoom findRoom(String userId) {
+        UUID game = users.get(userId);
+        return rooms.get(game);
+    }
 }

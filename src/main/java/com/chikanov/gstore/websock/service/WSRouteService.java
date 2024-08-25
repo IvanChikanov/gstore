@@ -36,6 +36,7 @@ public class WSRouteService {
             switch (message.tos()) {
                 case AUTH -> authenticationMessage(message);
                 case ACTION -> wsRoomService.actionMessageToRoom(message);
+                case RECONNECT -> wsRoomService.reconnectHandler(message);
             }
     }
     public void newConnection(WebSocketSession session) throws WsException
