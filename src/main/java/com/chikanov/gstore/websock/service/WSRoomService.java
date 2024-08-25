@@ -60,7 +60,8 @@ public class WSRoomService {
     }
 
     public void closeConnection(WebSocketSession session, int status) throws WsException{
-        findRoom(session.getId()).disconnect(session);
+        if(status != 3001)
+            findRoom(session.getId()).disconnect(session);
     }
     public void reconnectHandler(Message message) throws WsException{
         findRoom(message.session().getId()).reconnect(message.session());

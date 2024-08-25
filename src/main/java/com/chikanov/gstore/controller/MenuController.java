@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 @Controller
@@ -43,6 +44,9 @@ public class MenuController {
 
     @Autowired
     private ObjectMapper om;
+
+    @Autowired
+    private StatService statService;
 
     @GetMapping("/private")
     public ResponseEntity<GameTypeFilteredDTO> getGames() throws Exception {
@@ -78,5 +82,9 @@ public class MenuController {
         return ResponseEntity.ok(gameService.getGameModule(gameId));
     }
 
+    @GetMapping("/stat")
+    public ResponseEntity<Map<String, Integer>> getGameStats(@RequestAttribute("user") TgUser user) throws Exception{
+        return ResponseEntity.ok(statService.findAllResults(user));
+    }
 
 }
