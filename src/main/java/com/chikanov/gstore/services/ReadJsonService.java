@@ -79,7 +79,7 @@ public class ReadJsonService {
                             myChatMember.getChat().getId(),
                             messageService.oneButtonKeyboard(
                                     messageTextKeeper.lang("ru").get("private_hello_button"),
-                                    "https://t.me/Cooperation_chat_minigames_bot/coop_g_store?startapp=private"
+                                    "https://t.me/OneHandGames_Bot/gamesApp?startapp=private"
                             )
                     )));
                     role = Role.PRIVATE;
@@ -91,7 +91,7 @@ public class ReadJsonService {
                             myChatMember.getChat().getId(),
                             messageService.oneButtonKeyboard(
                                     messageTextKeeper.lang("ru").get("group_hello_button"),
-                                    "https://t.me/Cooperation_chat_minigames_bot"
+                                    "https://t.me/OneHandGames_Bot"
                             )
                     )));
                     role = Role.ADMIN;
