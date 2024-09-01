@@ -32,7 +32,7 @@ public class StatService {
         var res = all.orElse(new ArrayList<>());
         var grouped = res.stream().collect(Collectors.groupingBy(r -> r.getGame().getGameType().getName()));
         grouped.keySet().forEach(k->
-            result.add(new Stat(k, grouped.get(k).stream().filter(Result::isWinner).count(), grouped.size())));
+            result.add(new Stat(k, grouped.get(k).stream().filter(Result::isWinner).count(), grouped.get(k).size())));
         return ResponseEntity.ok(result);
     }
 
