@@ -83,8 +83,8 @@ public class MenuController {
     }
 
     @GetMapping("/stat")
-    public ResponseEntity<Map<String, Integer>> getGameStats(@RequestAttribute("user") TgUser user) throws Exception{
-        return ResponseEntity.ok(statService.findAllResults(user));
+    public ResponseEntity<?> getGameStats(@RequestAttribute("user") TgUser user) throws Exception{
+        return statService.findAllResults(user);
     }
 
 }
