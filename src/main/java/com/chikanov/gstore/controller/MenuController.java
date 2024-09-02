@@ -69,7 +69,7 @@ public class MenuController {
                 sendGameDTO.chat_id(),
                 messageService.oneButtonKeyboard(
                         "Играть",
-                        String.format("https://t.me/Cooperation_chat_minigames_bot/coop_g_store?startapp=%s",id))
+                        String.format("https://t.me/OneHandGames_Bot/gamesApp?startapp=%s",id))
                         )
                 )
         );
